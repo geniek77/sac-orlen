@@ -3,7 +3,7 @@
   "name": "Kalendarz Miesięczny",
   "description": "Widget prezentujący kalendarz miesięczny (widok z miesiącami), zoptymalizowany pod SAP Analytics Cloud",
   "vendor": "G++ E.Sz dla ORLEN S.A.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "newInstancePrefix": "kal_mies",
   "webcomponents": [{
       "kind": "main",
