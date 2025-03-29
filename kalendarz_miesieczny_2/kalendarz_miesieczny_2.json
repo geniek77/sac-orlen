@@ -10,12 +10,14 @@
       "kind": "main",
       "tag": "com-sap-analytics-custom-widget-monthlycalendar-2",
       "url": "/kalendarz_miesieczny_2.js",
+      "integrity": "",
       "ignoreIntegrity": true
     },
     {
       "kind": "builder",
       "tag": "com-sap-analytics-custom-widget-monthlycalendar-2-builder",
       "url": "/kalendarz_miesieczny_2_builder.js",
+      "integrity": "",
       "ignoreIntegrity": true
     }
   ],

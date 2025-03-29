@@ -4,7 +4,7 @@
     <form id="form">
       <fieldset>
         <legend>Ustawienia kalendarza</legend>
-        
+
         <label>Minimalny rok:</label><br>
         <input type="number" id="minYear"><br><br>
 
@@ -23,7 +23,7 @@
         <label>Kolor czcionki:</label><br>
         <input type="color" id="fontColor"><br><br>
 
-        <label>Czcionka (nazwa, np. Arial):</label><br>
+        <label>Czcionka (np. Arial):</label><br>
         <input type="text" id="fontFamily"><br><br>
 
         <label>Kolor aktywnej komórki:</label><br>
@@ -38,56 +38,42 @@
     </form>
   `;
 
-  class KalendarzMiesieczny2Builder {
+  class KalendarzMiesieczny2Builder extends HTMLElement {
     constructor() {
-      this._shadowRoot = null;
-      this._props = {};
+      super();
+      this._shadowRoot = this.attachShadow({ mode: "open" });
+      this._shadowRoot.appendChild(template.content.cloneNode(true));
     }
 
-    render(container, changedCallback) {
-      if (!this._shadowRoot) {
-        this._shadowRoot = container.attachShadow({ mode: "open" });
-        this._shadowRoot.appendChild(template.content.cloneNode(true));
-      }
+    connectedCallback() {
+      this._initialize();
+    }
 
+    _initialize() {
       const form = this._shadowRoot.getElementById("form");
-
-      const fields = [
-        "minYear", "maxYear", "numericMonths",
-        "monthBgColor", "quarterBgColor",
-        "fontColor", "fontFamily",
-        "activeCellColor", "buttonColor", "buttonTextColor"
-      ];
-
-      fields.forEach(field => {
-        const input = this._shadowRoot.getElementById(field);
-        const value = this._props[field];
-
-        if (input) {
-          if (input.type === "checkbox") {
-            input.checked = !!value;
-          } else {
-            input.value = value ?? "";
-          }
-
-          input.addEventListener("input", () => this._notifyChange(changedCallback));
-          input.addEventListener("change", () => this._notifyChange(changedCallback));
-        }
-      });
+      form.addEventListener("input", () => this._onChange());
+      form.addEventListener("change", () => this._onChange());
     }
 
-    _notifyChange(callback) {
-      const getVal = (id) => {
+    _onChange() {
+      this.dispatchEvent(new CustomEvent("propertiesChanged", {
+        detail: {
+          properties: this.getProperties()
+        }
+      }));
+    }
+
+    getProperties() {
+      const getVal = (id, isCheckbox = false) => {
         const el = this._shadowRoot.getElementById(id);
         if (!el) return undefined;
-        if (el.type === "checkbox") return el.checked;
-        return el.value;
+        return isCheckbox ? el.checked : el.value;
       };
 
-      const newProps = {
+      return {
         minYear: parseInt(getVal("minYear")),
         maxYear: parseInt(getVal("maxYear")),
-        numericMonths: getVal("numericMonths"),
+        numericMonths: getVal("numericMonths", true),
         monthBgColor: getVal("monthBgColor"),
         quarterBgColor: getVal("quarterBgColor"),
         fontColor: getVal("fontColor"),
@@ -96,17 +82,30 @@
         buttonColor: getVal("buttonColor"),
         buttonTextColor: getVal("buttonTextColor")
       };
-
-      this._props = newProps;
-      callback(this._props);
-    }
-
-    getProperties() {
-      return this._props;
     }
 
     setProperties(properties) {
-      this._props = properties || {};
+      const setVal = (id, value, isCheckbox = false) => {
+        const el = this._shadowRoot.getElementById(id);
+        if (el) {
+          if (isCheckbox) {
+            el.checked = !!value;
+          } else {
+            el.value = value ?? "";
+          }
+        }
+      };
+
+      setVal("minYear", properties.minYear);
+      setVal("maxYear", properties.maxYear);
+      setVal("numericMonths", properties.numericMonths, true);
+      setVal("monthBgColor", properties.monthBgColor);
+      setVal("quarterBgColor", properties.quarterBgColor);
+      setVal("fontColor", properties.fontColor);
+      setVal("fontFamily", properties.fontFamily);
+      setVal("activeCellColor", properties.activeCellColor);
+      setVal("buttonColor", properties.buttonColor);
+      setVal("buttonTextColor", properties.buttonTextColor);
     }
   }
 

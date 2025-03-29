@@ -89,7 +89,6 @@
         "--button-bg": this.properties.buttonColor || "#f0f0f0",
         "--button-text": this.properties.buttonTextColor || "#000"
       };
-
       Object.entries(styles).forEach(([key, value]) => {
         this._root.style.setProperty(key, value);
       });
