@@ -255,5 +255,5 @@
     }
   }
 
-  customElements.define("com-sap-analytics-custom-widget-monthlycalendar-2", KalendarzMiesieczny2);
+  customElements.define("com-sap-analytics-custom-widget-monthlycalendar2", KalendarzMiesieczny2);
 })();

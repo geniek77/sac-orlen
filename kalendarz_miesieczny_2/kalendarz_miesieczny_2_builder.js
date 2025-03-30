@@ -176,7 +176,7 @@
   }
 
   customElements.define(
-    "com-sap-analytics-custom-widget-monthlycalendar-2-builder",
+    "com-sap-analytics-custom-widget-monthlycalendar2-builder",
     KalendarzMiesieczny2Builder
   );
 })();

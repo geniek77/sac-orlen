@@ -1,5 +1,5 @@
 {
-  "id": "com.sap.analytics.custom.widget.monthlycalendar-2",
+  "id": "com.sap.analytics.custom.widget.monthlycalendar2",
   "version": "2.2.7",
   "name": "Kalendarz Miesięczny 2",
   "description": "Widget kalendarza miesięcznego z możliwością wyboru miesiąca i kwartału oraz konfiguracją wyglądu.",
@@ -8,14 +8,14 @@
   "webcomponents": [
     {
       "kind": "main",
-      "tag": "com-sap-analytics-custom-widget-monthlycalendar-2",
+      "tag": "com-sap-analytics-custom-widget-monthlycalendar2",
       "url": "/kalendarz_miesieczny_2.js",
       "integrity": "",
       "ignoreIntegrity": true
     },
     {
       "kind": "builder",
-      "tag": "com-sap-analytics-custom-widget-monthlycalendar-2-builder",
+      "tag": "com-sap-analytics-custom-widget-monthlycalendar2-builder",
       "url": "/kalendarz_miesieczny_2_builder.js",
       "integrity": "",
       "ignoreIntegrity": true
