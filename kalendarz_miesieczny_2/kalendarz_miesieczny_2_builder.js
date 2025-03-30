@@ -23,8 +23,18 @@
         <label>Kolor czcionki:</label><br>
         <input type="color" id="fontColor"><br><br>
 
-        <label>Czcionka (np. Arial):</label><br>
-        <input type="text" id="fontFamily"><br><br>
+        <label>Czcionka:</label><br>
+        <select id="fontFamily">
+          <option value="72">72 (SAP Default)</option>
+          <option value="72Mono">72 Mono</option>
+          <option value="Arial">Arial</option>
+          <option value="Verdana">Verdana</option>
+          <option value="Tahoma">Tahoma</option>
+          <option value="Courier New">Courier New</option>
+        </select><br><br>
+
+        <label>Rozmiar czcionki (np. 14px):</label><br>
+        <input type="text" id="fontSize"><br><br>
 
         <label>Kolor aktywnej komórki:</label><br>
         <input type="color" id="activeCellColor"><br><br>
@@ -72,6 +82,7 @@
         quarterBgColor: this.quarterBgColor,
         fontColor: this.fontColor,
         fontFamily: this.fontFamily,
+        fontSize: this.fontSize,
         activeCellColor: this.activeCellColor,
         buttonColor: this.buttonColor,
         buttonTextColor: this.buttonTextColor,
@@ -126,6 +137,13 @@
     }
     set fontFamily(value) {
       this._shadowRoot.getElementById("fontFamily").value = value;
+    }
+
+    get fontSize() {
+      return this._shadowRoot.getElementById("fontSize").value;
+    }
+    set fontSize(value) {
+      this._shadowRoot.getElementById("fontSize").value = value;
     }
 
     get activeCellColor() {

@@ -7,9 +7,9 @@
         height: 100%;
         padding: 10px;
         box-sizing: border-box;
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
+        font-size: var(--font-size, 14px);
+        font-family: var(--font-family, Arial);
+        color: var(--font-color, #000);
       }
       h2 {
         text-align: center;
@@ -40,20 +40,17 @@
         width: 100%;
         table-layout: fixed;
         border-collapse: collapse;
-        box-sizing: border-box;
-        margin: 0 auto;
+        margin-top: 10px;
       }
       table, th, td {
         border: 1px solid #ccc;
       }
       th, td {
         width: 25%;
+        box-sizing: border-box;
         padding: 10px;
         text-align: center;
         cursor: pointer;
-        box-sizing: border-box;
-        overflow: hidden;
-        text-overflow: ellipsis;
       }
       th {
         background-color: var(--quarter-bg, #eeeeee);
@@ -81,12 +78,6 @@
       this.render();
     }
 
-    onCustomWidgetResize(width, height) {
-      this._root.style.width = width + "px";
-      this._root.style.height = height + "px";
-      this.render();
-    }
-
     onCustomWidgetBeforeUpdate(changedProperties) {
       const defaults = {
         minYear: 2000,
@@ -99,12 +90,19 @@
         activeCellColor: "lightblue",
         buttonColor: "#f0f0f0",
         buttonTextColor: "#000000",
-        sliderColor: "#3399ff"
+        sliderColor: "#3399ff",
+        fontSize: "14px"
       };
       this.properties = Object.assign({}, defaults, this.properties, changedProperties);
     }
 
     onCustomWidgetAfterUpdate() {
+      this.render();
+    }
+
+    onCustomWidgetResize(width, height) {
+      this._root.style.width = width + "px";
+      this._root.style.height = height + "px";
       this.render();
     }
 
@@ -117,7 +115,8 @@
         "--selected-bg": this.properties.activeCellColor,
         "--button-bg": this.properties.buttonColor,
         "--button-text": this.properties.buttonTextColor,
-        "--slider-color": this.properties.sliderColor
+        "--slider-color": this.properties.sliderColor,
+        "--font-size": this.properties.fontSize
       };
       Object.entries(styles).forEach(([key, value]) => {
         this._root.style.setProperty(key, value);
@@ -125,18 +124,13 @@
     }
 
     render() {
-      const p = this.properties || {};
-      const sliderMin = (p.minYear !== undefined) ? p.minYear : 2000;
-      const sliderMax = (p.maxYear !== undefined) ? p.maxYear : 2035;
-
-      const t = {
-        months: p.numericMonths
-          ? ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
-          : ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"],
-        quarters: ["Q1", "Q2", "Q3", "Q4"]
-      };
-
       this.applyStyles();
+      const sliderMin = this.properties.minYear;
+      const sliderMax = this.properties.maxYear;
+      const months = this.properties.numericMonths
+        ? ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
+        : ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"];
+      const quarters = ["Q1", "Q2", "Q3", "Q4"];
       this._root.innerHTML = "";
 
       const header = document.createElement("h2");
@@ -146,11 +140,11 @@
       const sliderContainer = document.createElement("div");
       sliderContainer.className = "slider-container";
 
-      const createButton = (label, change) => {
+      const createBtn = (label, step) => {
         const btn = document.createElement("button");
         btn.innerText = label;
         btn.addEventListener("click", () => {
-          this._year = Math.max(sliderMin, Math.min(sliderMax, this._year + change));
+          this._year = Math.max(sliderMin, Math.min(sliderMax, this._year + step));
           slider.value = this._year;
           header.innerText = this.get_calmoth();
           this.dispatchEvent(new CustomEvent("onSelect", {
@@ -160,8 +154,8 @@
         return btn;
       };
 
-      sliderContainer.appendChild(createButton("<<", -5));
-      sliderContainer.appendChild(createButton("<", -1));
+      sliderContainer.appendChild(createBtn("<<", -5));
+      sliderContainer.appendChild(createBtn("<", -1));
 
       const slider = document.createElement("input");
       slider.type = "range";
@@ -179,8 +173,8 @@
       });
 
       sliderContainer.appendChild(slider);
-      sliderContainer.appendChild(createButton(">", 1));
-      sliderContainer.appendChild(createButton(">>", 5));
+      sliderContainer.appendChild(createBtn(">", 1));
+      sliderContainer.appendChild(createBtn(">>", 5));
       this._root.appendChild(sliderContainer);
 
       const table = document.createElement("table");
@@ -189,7 +183,7 @@
 
       for (let q = 0; q < 4; q++) {
         const th = document.createElement("th");
-        th.innerText = t.quarters[q];
+        th.innerText = quarters[q];
         th.addEventListener("click", () => {
           const allCells = table.querySelectorAll("th, td");
           allCells.forEach(cell => cell.classList.remove("selected"));
@@ -209,7 +203,7 @@
         for (let m = 0; m < 3; m++) {
           const td = document.createElement("td");
           const monthIndex = q * 3 + m;
-          td.innerText = t.months[monthIndex];
+          td.innerText = months[monthIndex];
           if (monthIndex === this._month) td.classList.add("selected");
           td.addEventListener("click", () => {
             const allCells = table.querySelectorAll("th, td");

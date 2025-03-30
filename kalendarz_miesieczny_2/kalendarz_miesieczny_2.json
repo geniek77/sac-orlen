@@ -1,9 +1,9 @@
 {
-  "id": "com.sap.analytics.custom.widget.monthlycalendar2",
+  "id": "com.sap.analytics.custom.widget.monthlycalendar-2",
+  "version": "2.2.7",
   "name": "Kalendarz Miesięczny 2",
-  "description": "Widget kalendarza miesięcznego z wyborem miesięcy, kwartałów i pełną konfiguracją wyglądu.",
+  "description": "Widget kalendarza miesięcznego z możliwością wyboru miesiąca i kwartału oraz konfiguracją wyglądu.",
   "vendor": "G++ E.Sz dla ORLEN S.A.",
-  "version": "2.2.6",
   "newInstancePrefix": "kal_mies_2",
   "webcomponents": [
     {
@@ -35,32 +35,37 @@
     "numericMonths": {
       "type": "boolean",
       "default": false,
-      "description": "Czy wyświetlać miesiące w formie numerycznej (np. 01, 02, 03)?"
+      "description": "Czy wyświetlać miesiące jako numery (01, 02, ...)"
     },
     "monthBgColor": {
       "type": "string",
       "default": "#ffffff",
-      "description": "Kolor tła komórek miesięcy"
+      "description": "Kolor tła miesięcy"
     },
     "quarterBgColor": {
       "type": "string",
       "default": "#eeeeee",
-      "description": "Kolor tła nagłówków kwartałów"
+      "description": "Kolor tła kwartałów"
     },
     "fontColor": {
       "type": "string",
       "default": "#000000",
-      "description": "Kolor tekstu"
+      "description": "Kolor czcionki"
     },
     "fontFamily": {
       "type": "string",
       "default": "Arial",
-      "description": "Rodzina czcionki, np. Arial"
+      "description": "Rodzaj czcionki"
+    },
+    "fontSize": {
+      "type": "string",
+      "default": "14px",
+      "description": "Rozmiar czcionki (np. 14px)"
     },
     "activeCellColor": {
       "type": "string",
       "default": "lightblue",
-      "description": "Kolor zaznaczonej komórki (miesiąc/kwartał)"
+      "description": "Kolor zaznaczenia komórki"
     },
     "buttonColor": {
       "type": "string",
@@ -70,27 +75,18 @@
     "buttonTextColor": {
       "type": "string",
       "default": "#000000",
-      "description": "Kolor tekstu przycisków"
+      "description": "Kolor tekstu na przyciskach"
     },
     "sliderColor": {
       "type": "string",
       "default": "#3399ff",
-      "description": "Kolor suwaka (slidera)"
+      "description": "Kolor suwaka"
     }
   },
   "methods": {
-    "get_calmoth": {
-      "returnType": "string",
-      "description": "Zwraca wybrany okres w formacie mm.yyyy"
-    },
-    "get_calmoth_sap": {
-      "returnType": "string",
-      "description": "Zwraca wybrany okres w formacie yyyymm"
-    },
-    "get_calquarter": {
-      "returnType": "string",
-      "description": "Zwraca wybrany kwartał w formacie yyyyq (np. 20201)"
-    },
+    "get_calmoth": { "returnType": "string" },
+    "get_calmoth_sap": { "returnType": "string" },
+    "get_calquarter": { "returnType": "string" },
     "set_calmoth": {
       "parameters": [
         {
@@ -112,7 +108,7 @@
   },
   "events": {
     "onSelect": {
-      "description": "Zdarzenie po wyborze miesiąca, kwartału lub zmiany roku. Zwraca { type, value, selected }"
+      "description": "Zdarzenie po wyborze miesiąca lub kwartału"
     }
   }
 }
