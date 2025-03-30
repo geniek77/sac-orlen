@@ -35,26 +35,20 @@
         color: var(--button-text, #000);
         border: 1px solid #ccc;
       }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-      }
-      table, th, td {
-        border: 1px solid #ccc;
-      }
-      th {
-        background-color: var(--quarter-bg, #eee);
-        cursor: pointer;
-        padding: 10px;
-        text-align: center;
-      }
-      td {
-        background-color: var(--month-bg, #fff);
-        cursor: pointer;
-        padding: 10px;
-        text-align: center;
-      }
+	  table {
+	    width: 100%;
+	    table-layout: fixed;
+	    border-collapse: collapse;
+	    margin: 0 auto; /* wyśrodkowanie */
+	  }
+
+	  th, td {
+	    width: 25%;
+	    box-sizing: border-box;
+	    padding: 10px;
+	    text-align: center;
+	    cursor: pointer;
+	  }
       .selected {
         background-color: var(--selected-bg, lightblue) !important;
       }
