@@ -81,57 +81,80 @@
       "type": "string",
       "default": "14px",
       "description": "Rozmiar czcionki"
+    },
+    "labelB": {
+      "type": "string",
+      "default": "B",
+      "description": "Etykieta zmiany B"
+    },
+    "labelRR": {
+      "type": "string",
+      "default": "R/R",
+      "description": "Etykieta zmiany R/R"
+    },
+    "textColorB": {
+      "type": "string",
+      "default": "#006400",
+      "description": "Kolor tekstu wartości B"
+    },
+    "textColorRR": {
+      "type": "string",
+      "default": "#a94442",
+      "description": "Kolor tekstu wartości R/R"
+    },
+    "arrowColorB": {
+      "type": "string",
+      "default": "#006400",
+      "description": "Kolor trójkąta B"
+    },
+    "arrowColorRR": {
+      "type": "string",
+      "default": "#a94442",
+      "description": "Kolor trójkąta R/R"
+    },
+    "arrowDirectionB": {
+      "type": "string",
+      "default": "up",
+      "description": "Kierunek trójkąta B (up/down/none)"
+    },
+    "arrowDirectionRR": {
+      "type": "string",
+      "default": "down",
+      "description": "Kierunek trójkąta R/R (up/down/none)"
     }
   },
   "methods": {
-    "getTitle": {
-      "returnType": "string"
-    },
-    "setTitle": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getMainValue": {
-      "returnType": "string"
-    },
-    "setMainValue": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getDeltaB": {
-      "returnType": "string"
-    },
-    "setDeltaB": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getDeltaRR": {
-      "returnType": "string"
-    },
-    "setDeltaRR": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    }
+    "getTitle": { "returnType": "string" },
+    "setTitle": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getMainValue": { "returnType": "string" },
+    "setMainValue": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaB": { "returnType": "string" },
+    "setDeltaB": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaRR": { "returnType": "string" },
+    "setDeltaRR": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getLabelB": { "returnType": "string" },
+    "setLabelB": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getLabelRR": { "returnType": "string" },
+    "setLabelRR": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getTextColorB": { "returnType": "string" },
+    "setTextColorB": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getTextColorRR": { "returnType": "string" },
+    "setTextColorRR": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getArrowColorB": { "returnType": "string" },
+    "setArrowColorB": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getArrowColorRR": { "returnType": "string" },
+    "setArrowColorRR": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getArrowDirectionB": { "returnType": "string" },
+    "setArrowDirectionB": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getArrowDirectionRR": { "returnType": "string" },
+    "setArrowDirectionRR": { "parameters": [{ "name": "value", "type": "string" }] }
   },
   "events": {
     "onClick": {
       "description": "Zdarzenie po kliknięciu w cały widget"
+    },
+    "onEdit": {
+      "description": "Zdarzenie po kliknięciu w ikonę edycji"
     }
   }
 }

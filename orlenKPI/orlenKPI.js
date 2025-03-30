@@ -1,95 +1,110 @@
 (function () {
   const template = document.createElement("template");
   template.innerHTML = `
-    <style>
-      :host {
-        display: block;
-      }
-      #root {
-        width: 100%;
-        height: 100%;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-        font-family: var(--font-family, Arial);
-        color: var(--font-color, #000);
-        font-size: var(--font-size, 14px);
-      }
+  <style>
+    :host {
+      display: block;
+      position: relative;
+    }
 
-      .kpi-box {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        cursor: pointer;
-      }
+    #root {
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      box-sizing: border-box;
+      font-family: var(--font-family, Arial);
+      color: var(--font-color, #000);
+      font-size: var(--font-size, 14px);
+    }
 
-      .kpi-header {
-        font-weight: bold;
-        font-size: 16px;
-        margin-bottom: 4px;
-      }
+    .edit-icon {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      font-size: 14px;
+      color: gray;
+      cursor: pointer;
+      z-index: 10;
+    }
 
-      .kpi-main {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
+    .kpi-box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      cursor: pointer;
+    }
 
-      .kpi-bar {
-        width: 10px;
-        height: 40px;
-        background-color: var(--bar-color, #006400);
-      }
+    .kpi-header {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 4px;
+      text-align: left;
+    }
 
-      .kpi-value {
-        font-size: 28px;
-        font-weight: bold;
-      }
+    .kpi-main {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-start;
+      width: 100%;
+    }
 
-      .kpi-matrix {
-        margin-top: 8px;
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
+    .kpi-bar {
+      width: var(--bar-width, 10px);
+      height: 40px;
+      background-color: var(--bar-color, #006400);
+    }
 
-      .kpi-row {
-        display: flex;
-        justify-content: center;
-        gap: 4px;
-      }
+    .kpi-value {
+      font-size: 28px;
+      font-weight: bold;
+      text-align: left;
+    }
 
-      .kpi-label {
-        width: 40px;
-        text-align: center;
-        font-size: 12px;
-      }
+    .kpi-matrix {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
 
-      .kpi-cell {
-        width: 60px;
-        padding: 4px;
-        text-align: center;
-        font-weight: bold;
-        font-size: 14px;
-        border-radius: 2px;
-      }
+    .kpi-row {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
 
-      .up {
-        background-color: var(--bg-up-color, #dff0d8);
-        color: #006400;
-      }
+    .kpi-label {
+      width: 40px;
+      text-align: center;
+      font-size: 12px;
+    }
 
-      .down {
-        background-color: var(--bg-down-color, #f2dede);
-        color: #a94442;
-      }
-    </style>
-    <div id="root"></div>
-  `;
+    .kpi-cell {
+      width: 60px;
+      padding: 4px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+      border-radius: 2px;
+    }
+
+    .up {
+      background-color: var(--bg-up-color, #dff0d8);
+      color: var(--text-color-b, #006400);
+    }
+
+    .down {
+      background-color: var(--bg-down-color, #f2dede);
+      color: var(--text-color-rr, #a94442);
+    }
+  </style>
+  <div id="root"></div>`;
 
   class OrlenKPI extends HTMLElement {
     constructor() {
@@ -117,6 +132,16 @@
       this.render();
     }
 
+    onCustomWidgetResize(width, height) {
+      const baseWidth = 300;
+      const baseFontSize = 14;
+      const scale = Math.min(width / baseWidth, 2);
+      const fontSize = (baseFontSize * scale).toFixed(1) + "px";
+      const barWidth = Math.max(4, Math.round(10 * scale)) + "px";
+      this._root.style.setProperty("--font-size", fontSize);
+      this._root.style.setProperty("--bar-width", barWidth);
+    }
+
     applyStyles() {
       const {
         fontColor = "#000000",
@@ -124,7 +149,9 @@
         fontSize = "14px",
         barColor = "#006400",
         bgUpColor = "#dff0d8",
-        bgDownColor = "#f2dede"
+        bgDownColor = "#f2dede",
+        textColorB = "#006400",
+        textColorRR = "#a94442"
       } = this.properties;
 
       this._root.style.setProperty("--font-color", fontColor);
@@ -133,6 +160,8 @@
       this._root.style.setProperty("--bar-color", barColor);
       this._root.style.setProperty("--bg-up-color", bgUpColor);
       this._root.style.setProperty("--bg-down-color", bgDownColor);
+      this._root.style.setProperty("--text-color-b", textColorB);
+      this._root.style.setProperty("--text-color-rr", textColorRR);
     }
 
     render() {
@@ -144,10 +173,19 @@
         deltaB = "+198",
         deltaBPercent = "+168%",
         deltaRR = "-521",
-        deltaRRPercent = "-254%"
+        deltaRRPercent = "-254%",
+        labelB = "B",
+        labelRR = "R/R",
+        arrowColorB = "#006400",
+        arrowColorRR = "#a94442",
+        arrowDirectionB = "up",
+        arrowDirectionRR = "down"
       } = this.properties;
 
-      this._root.innerHTML = `
+      const arrowB = arrowDirectionB === "up" ? "▲" : arrowDirectionB === "down" ? "▼" : "";
+      const arrowRR = arrowDirectionRR === "up" ? "▲" : arrowDirectionRR === "down" ? "▼" : "";
+
+      this._root.innerHTML = `<div class="edit-icon" id="editIcon" title="Edytuj">✎</div>
         <div class="kpi-box">
           <div class="kpi-header">${title}</div>
           <div class="kpi-main">
@@ -156,55 +194,66 @@
           </div>
           <div class="kpi-matrix">
             <div class="kpi-row">
-              <div class="kpi-label up">▲<br>B</div>
+              <div class="kpi-label up" style="color: ${arrowColorB}">${arrowB}<br>${labelB}</div>
               <div class="kpi-cell up">${deltaB}</div>
               <div class="kpi-cell up">${deltaBPercent}</div>
             </div>
             <div class="kpi-row">
-              <div class="kpi-label down">▼<br>R/R</div>
+              <div class="kpi-label down" style="color: ${arrowColorRR}">${arrowRR}<br>${labelRR}</div>
               <div class="kpi-cell down">${deltaRR}</div>
               <div class="kpi-cell down">${deltaRRPercent}</div>
             </div>
           </div>
-        </div>
-      `;
+        </div>`;
+
+      const editIcon = this._root.querySelector("#editIcon");
+      if (editIcon) {
+        editIcon.addEventListener("click", (e) => {
+          e.stopPropagation();
+          this.dispatchEvent(new CustomEvent("onEdit", {
+            detail: {
+              title: this.properties.title || ""
+            }
+          }));
+        });
+      }
     }
 
-    getTitle() {
-      return this.properties.title;
-    }
+    getTitle() { return this.properties.title; }
+    setTitle(value) { this.properties.title = value; this.render(); }
 
-    setTitle(value) {
-      this.properties.title = value;
-      this.render();
-    }
+    getMainValue() { return this.properties.mainValue; }
+    setMainValue(value) { this.properties.mainValue = value; this.render(); }
 
-    getMainValue() {
-      return this.properties.mainValue;
-    }
+    getDeltaB() { return this.properties.deltaB; }
+    setDeltaB(value) { this.properties.deltaB = value; this.render(); }
 
-    setMainValue(value) {
-      this.properties.mainValue = value;
-      this.render();
-    }
+    getDeltaRR() { return this.properties.deltaRR; }
+    setDeltaRR(value) { this.properties.deltaRR = value; this.render(); }
 
-    getDeltaB() {
-      return this.properties.deltaB;
-    }
+    getLabelB() { return this.properties.labelB; }
+    setLabelB(value) { this.properties.labelB = value; this.render(); }
 
-    setDeltaB(value) {
-      this.properties.deltaB = value;
-      this.render();
-    }
+    getLabelRR() { return this.properties.labelRR; }
+    setLabelRR(value) { this.properties.labelRR = value; this.render(); }
 
-    getDeltaRR() {
-      return this.properties.deltaRR;
-    }
+    getTextColorB() { return this.properties.textColorB; }
+    setTextColorB(value) { this.properties.textColorB = value; this.render(); }
 
-    setDeltaRR(value) {
-      this.properties.deltaRR = value;
-      this.render();
-    }
+    getTextColorRR() { return this.properties.textColorRR; }
+    setTextColorRR(value) { this.properties.textColorRR = value; this.render(); }
+
+    getArrowColorB() { return this.properties.arrowColorB; }
+    setArrowColorB(value) { this.properties.arrowColorB = value; this.render(); }
+
+    getArrowColorRR() { return this.properties.arrowColorRR; }
+    setArrowColorRR(value) { this.properties.arrowColorRR = value; this.render(); }
+
+    getArrowDirectionB() { return this.properties.arrowDirectionB; }
+    setArrowDirectionB(value) { this.properties.arrowDirectionB = value; this.render(); }
+
+    getArrowDirectionRR() { return this.properties.arrowDirectionRR; }
+    setArrowDirectionRR(value) { this.properties.arrowDirectionRR = value; this.render(); }
   }
 
   customElements.define("com-sap-analytics-custom-widget-orlenkpi", OrlenKPI);
