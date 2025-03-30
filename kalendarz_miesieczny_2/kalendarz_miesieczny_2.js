@@ -9,7 +9,6 @@
         margin: 10px;
         display: flex;
         flex-direction: column;
-        align-items: center;
       }
       h2 {
         text-align: center;
@@ -35,10 +34,9 @@
       }
       table {
         width: 100%;
-		border-collapse: collapse;
-		margin-left: auto;
-		margin-right: auto;
-		box-sizing: border-box;
+        table-layout: fixed;
+        border-collapse: collapse;
+        box-sizing: border-box;
       }
       table, th, td {
         border: 1px solid #ccc;
@@ -65,7 +63,7 @@
       this._baseYear = new Date().getFullYear();
       this._year = this._baseYear;
       this._month = new Date().getMonth();
-      this.properties = {}; // 🛡️ Zabezpieczenie – domyślna pusta konfiguracja
+      this.properties = {};
       this.render();
     }
 
