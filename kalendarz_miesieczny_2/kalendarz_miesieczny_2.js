@@ -19,15 +19,16 @@
         text-align: center;
       }
       .slider-container {
-        gap: 8px;
-        flex-wrap: wrap;
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-wrap: nowrap;
+        gap: 8px;
       }
       .slider-container input[type="range"] {
-        max-width: 300px;
-        width: 100%;
+        flex: 1;
+        min-width: 50px;
+        max-width: 100%;
         accent-color: var(--slider-color, #3399ff);
       }
       .slider-container button {
