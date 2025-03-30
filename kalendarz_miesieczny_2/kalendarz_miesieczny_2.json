@@ -3,7 +3,7 @@
   "name": "Kalendarz Miesięczny 2",
   "description": "Widget kalendarza miesięcznego z wyborem miesięcy, kwartałów i pełną konfiguracją wyglądu.",
   "vendor": "G++ E.Sz dla ORLEN S.A.",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "newInstancePrefix": "kal_mies_2",
   "webcomponents": [
     {
@@ -22,27 +22,73 @@
     }
   ],
   "properties": {
-    "minYear": { "type": "number", "default": 2000 },
-    "maxYear": { "type": "number", "default": 2035 },
-    "numericMonths": { "type": "boolean", "default": false },
-    "monthBgColor": { "type": "string", "default": "#ffffff" },
-    "quarterBgColor": { "type": "string", "default": "#eeeeee" },
-    "fontColor": { "type": "string", "default": "#000000" },
-    "fontFamily": { "type": "string", "default": "Arial" },
-    "activeCellColor": { "type": "string", "default": "lightblue" },
-    "buttonColor": { "type": "string", "default": "#f0f0f0" },
-    "buttonTextColor": { "type": "string", "default": "#000000" },
-    "sliderColor": { "type": "string", "default": "#3399ff", "description": "Kolor suwaka (slidera)" }
+    "minYear": {
+      "type": "number",
+      "default": 2000
+    },
+    "maxYear": {
+      "type": "number",
+      "default": 2035
+    },
+    "numericMonths": {
+      "type": "boolean",
+      "default": false
+    },
+    "monthBgColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "quarterBgColor": {
+      "type": "string",
+      "default": "#eeeeee"
+    },
+    "fontColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "fontFamily": {
+      "type": "string",
+      "default": "Arial"
+    },
+    "activeCellColor": {
+      "type": "string",
+      "default": "lightblue"
+    },
+    "buttonColor": {
+      "type": "string",
+      "default": "#f0f0f0"
+    },
+    "buttonTextColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "sliderColor": {
+      "type": "string",
+      "default": "#3399ff",
+      "description": "Kolor suwaka (slidera)"
+    }
   },
   "methods": {
     "get_calmoth": { "returnType": "string" },
     "get_calmoth_sap": { "returnType": "string" },
     "get_calquarter": { "returnType": "string" },
     "set_calmoth": {
-      "parameters": [{ "name": "period", "type": "string", "description": "Okres w formacie mm.yyyy" }]
+      "parameters": [
+        {
+          "name": "period",
+          "type": "string",
+          "description": "Okres w formacie mm.yyyy"
+        }
+      ]
     },
     "set_calmoth_sap": {
-      "parameters": [{ "name": "period", "type": "string", "description": "Okres w formacie yyyymm" }]
+      "parameters": [
+        {
+          "name": "period",
+          "type": "string",
+          "description": "Okres w formacie yyyymm"
+        }
+      ]
     }
   },
   "events": {

@@ -186,41 +186,35 @@
     }
 
     get_calmoth() {
-      let month = this._month + 1;
-      let monthStr = month < 10 ? "0" + month : month.toString();
-      return monthStr + "." + this._year;
+      const m = this._month + 1;
+      return (m < 10 ? "0" + m : m) + "." + this._year;
     }
 
     get_calmoth_sap() {
-      let month = this._month + 1;
-      let monthStr = month < 10 ? "0" + month : month.toString();
-      return this._year.toString() + monthStr;
+      const m = this._month + 1;
+      return this._year.toString() + (m < 10 ? "0" + m : m);
     }
 
     get_calquarter() {
-      const quarter = Math.floor(this._month / 3) + 1;
-      return this._year.toString() + quarter;
+      const q = Math.floor(this._month / 3) + 1;
+      return this._year.toString() + q;
     }
 
     set_calmoth(period) {
       const parts = period.split(".");
-      if (parts.length !== 2) return;
-      const mm = parseInt(parts[0]);
-      const yyyy = parseInt(parts[1]);
-      if (isNaN(mm) || isNaN(yyyy)) return;
-      this._year = yyyy;
-      this._month = mm - 1;
-      setTimeout(() => this.render(), 0);
+      if (parts.length === 2) {
+        this._year = parseInt(parts[1]);
+        this._month = parseInt(parts[0]) - 1;
+        setTimeout(() => this.render(), 0);
+      }
     }
 
     set_calmoth_sap(period) {
-      if (period.length !== 6) return;
-      const yyyy = parseInt(period.substring(0, 4));
-      const mm = parseInt(period.substring(4, 6));
-      if (isNaN(mm) || isNaN(yyyy)) return;
-      this._year = yyyy;
-      this._month = mm - 1;
-      setTimeout(() => this.render(), 0);
+      if (period.length === 6) {
+        this._year = parseInt(period.substring(0, 4));
+        this._month = parseInt(period.substring(4, 6)) - 1;
+        setTimeout(() => this.render(), 0);
+      }
     }
   }
 
