@@ -1,6 +1,6 @@
 {
   "id": "com.sap.analytics.custom.widget.monthlycalendar2",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "name": "Kalendarz Miesięczny 2",
   "description": "Widget kalendarza miesięcznego z możliwością wyboru miesiąca i kwartału oraz konfiguracją wyglądu.",
   "vendor": "G++ E.Sz dla ORLEN S.A.",
@@ -84,9 +84,15 @@
     }
   },
   "methods": {
-    "get_calmoth": { "returnType": "string" },
-    "get_calmoth_sap": { "returnType": "string" },
-    "get_calquarter": { "returnType": "string" },
+    "get_calmoth": {
+      "returnType": "string"
+    },
+    "get_calmoth_sap": {
+      "returnType": "string"
+    },
+    "get_calquarter": {
+      "returnType": "string"
+    },
     "set_calmoth": {
       "parameters": [
         {

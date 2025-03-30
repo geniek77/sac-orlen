@@ -2,12 +2,14 @@
   const template = document.createElement("template");
   template.innerHTML = `
     <style>
+      :host {
+        display: block;
+      }
       #root {
+        font-size: var(--font-size, 14px);
         width: 100%;
         height: 100%;
-        padding: 10px;
-        box-sizing: border-box;
-        font-size: var(--font-size, 14px);
+        margin: 10px;
         font-family: var(--font-family, Arial);
         color: var(--font-color, #000);
       }
@@ -20,11 +22,8 @@
         align-items: center;
         justify-content: center;
         margin: 10px 0;
-        width: 100%;
       }
       .slider-container input[type="range"] {
-        flex-grow: 1;
-        max-width: 400px;
         margin: 0 10px;
         accent-color: var(--slider-color, #3399ff);
       }
@@ -33,30 +32,28 @@
         margin: 0 5px;
         cursor: pointer;
         background-color: var(--button-bg, #f0f0f0);
-        color: var(--button-text, #000000);
+        color: var(--button-text, #000);
         border: 1px solid #ccc;
       }
       table {
         width: 100%;
-        table-layout: fixed;
         border-collapse: collapse;
         margin-top: 10px;
       }
       table, th, td {
         border: 1px solid #ccc;
       }
-      th, td {
-        width: 25%;
-        box-sizing: border-box;
+      th {
+        background-color: var(--quarter-bg, #eee);
+        cursor: pointer;
         padding: 10px;
         text-align: center;
-        cursor: pointer;
-      }
-      th {
-        background-color: var(--quarter-bg, #eeeeee);
       }
       td {
-        background-color: var(--month-bg, #ffffff);
+        background-color: var(--month-bg, #fff);
+        cursor: pointer;
+        padding: 10px;
+        text-align: center;
       }
       .selected {
         background-color: var(--selected-bg, lightblue) !important;
@@ -116,7 +113,7 @@
         "--button-bg": this.properties.buttonColor,
         "--button-text": this.properties.buttonTextColor,
         "--slider-color": this.properties.sliderColor,
-        "--font-size": this.properties.fontSize
+        "--font-size": this.properties.fontSize || "14px"
       };
       Object.entries(styles).forEach(([key, value]) => {
         this._root.style.setProperty(key, value);
@@ -125,12 +122,26 @@
 
     render() {
       this.applyStyles();
-      const sliderMin = this.properties.minYear;
-      const sliderMax = this.properties.maxYear;
-      const months = this.properties.numericMonths
-        ? ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
-        : ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"];
-      const quarters = ["Q1", "Q2", "Q3", "Q4"];
+
+      const userLang = (this.locale || navigator.language || "en").substring(0, 2);
+      const translations = {
+        pl: {
+          title: "Kalendarz Miesięczny 2",
+          months: ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"],
+          quarters: ["Q1", "Q2", "Q3", "Q4"]
+        },
+        en: {
+          title: "Monthly Calendar 2",
+          months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          quarters: ["Q1", "Q2", "Q3", "Q4"]
+        }
+      };
+      const t = translations[userLang] || translations.en;
+      const self = this;
+
+      const sliderMin = (this.properties && this.properties.minYear != null) ? this.properties.minYear : 2000;
+      const sliderMax = (this.properties && this.properties.maxYear != null) ? this.properties.maxYear : 2035;
+
       this._root.innerHTML = "";
 
       const header = document.createElement("h2");
@@ -147,7 +158,7 @@
           this._year = Math.max(sliderMin, Math.min(sliderMax, this._year + step));
           slider.value = this._year;
           header.innerText = this.get_calmoth();
-          this.dispatchEvent(new CustomEvent("onSelect", {
+          self.dispatchEvent(new CustomEvent("onSelect", {
             detail: { type: "year", value: this._year, selected: true }
           }));
         });
@@ -159,16 +170,16 @@
 
       const slider = document.createElement("input");
       slider.type = "range";
-      slider.min = sliderMin.toString();
-      slider.max = sliderMax.toString();
+      slider.min = sliderMin;
+      slider.max = sliderMax;
       slider.value = this._year;
       slider.addEventListener("input", () => {
         this._year = parseInt(slider.value);
         header.innerText = this.get_calmoth();
       });
       slider.addEventListener("change", () => {
-        this.dispatchEvent(new CustomEvent("onSelect", {
-          detail: { type: "year", value: this._year, selected: true }
+        self.dispatchEvent(new CustomEvent("onSelect", {
+          detail: { type: "year", value: slider.value, selected: true }
         }));
       });
 
@@ -183,10 +194,10 @@
 
       for (let q = 0; q < 4; q++) {
         const th = document.createElement("th");
-        th.innerText = quarters[q];
+        th.innerText = t.quarters[q];
         th.addEventListener("click", () => {
-          const allCells = table.querySelectorAll("th, td");
-          allCells.forEach(cell => cell.classList.remove("selected"));
+          const all = table.querySelectorAll("th, td");
+          all.forEach(c => c.classList.remove("selected"));
           th.classList.add("selected");
           const td = rows[3].children[q];
           if (td) {
@@ -194,7 +205,7 @@
             this._month = q * 3 + 2;
           }
           header.innerText = this.get_calmoth();
-          this.dispatchEvent(new CustomEvent("onSelect", {
+          self.dispatchEvent(new CustomEvent("onSelect", {
             detail: { type: "quarter", value: th.innerText, selected: true }
           }));
         });
@@ -202,16 +213,18 @@
 
         for (let m = 0; m < 3; m++) {
           const td = document.createElement("td");
-          const monthIndex = q * 3 + m;
-          td.innerText = months[monthIndex];
-          if (monthIndex === this._month) td.classList.add("selected");
+          const mi = q * 3 + m;
+          td.innerText = this.properties.numericMonths
+            ? (mi + 1).toString().padStart(2, "0")
+            : t.months[mi];
+          if (mi === this._month) td.classList.add("selected");
           td.addEventListener("click", () => {
-            const allCells = table.querySelectorAll("th, td");
-            allCells.forEach(cell => cell.classList.remove("selected"));
+            const all = table.querySelectorAll("th, td");
+            all.forEach(c => c.classList.remove("selected"));
             td.classList.add("selected");
-            this._month = monthIndex;
+            this._month = mi;
             header.innerText = this.get_calmoth();
-            this.dispatchEvent(new CustomEvent("onSelect", {
+            self.dispatchEvent(new CustomEvent("onSelect", {
               detail: { type: "month", value: td.innerText, selected: true }
             }));
           });
@@ -223,35 +236,29 @@
     }
 
     get_calmoth() {
-      const m = this._month + 1;
-      return (m < 10 ? "0" + m : m) + "." + this._year;
+      return (this._month + 1).toString().padStart(2, "0") + "." + this._year;
     }
 
     get_calmoth_sap() {
-      const m = this._month + 1;
-      return this._year.toString() + (m < 10 ? "0" + m : m);
+      return this._year.toString() + (this._month + 1).toString().padStart(2, "0");
     }
 
     get_calquarter() {
-      const q = Math.floor(this._month / 3) + 1;
-      return this._year.toString() + q;
+      const quarter = Math.floor(this._month / 3) + 1;
+      return this._year.toString() + quarter.toString();
     }
 
     set_calmoth(period) {
-      const parts = period.split(".");
-      if (parts.length === 2) {
-        this._year = parseInt(parts[1]);
-        this._month = parseInt(parts[0]) - 1;
-        setTimeout(() => this.render(), 0);
-      }
+      const [mm, yyyy] = period.split(".");
+      this._month = parseInt(mm) - 1;
+      this._year = parseInt(yyyy);
+      setTimeout(() => this.render(), 0);
     }
 
     set_calmoth_sap(period) {
-      if (period.length === 6) {
-        this._year = parseInt(period.substring(0, 4));
-        this._month = parseInt(period.substring(4, 6)) - 1;
-        setTimeout(() => this.render(), 0);
-      }
+      this._year = parseInt(period.substring(0, 4));
+      this._month = parseInt(period.substring(4, 6)) - 1;
+      setTimeout(() => this.render(), 0);
     }
   }
 
