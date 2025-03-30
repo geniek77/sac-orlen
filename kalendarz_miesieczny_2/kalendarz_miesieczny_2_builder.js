@@ -70,17 +70,31 @@
     setProperties(properties) {
       const safe = (val, def) => (val !== undefined && val !== null ? val : def);
 
-      this._shadowRoot.getElementById("minYear").value = parseInt(safe(properties.minYear, 2000));
-      this._shadowRoot.getElementById("maxYear").value = parseInt(safe(properties.maxYear, 2035));
-      this._shadowRoot.getElementById("numericMonths").checked = ("" + properties.numericMonths) === "true";
+      const props = {
+        minYear: parseInt(safe(properties.minYear, 2000)),
+        maxYear: parseInt(safe(properties.maxYear, 2035)),
+        numericMonths: ("" + properties.numericMonths) === "true",
+        monthBgColor: safe(properties.monthBgColor, "#ffffff"),
+        quarterBgColor: safe(properties.quarterBgColor, "#eeeeee"),
+        fontColor: safe(properties.fontColor, "#000000"),
+        fontFamily: safe(properties.fontFamily, "Arial"),
+        activeCellColor: safe(properties.activeCellColor, "lightblue"),
+        buttonColor: safe(properties.buttonColor, "#f0f0f0"),
+        buttonTextColor: safe(properties.buttonTextColor, "#000000")
+      };
 
-      this._shadowRoot.getElementById("monthBgColor").value = safe(properties.monthBgColor, "#ffffff");
-      this._shadowRoot.getElementById("quarterBgColor").value = safe(properties.quarterBgColor, "#eeeeee");
-      this._shadowRoot.getElementById("fontColor").value = safe(properties.fontColor, "#000000");
-      this._shadowRoot.getElementById("fontFamily").value = safe(properties.fontFamily, "Arial");
-      this._shadowRoot.getElementById("activeCellColor").value = safe(properties.activeCellColor, "lightblue");
-      this._shadowRoot.getElementById("buttonColor").value = safe(properties.buttonColor, "#f0f0f0");
-      this._shadowRoot.getElementById("buttonTextColor").value = safe(properties.buttonTextColor, "#000000");
+      requestAnimationFrame(() => {
+        this._shadowRoot.getElementById("minYear").value = props.minYear;
+        this._shadowRoot.getElementById("maxYear").value = props.maxYear;
+        this._shadowRoot.getElementById("numericMonths").checked = props.numericMonths;
+        this._shadowRoot.getElementById("monthBgColor").value = props.monthBgColor;
+        this._shadowRoot.getElementById("quarterBgColor").value = props.quarterBgColor;
+        this._shadowRoot.getElementById("fontColor").value = props.fontColor;
+        this._shadowRoot.getElementById("fontFamily").value = props.fontFamily;
+        this._shadowRoot.getElementById("activeCellColor").value = props.activeCellColor;
+        this._shadowRoot.getElementById("buttonColor").value = props.buttonColor;
+        this._shadowRoot.getElementById("buttonTextColor").value = props.buttonTextColor;
+      });
     }
 
     _updateProperties() {
