@@ -46,16 +46,16 @@
     }
 
     connectedCallback() {
-      this._initialize();
+      this._initListeners();
     }
 
-    _initialize() {
+    _initListeners() {
       const form = this._shadowRoot.getElementById("form");
-      form.addEventListener("input", () => this._onChange());
-      form.addEventListener("change", () => this._onChange());
+      form.addEventListener("input", () => this._firePropertiesChanged());
+      form.addEventListener("change", () => this._firePropertiesChanged());
     }
 
-    _onChange() {
+    _firePropertiesChanged() {
       this.dispatchEvent(new CustomEvent("propertiesChanged", {
         detail: {
           properties: this.getProperties()
