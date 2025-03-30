@@ -46,7 +46,7 @@
       this._shadowRoot = this.attachShadow({ mode: "open" });
       this._shadowRoot.appendChild(template.content.cloneNode(true));
 
-      this._shadowRoot.getElementById("form").addEventListener("submit", e => {
+      this._shadowRoot.getElementById("form").addEventListener("submit", (e) => {
         e.preventDefault();
         this._updateProperties();
       });
@@ -68,23 +68,25 @@
     }
 
     setProperties(properties) {
-      this._shadowRoot.getElementById("minYear").value = properties.minYear ?? 2000;
-      this._shadowRoot.getElementById("maxYear").value = properties.maxYear ?? 2035;
-      this._shadowRoot.getElementById("numericMonths").checked = !!properties.numericMonths;
-      this._shadowRoot.getElementById("monthBgColor").value = properties.monthBgColor ?? "#ffffff";
-      this._shadowRoot.getElementById("quarterBgColor").value = properties.quarterBgColor ?? "#eeeeee";
-      this._shadowRoot.getElementById("fontColor").value = properties.fontColor ?? "#000000";
-      this._shadowRoot.getElementById("fontFamily").value = properties.fontFamily ?? "Arial";
-      this._shadowRoot.getElementById("activeCellColor").value = properties.activeCellColor ?? "lightblue";
-      this._shadowRoot.getElementById("buttonColor").value = properties.buttonColor ?? "#f0f0f0";
-      this._shadowRoot.getElementById("buttonTextColor").value = properties.buttonTextColor ?? "#000000";
+      const safe = (val, def) => (val !== undefined && val !== null ? val : def);
+
+      this._shadowRoot.getElementById("minYear").value = parseInt(safe(properties.minYear, 2000));
+      this._shadowRoot.getElementById("maxYear").value = parseInt(safe(properties.maxYear, 2035));
+      this._shadowRoot.getElementById("numericMonths").checked = ("" + properties.numericMonths) === "true";
+
+      this._shadowRoot.getElementById("monthBgColor").value = safe(properties.monthBgColor, "#ffffff");
+      this._shadowRoot.getElementById("quarterBgColor").value = safe(properties.quarterBgColor, "#eeeeee");
+      this._shadowRoot.getElementById("fontColor").value = safe(properties.fontColor, "#000000");
+      this._shadowRoot.getElementById("fontFamily").value = safe(properties.fontFamily, "Arial");
+      this._shadowRoot.getElementById("activeCellColor").value = safe(properties.activeCellColor, "lightblue");
+      this._shadowRoot.getElementById("buttonColor").value = safe(properties.buttonColor, "#f0f0f0");
+      this._shadowRoot.getElementById("buttonTextColor").value = safe(properties.buttonTextColor, "#000000");
     }
 
     _updateProperties() {
-      const properties = this.getProperties();
-
+      const props = this.getProperties();
       this.dispatchEvent(new CustomEvent("propertiesChanged", {
-        detail: { properties }
+        detail: { properties: props }
       }));
     }
   }
