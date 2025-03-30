@@ -1,0 +1,83 @@
+{
+  "id": "com.sap.analytics.custom.widget.orlenprogressbar",
+  "name": "OrlenProgressBar",
+  "description": "ProgressBar Orlen",
+  "vendor": "G++ E.Sz dla Orlen S.A",
+  "version": "1.0.11",
+  "newInstancePrefix": "orlenProgressBar",
+  "webcomponents": [
+    {
+      "kind": "main",
+      "tag": "com-sap-analytics-custom-widget-orlenprogressbar",
+      "url": "/orlenProgressBar.js",
+      "integrity": "",
+      "ignoreIntegrity": true
+    },
+    {
+      "kind": "builder",
+      "tag": "com-sap-analytics-custom-widget-orlenprogressbar-builder",
+      "url": "/orlenProgressBarBuilder.js",
+      "integrity": "",
+      "ignoreIntegrity": true
+    }
+  ],
+  "properties": {
+    "progress": {
+      "type": "number",
+      "default": 0,
+      "description": "Wartość progresu (0-100)"
+    },
+    "bottomcolor": {
+      "type": "string",
+      "default": "#ff0000",
+      "description": "Kolor wypełnienia dolnego bloku"
+    },
+    "middlecolor": {
+      "type": "string",
+      "default": "#00ff00",
+      "description": "Kolor wypełnienia środkowego bloku"
+    },
+    "topcolor": {
+      "type": "string",
+      "default": "#0000ff",
+      "description": "Kolor wypełnienia górnego bloku"
+    },
+    "bottomcount": {
+      "type": "number",
+      "default": 3,
+      "description": "Liczba segmentów w dolnym bloku"
+    },
+    "middlecount": {
+      "type": "number",
+      "default": 6,
+      "description": "Liczba segmentów w środkowym bloku"
+    },
+    "topcount": {
+      "type": "number",
+      "default": 6,
+      "description": "Liczba segmentów w górnym bloku"
+    },
+    "backgroundcolor": {
+      "type": "string",
+      "default": "transparent",
+      "description": "Kolor tła paska progresu (lub 'transparent')"
+    },
+    "animationspeed": {
+      "type": "number",
+      "default": 100,
+      "description": "Szybkość animacji (ms)"
+    },
+    "enableanimation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Włącz/wyłącz animację wypełniania"
+    },
+    "loop": {
+      "type": "boolean",
+      "default": true,
+      "description": "Zapętl animację po osiągnięciu 100%"
+    }
+  },
+  "methods": {},
+  "events": {}
+}
