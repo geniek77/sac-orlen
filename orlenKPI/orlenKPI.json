@@ -1,0 +1,33 @@
+{
+  "id": "com.sap.analytics.custom.widget.orlenkpi",
+  "version": "1.0.0",
+  "name": "orlenKPI",
+  "description": "Pusty widget do dalszego rozwoju – zgodny z SAC",
+  "vendor": "G++ E.Sz dla ORLEN S.A.",
+  "newInstancePrefix": "orlen_kpi",
+  "webcomponents": [
+    {
+      "kind": "main",
+      "tag": "com-sap-analytics-custom-widget-orlenkpi",
+      "url": "/orlenKPI.js",
+      "integrity": "",
+      "ignoreIntegrity": true
+    },
+    {
+      "kind": "builder",
+      "tag": "com-sap-analytics-custom-widget-orlenkpi-builder",
+      "url": "/orlenKPI_builder.js",
+      "integrity": "",
+      "ignoreIntegrity": true
+    }
+  ],
+  "properties": {
+    "exampleText": {
+      "type": "string",
+      "default": "",
+      "description": "Przykładowy tekst konfiguracyjny"
+    }
+  },
+  "methods": {},
+  "events": {}
+}
