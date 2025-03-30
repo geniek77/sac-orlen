@@ -12,6 +12,8 @@
         margin: 10px;
         font-family: var(--font-family, Arial);
         color: var(--font-color, #000);
+		display: flex;
+		flex-direction: column;
       }
       h2 {
         text-align: center;
@@ -39,15 +41,16 @@
 	    width: 100%;
 	    table-layout: fixed;
 	    border-collapse: collapse;
-	    margin: 0 auto; /* wyśrodkowanie */
-	  }
-
-	  th, td {
-	    width: 25%;
 	    box-sizing: border-box;
+	  }
+	  table, th, td {
+	    border: 1px solid #ccc;
+	  }
+	  th, td {
 	    padding: 10px;
 	    text-align: center;
 	    cursor: pointer;
+	    box-sizing: border-box;
 	  }
       .selected {
         background-color: var(--selected-bg, lightblue) !important;
