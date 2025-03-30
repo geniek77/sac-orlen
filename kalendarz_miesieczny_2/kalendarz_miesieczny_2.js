@@ -9,23 +9,25 @@
         font-size: var(--font-size, 14px);
         width: 100%;
         height: 100%;
-        margin: 10px;
+        padding: 10px;
         font-family: var(--font-family, Arial);
         color: var(--font-color, #000);
-		display: flex;
-		flex-direction: column;
+        display: flex;
+        flex-direction: column;
       }
       h2 {
         text-align: center;
-
       }
       .slider-container {
+        gap: 8px;
+        flex-wrap: wrap;
         display: flex;
         align-items: center;
         justify-content: center;
       }
       .slider-container input[type="range"] {
-
+        max-width: 300px;
+        width: 100%;
         accent-color: var(--slider-color, #3399ff);
       }
       .slider-container button {
@@ -36,22 +38,22 @@
         color: var(--button-text, #000);
         border: 1px solid #ccc;
       }
-	  table {
-		width: 100%;
-		table-layout: fixed;
-		border-collapse: collapse;
-		box-sizing: border-box;
-		margin: 0 auto; /* dodane wyśrodkowanie */
-	  }
-	  table, th, td {
-	    border: 1px solid #ccc;
-	  }
-	  th, td {
-	    padding: 10px;
-	    text-align: center;
-	    cursor: pointer;
-	    box-sizing: border-box;
-	  }
+      table {
+        margin: 0 auto;
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+        box-sizing: border-box;
+      }
+      table, th, td {
+        border: 1px solid #ccc;
+      }
+      th, td {
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        box-sizing: border-box;
+      }
       .selected {
         background-color: var(--selected-bg, lightblue) !important;
       }
