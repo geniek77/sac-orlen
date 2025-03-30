@@ -39,30 +39,37 @@
     },
     "monthBgColor": {
       "type": "string",
-      "description": "Kolor tła komórek miesięcy (np. #ffffff)"
+      "default": "#ffffff",
+      "description": "Kolor tła komórek miesięcy"
     },
     "quarterBgColor": {
       "type": "string",
+      "default": "#eeeeee",
       "description": "Kolor tła nagłówków kwartałów"
     },
     "fontColor": {
       "type": "string",
+      "default": "#000000",
       "description": "Kolor tekstu"
     },
     "fontFamily": {
       "type": "string",
+      "default": "Arial",
       "description": "Rodzina czcionki, np. Arial"
     },
     "activeCellColor": {
       "type": "string",
+      "default": "lightblue",
       "description": "Kolor zaznaczonej komórki (miesiąc/kwartał)"
     },
     "buttonColor": {
       "type": "string",
+      "default": "#f0f0f0",
       "description": "Kolor tła przycisków"
     },
     "buttonTextColor": {
       "type": "string",
+      "default": "#000000",
       "description": "Kolor tekstu przycisków"
     }
   },

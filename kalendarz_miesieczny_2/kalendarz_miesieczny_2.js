@@ -79,15 +79,32 @@
       this.render();
     }
 
+    setProperties(properties) {
+      const defaults = {
+        minYear: 2000,
+        maxYear: 2035,
+        numericMonths: false,
+        monthBgColor: "#ffffff",
+        quarterBgColor: "#eeeeee",
+        fontColor: "#000000",
+        fontFamily: "Arial",
+        activeCellColor: "lightblue",
+        buttonColor: "#f0f0f0",
+        buttonTextColor: "#000000"
+      };
+      this.properties = Object.assign({}, defaults, properties || {});
+      this.render();
+    }
+
     applyStyles() {
       const styles = {
-        "--month-bg": this.properties.monthBgColor || "#fff",
-        "--quarter-bg": this.properties.quarterBgColor || "#eee",
-        "--font-color": this.properties.fontColor || "#000",
-        "--font-family": this.properties.fontFamily || "Arial",
-        "--selected-bg": this.properties.activeCellColor || "lightblue",
-        "--button-bg": this.properties.buttonColor || "#f0f0f0",
-        "--button-text": this.properties.buttonTextColor || "#000"
+        "--month-bg": this.properties.monthBgColor,
+        "--quarter-bg": this.properties.quarterBgColor,
+        "--font-color": this.properties.fontColor,
+        "--font-family": this.properties.fontFamily,
+        "--selected-bg": this.properties.activeCellColor,
+        "--button-bg": this.properties.buttonColor,
+        "--button-text": this.properties.buttonTextColor
       };
       Object.entries(styles).forEach(([key, value]) => {
         this._root.style.setProperty(key, value);
@@ -113,8 +130,8 @@
       const t = translations[userLang] || translations.en;
       const self = this;
 
-      const sliderMin = this.properties.minYear ?? this._baseYear - 20;
-      const sliderMax = this.properties.maxYear ?? this._baseYear + 10;
+      const sliderMin = this.properties.minYear;
+      const sliderMax = this.properties.maxYear;
 
       this._root.innerHTML = "";
 
