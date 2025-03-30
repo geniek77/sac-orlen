@@ -17,16 +17,15 @@
       }
       h2 {
         text-align: center;
-        margin: 5px 0;
+
       }
       .slider-container {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 10px 0;
       }
       .slider-container input[type="range"] {
-        margin: 0 10px;
+
         accent-color: var(--slider-color, #3399ff);
       }
       .slider-container button {
