@@ -70,16 +70,9 @@
       this._year = this._baseYear;
       this._month = new Date().getMonth();
       this.properties = {};
-      this.render();
     }
 
-    onCustomWidgetResize(width, height) {
-      this._root.style.width = width + "px";
-      this._root.style.height = height + "px";
-      this.render();
-    }
-
-    setProperties(properties) {
+    onCustomWidgetBeforeUpdate(changedProperties) {
       const defaults = {
         minYear: 2000,
         maxYear: 2035,
@@ -92,7 +85,16 @@
         buttonColor: "#f0f0f0",
         buttonTextColor: "#000000"
       };
-      this.properties = Object.assign({}, defaults, properties || {});
+      this.properties = Object.assign({}, defaults, this.properties, changedProperties);
+    }
+
+    onCustomWidgetAfterUpdate(changedProperties) {
+      this.render();
+    }
+
+    onCustomWidgetResize(width, height) {
+      this._root.style.width = width + "px";
+      this._root.style.height = height + "px";
       this.render();
     }
 
@@ -111,7 +113,7 @@
       });
     }
 
-    async render() {
+    render() {
       this.applyStyles();
 
       const userLang = (this.locale || navigator.language || "en").substring(0, 2);
