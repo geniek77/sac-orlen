@@ -35,6 +35,9 @@
         <label>Kolor tekstu przycisków:</label><br>
         <input type="color" id="buttonTextColor"><br><br>
 
+        <label>Kolor suwaka:</label><br>
+        <input type="color" id="sliderColor"><br><br>
+
         <button type="submit">Zapisz</button>
       </fieldset>
     </form>
@@ -45,7 +48,6 @@
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
       this._shadowRoot.appendChild(template.content.cloneNode(true));
-
       this._shadowRoot.getElementById("form").addEventListener("submit", (e) => {
         e.preventDefault();
         this._firePropertiesChanged();
@@ -54,9 +56,7 @@
 
     _firePropertiesChanged() {
       this.dispatchEvent(new CustomEvent("propertiesChanged", {
-        detail: {
-          properties: this.getProperties()
-        }
+        detail: { properties: this.getProperties() }
       }));
     }
 
@@ -71,79 +71,43 @@
         fontFamily: this.fontFamily,
         activeCellColor: this.activeCellColor,
         buttonColor: this.buttonColor,
-        buttonTextColor: this.buttonTextColor
+        buttonTextColor: this.buttonTextColor,
+        sliderColor: this.sliderColor
       };
     }
 
-    get minYear() {
-      return parseInt(this._shadowRoot.getElementById("minYear").value);
-    }
-    set minYear(value) {
-      this._shadowRoot.getElementById("minYear").value = value;
-    }
+    get minYear() { return parseInt(this._shadowRoot.getElementById("minYear").value); }
+    set minYear(value) { this._shadowRoot.getElementById("minYear").value = value; }
 
-    get maxYear() {
-      return parseInt(this._shadowRoot.getElementById("maxYear").value);
-    }
-    set maxYear(value) {
-      this._shadowRoot.getElementById("maxYear").value = value;
-    }
+    get maxYear() { return parseInt(this._shadowRoot.getElementById("maxYear").value); }
+    set maxYear(value) { this._shadowRoot.getElementById("maxYear").value = value; }
 
-    get numericMonths() {
-      return this._shadowRoot.getElementById("numericMonths").checked;
-    }
-    set numericMonths(value) {
-      this._shadowRoot.getElementById("numericMonths").checked = value;
-    }
+    get numericMonths() { return this._shadowRoot.getElementById("numericMonths").checked; }
+    set numericMonths(value) { this._shadowRoot.getElementById("numericMonths").checked = value; }
 
-    get monthBgColor() {
-      return this._shadowRoot.getElementById("monthBgColor").value;
-    }
-    set monthBgColor(value) {
-      this._shadowRoot.getElementById("monthBgColor").value = value;
-    }
+    get monthBgColor() { return this._shadowRoot.getElementById("monthBgColor").value; }
+    set monthBgColor(value) { this._shadowRoot.getElementById("monthBgColor").value = value; }
 
-    get quarterBgColor() {
-      return this._shadowRoot.getElementById("quarterBgColor").value;
-    }
-    set quarterBgColor(value) {
-      this._shadowRoot.getElementById("quarterBgColor").value = value;
-    }
+    get quarterBgColor() { return this._shadowRoot.getElementById("quarterBgColor").value; }
+    set quarterBgColor(value) { this._shadowRoot.getElementById("quarterBgColor").value = value; }
 
-    get fontColor() {
-      return this._shadowRoot.getElementById("fontColor").value;
-    }
-    set fontColor(value) {
-      this._shadowRoot.getElementById("fontColor").value = value;
-    }
+    get fontColor() { return this._shadowRoot.getElementById("fontColor").value; }
+    set fontColor(value) { this._shadowRoot.getElementById("fontColor").value = value; }
 
-    get fontFamily() {
-      return this._shadowRoot.getElementById("fontFamily").value;
-    }
-    set fontFamily(value) {
-      this._shadowRoot.getElementById("fontFamily").value = value;
-    }
+    get fontFamily() { return this._shadowRoot.getElementById("fontFamily").value; }
+    set fontFamily(value) { this._shadowRoot.getElementById("fontFamily").value = value; }
 
-    get activeCellColor() {
-      return this._shadowRoot.getElementById("activeCellColor").value;
-    }
-    set activeCellColor(value) {
-      this._shadowRoot.getElementById("activeCellColor").value = value;
-    }
+    get activeCellColor() { return this._shadowRoot.getElementById("activeCellColor").value; }
+    set activeCellColor(value) { this._shadowRoot.getElementById("activeCellColor").value = value; }
 
-    get buttonColor() {
-      return this._shadowRoot.getElementById("buttonColor").value;
-    }
-    set buttonColor(value) {
-      this._shadowRoot.getElementById("buttonColor").value = value;
-    }
+    get buttonColor() { return this._shadowRoot.getElementById("buttonColor").value; }
+    set buttonColor(value) { this._shadowRoot.getElementById("buttonColor").value = value; }
 
-    get buttonTextColor() {
-      return this._shadowRoot.getElementById("buttonTextColor").value;
-    }
-    set buttonTextColor(value) {
-      this._shadowRoot.getElementById("buttonTextColor").value = value;
-    }
+    get buttonTextColor() { return this._shadowRoot.getElementById("buttonTextColor").value; }
+    set buttonTextColor(value) { this._shadowRoot.getElementById("buttonTextColor").value = value; }
+
+    get sliderColor() { return this._shadowRoot.getElementById("sliderColor").value; }
+    set sliderColor(value) { this._shadowRoot.getElementById("sliderColor").value = value; }
   }
 
   customElements.define(

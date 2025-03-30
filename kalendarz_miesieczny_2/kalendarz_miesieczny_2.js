@@ -2,15 +2,14 @@
   const template = document.createElement("template");
   template.innerHTML = `
     <style>
-      :host {
-        display: block;
-      }
       #root {
         width: 100%;
         height: 100%;
+        font-family: Arial, sans-serif;
         margin: 10px;
-        font-family: var(--font-family, Arial);
-        color: var(--font-color, #000);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       h2 {
         text-align: center;
@@ -21,40 +20,36 @@
         align-items: center;
         justify-content: center;
         margin: 10px 0;
+        width: 100%;
       }
       .slider-container input[type="range"] {
+        flex-grow: 1;
+        max-width: 400px;
         margin: 0 10px;
+        accent-color: var(--slider-color, #3399ff);
       }
       .slider-container button {
         padding: 5px 10px;
         margin: 0 5px;
         cursor: pointer;
-        background-color: var(--button-bg, #f0f0f0);
-        color: var(--button-text, #000);
-        border: 1px solid #ccc;
       }
       table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 10px;
+        margin: 0 auto;
+        box-sizing: border-box;
       }
       table, th, td {
         border: 1px solid #ccc;
       }
-      th {
-        background-color: var(--quarter-bg, #eee);
-        cursor: pointer;
+      th, td {
         padding: 10px;
         text-align: center;
-      }
-      td {
-        background-color: var(--month-bg, #fff);
         cursor: pointer;
-        padding: 10px;
-        text-align: center;
+        box-sizing: border-box;
       }
       .selected {
-        background-color: var(--selected-bg, lightblue) !important;
+        background-color: lightblue;
       }
     </style>
     <div id="root"></div>
@@ -69,39 +64,6 @@
       this._baseYear = new Date().getFullYear();
       this._year = this._baseYear;
       this._month = new Date().getMonth();
-
-      // domyślne wartości przy pierwszym załadowaniu
-      this.properties = {
-        minYear: 2000,
-        maxYear: 2035,
-        numericMonths: false,
-        monthBgColor: "#ffffff",
-        quarterBgColor: "#eeeeee",
-        fontColor: "#000000",
-        fontFamily: "Arial",
-        activeCellColor: "lightblue",
-        buttonColor: "#f0f0f0",
-        buttonTextColor: "#000000"
-      };
-
-      this.render();
-    }
-
-    onCustomWidgetBeforeUpdate(changedProperties) {
-      const defaults = {
-        minYear: 2000,
-        maxYear: 2035,
-        numericMonths: false,
-        monthBgColor: "#ffffff",
-        quarterBgColor: "#eeeeee",
-        fontColor: "#000000",
-        fontFamily: "Arial",
-        activeCellColor: "lightblue",
-        buttonColor: "#f0f0f0",
-        buttonTextColor: "#000000"
-      };
-
-      this.properties = Object.assign({}, defaults, this.properties, changedProperties);
       this.render();
     }
 
@@ -111,87 +73,71 @@
       this.render();
     }
 
-    applyStyles() {
-      const styles = {
-        "--month-bg": this.properties.monthBgColor,
-        "--quarter-bg": this.properties.quarterBgColor,
-        "--font-color": this.properties.fontColor,
-        "--font-family": this.properties.fontFamily,
-        "--selected-bg": this.properties.activeCellColor,
-        "--button-bg": this.properties.buttonColor,
-        "--button-text": this.properties.buttonTextColor
-      };
-      Object.entries(styles).forEach(([key, value]) => {
-        this._root.style.setProperty(key, value);
-      });
+    onCustomWidgetBeforeUpdate(changedProperties) {
+      this.properties = { ...this.properties, ...changedProperties };
+    }
+
+    onCustomWidgetAfterUpdate() {
+      this.render();
     }
 
     render() {
-      this.applyStyles();
-
-      const userLang = (this.locale || navigator.language || "en").substring(0, 2);
-      const translations = {
-        pl: {
-          title: "Kalendarz Miesięczny 2",
-          months: ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"],
-          quarters: ["Q1", "Q2", "Q3", "Q4"]
-        },
-        en: {
-          title: "Monthly Calendar 2",
-          months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-          quarters: ["Q1", "Q2", "Q3", "Q4"]
-        }
+      const t = {
+        months: this.properties.numericMonths
+          ? ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
+          : ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"],
+        quarters: ["Q1", "Q2", "Q3", "Q4"]
       };
-      const t = translations[userLang] || translations.en;
-      const self = this;
 
-      const sliderMin = this.properties.minYear;
-      const sliderMax = this.properties.maxYear;
+      const sliderMin = parseInt(this.properties.minYear || this._baseYear - 20);
+      const sliderMax = parseInt(this.properties.maxYear || this._baseYear + 10);
+      const sliderColor = this.properties.sliderColor || "#3399ff";
 
       this._root.innerHTML = "";
 
-      const header = document.createElement("h2");
-      header.innerText = this.get_calmoth();
-      this._root.appendChild(header);
+      const periodHeader = document.createElement("h2");
+      periodHeader.innerText = this.get_calmoth();
+      this._root.appendChild(periodHeader);
 
       const sliderContainer = document.createElement("div");
       sliderContainer.className = "slider-container";
 
-      const createBtn = (label, step) => {
+      const createButton = (label, change) => {
         const btn = document.createElement("button");
         btn.innerText = label;
         btn.addEventListener("click", () => {
-          this._year = Math.max(sliderMin, Math.min(sliderMax, this._year + step));
+          this._year = Math.max(sliderMin, Math.min(sliderMax, this._year + change));
           slider.value = this._year;
-          header.innerText = this.get_calmoth();
-          self.dispatchEvent(new CustomEvent("onSelect", {
+          periodHeader.innerText = this.get_calmoth();
+          this.dispatchEvent(new CustomEvent("onSelect", {
             detail: { type: "year", value: this._year, selected: true }
           }));
         });
         return btn;
       };
 
-      sliderContainer.appendChild(createBtn("<<", -5));
-      sliderContainer.appendChild(createBtn("<", -1));
+      sliderContainer.appendChild(createButton("<<", -5));
+      sliderContainer.appendChild(createButton("<", -1));
 
       const slider = document.createElement("input");
       slider.type = "range";
-      slider.min = sliderMin;
-      slider.max = sliderMax;
+      slider.min = sliderMin.toString();
+      slider.max = sliderMax.toString();
       slider.value = this._year;
+      slider.style.setProperty("--slider-color", sliderColor);
       slider.addEventListener("input", () => {
         this._year = parseInt(slider.value);
-        header.innerText = this.get_calmoth();
+        periodHeader.innerText = this.get_calmoth();
       });
       slider.addEventListener("change", () => {
-        self.dispatchEvent(new CustomEvent("onSelect", {
-          detail: { type: "year", value: slider.value, selected: true }
+        this.dispatchEvent(new CustomEvent("onSelect", {
+          detail: { type: "year", value: this._year, selected: true }
         }));
       });
-
       sliderContainer.appendChild(slider);
-      sliderContainer.appendChild(createBtn(">", 1));
-      sliderContainer.appendChild(createBtn(">>", 5));
+
+      sliderContainer.appendChild(createButton(">", 1));
+      sliderContainer.appendChild(createButton(">>", 5));
       this._root.appendChild(sliderContainer);
 
       const table = document.createElement("table");
@@ -202,37 +148,35 @@
         const th = document.createElement("th");
         th.innerText = t.quarters[q];
         th.addEventListener("click", () => {
-          const all = table.querySelectorAll("th, td");
-          all.forEach(c => c.classList.remove("selected"));
+          const allCells = table.querySelectorAll("th, td");
+          allCells.forEach(cell => cell.classList.remove("selected"));
           th.classList.add("selected");
-          const td = rows[3].children[q];
-          if (td) {
-            td.classList.add("selected");
-            this._month = q * 3 + 2;
-          }
-          header.innerText = this.get_calmoth();
-          self.dispatchEvent(new CustomEvent("onSelect", {
+
+          const lastMonthIndex = q * 3 + 2;
+          rows[3].children[q].classList.add("selected");
+          this._month = lastMonthIndex;
+
+          this.dispatchEvent(new CustomEvent("onSelect", {
             detail: { type: "quarter", value: th.innerText, selected: true }
           }));
+          periodHeader.innerText = this.get_calmoth();
         });
         rows[0].appendChild(th);
 
         for (let m = 0; m < 3; m++) {
           const td = document.createElement("td");
-          const mi = q * 3 + m;
-          td.innerText = this.properties.numericMonths
-            ? (mi + 1).toString().padStart(2, "0")
-            : t.months[mi];
-          if (mi === this._month) td.classList.add("selected");
+          const monthIndex = q * 3 + m;
+          td.innerText = t.months[monthIndex];
+          if (monthIndex === this._month) td.classList.add("selected");
           td.addEventListener("click", () => {
-            const all = table.querySelectorAll("th, td");
-            all.forEach(c => c.classList.remove("selected"));
+            const allCells = table.querySelectorAll("th, td");
+            allCells.forEach(cell => cell.classList.remove("selected"));
             td.classList.add("selected");
-            this._month = mi;
-            header.innerText = this.get_calmoth();
-            self.dispatchEvent(new CustomEvent("onSelect", {
+            this._month = monthIndex;
+            this.dispatchEvent(new CustomEvent("onSelect", {
               detail: { type: "month", value: td.innerText, selected: true }
             }));
+            periodHeader.innerText = this.get_calmoth();
           });
           rows[m + 1].appendChild(td);
         }
@@ -242,28 +186,40 @@
     }
 
     get_calmoth() {
-      return (this._month + 1).toString().padStart(2, "0") + "." + this._year;
+      let month = this._month + 1;
+      let monthStr = month < 10 ? "0" + month : month.toString();
+      return monthStr + "." + this._year;
     }
 
     get_calmoth_sap() {
-      return this._year.toString() + (this._month + 1).toString().padStart(2, "0");
+      let month = this._month + 1;
+      let monthStr = month < 10 ? "0" + month : month.toString();
+      return this._year.toString() + monthStr;
     }
 
     get_calquarter() {
       const quarter = Math.floor(this._month / 3) + 1;
-      return this._year.toString() + quarter.toString();
+      return this._year.toString() + quarter;
     }
 
     set_calmoth(period) {
-      const [mm, yyyy] = period.split(".");
-      this._month = parseInt(mm) - 1;
-      this._year = parseInt(yyyy);
+      const parts = period.split(".");
+      if (parts.length !== 2) return;
+      const mm = parseInt(parts[0]);
+      const yyyy = parseInt(parts[1]);
+      if (isNaN(mm) || isNaN(yyyy)) return;
+      this._year = yyyy;
+      this._month = mm - 1;
       setTimeout(() => this.render(), 0);
     }
 
     set_calmoth_sap(period) {
-      this._year = parseInt(period.substring(0, 4));
-      this._month = parseInt(period.substring(4, 6)) - 1;
+      if (period.length !== 6) return;
+      const yyyy = parseInt(period.substring(0, 4));
+      const mm = parseInt(period.substring(4, 6));
+      if (isNaN(mm) || isNaN(yyyy)) return;
+      this._year = yyyy;
+      this._month = mm - 1;
       setTimeout(() => this.render(), 0);
     }
   }
