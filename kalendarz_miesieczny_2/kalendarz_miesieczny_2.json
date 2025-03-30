@@ -5,22 +5,22 @@
   "vendor": "G++ E.Sz dla ORLEN S.A.",
   "version": "2.2.0",
   "newInstancePrefix": "kal_mies_2",
-  "webcomponents": [
-    {
-      "kind": "main",
-      "tag": "com-sap-analytics-custom-widget-monthlycalendar-2",
-      "url": "/kalendarz_miesieczny_2.js",
-      "integrity": "",
-      "ignoreIntegrity": true
-    },
-    {
-      "kind": "builder",
-      "tag": "com-sap-analytics-custom-widget-monthlycalendar-2-builder",
-      "url": "/kalendarz_miesieczny_2_builder.js",
-      "integrity": "",
-      "ignoreIntegrity": true
-    }
-  ],
+	"webcomponents": [
+	  {
+	    "kind": "main",
+	    "tag": "com-sap-analytics-custom-widget-monthlycalendar-2",
+	    "url": "https://cdn.jsdelivr.net/gh/geniek77/sac-orlen/kalendarz_miesieczny_2/kalendarz_miesieczny_2.js",
+	    "integrity": "",
+	    "ignoreIntegrity": true
+	  },
+	  {
+	    "kind": "builder",
+	    "tag": "com-sap-analytics-custom-widget-monthlycalendar-2-builder",
+	    "url": "https://cdn.jsdelivr.net/gh/geniek77/sac-orlen/kalendarz_miesieczny_2/kalendarz_miesieczny_2_builder.js",
+	    "integrity": "",
+	    "ignoreIntegrity": true
+	  }
+	],
   "properties": {
     "minYear": {
       "type": "number",

@@ -69,7 +69,22 @@
       this._baseYear = new Date().getFullYear();
       this._year = this._baseYear;
       this._month = new Date().getMonth();
-      this.properties = {};
+
+      // domyślne wartości przy pierwszym załadowaniu
+      this.properties = {
+        minYear: 2000,
+        maxYear: 2035,
+        numericMonths: false,
+        monthBgColor: "#ffffff",
+        quarterBgColor: "#eeeeee",
+        fontColor: "#000000",
+        fontFamily: "Arial",
+        activeCellColor: "lightblue",
+        buttonColor: "#f0f0f0",
+        buttonTextColor: "#000000"
+      };
+
+      this.render();
     }
 
     onCustomWidgetBeforeUpdate(changedProperties) {
@@ -85,10 +100,8 @@
         buttonColor: "#f0f0f0",
         buttonTextColor: "#000000"
       };
-      this.properties = Object.assign({}, defaults, this.properties, changedProperties);
-    }
 
-    onCustomWidgetAfterUpdate(changedProperties) {
+      this.properties = Object.assign({}, defaults, this.properties, changedProperties);
       this.render();
     }
 
