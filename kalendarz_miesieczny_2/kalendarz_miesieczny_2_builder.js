@@ -34,6 +34,8 @@
 
         <label>Kolor tekstu przycisków:</label><br>
         <input type="color" id="buttonTextColor"><br><br>
+
+        <button type="submit">Zapisz</button>
       </fieldset>
     </form>
   `;
@@ -43,69 +45,77 @@
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
       this._shadowRoot.appendChild(template.content.cloneNode(true));
+
+      this._shadowRoot.getElementById("form").addEventListener("submit", e => {
+        e.preventDefault();
+        this._updateProperties();
+      });
     }
 
-    connectedCallback() {
-      this._initListeners();
+    // GET
+    getProperties() {
+      return {
+        minYear: this.minYear,
+        maxYear: this.maxYear,
+        numericMonths: this.numericMonths,
+        monthBgColor: this.monthBgColor,
+        quarterBgColor: this.quarterBgColor,
+        fontColor: this.fontColor,
+        fontFamily: this.fontFamily,
+        activeCellColor: this.activeCellColor,
+        buttonColor: this.buttonColor,
+        buttonTextColor: this.buttonTextColor
+      };
     }
 
-    _initListeners() {
-      const form = this._shadowRoot.getElementById("form");
-      form.addEventListener("input", () => this._firePropertiesChanged());
-      form.addEventListener("change", () => this._firePropertiesChanged());
+    // SET
+    setProperties(props) {
+      this.minYear = props.minYear ?? 2000;
+      this.maxYear = props.maxYear ?? 2035;
+      this.numericMonths = props.numericMonths ?? false;
+      this.monthBgColor = props.monthBgColor ?? "#ffffff";
+      this.quarterBgColor = props.quarterBgColor ?? "#eeeeee";
+      this.fontColor = props.fontColor ?? "#000000";
+      this.fontFamily = props.fontFamily ?? "Arial";
+      this.activeCellColor = props.activeCellColor ?? "lightblue";
+      this.buttonColor = props.buttonColor ?? "#f0f0f0";
+      this.buttonTextColor = props.buttonTextColor ?? "#000000";
+
+      this._updateFormUI();
     }
 
-    _firePropertiesChanged() {
+    // Przypisz dane do formularza
+    _updateFormUI() {
+      this._shadowRoot.getElementById("minYear").value = this.minYear;
+      this._shadowRoot.getElementById("maxYear").value = this.maxYear;
+      this._shadowRoot.getElementById("numericMonths").checked = this.numericMonths;
+      this._shadowRoot.getElementById("monthBgColor").value = this.monthBgColor;
+      this._shadowRoot.getElementById("quarterBgColor").value = this.quarterBgColor;
+      this._shadowRoot.getElementById("fontColor").value = this.fontColor;
+      this._shadowRoot.getElementById("fontFamily").value = this.fontFamily;
+      this._shadowRoot.getElementById("activeCellColor").value = this.activeCellColor;
+      this._shadowRoot.getElementById("buttonColor").value = this.buttonColor;
+      this._shadowRoot.getElementById("buttonTextColor").value = this.buttonTextColor;
+    }
+
+    // Odczyt z formularza do obiektu klasy + wysyłka do SAC
+    _updateProperties() {
+      this.minYear = parseInt(this._shadowRoot.getElementById("minYear").value);
+      this.maxYear = parseInt(this._shadowRoot.getElementById("maxYear").value);
+      this.numericMonths = this._shadowRoot.getElementById("numericMonths").checked;
+      this.monthBgColor = this._shadowRoot.getElementById("monthBgColor").value;
+      this.quarterBgColor = this._shadowRoot.getElementById("quarterBgColor").value;
+      this.fontColor = this._shadowRoot.getElementById("fontColor").value;
+      this.fontFamily = this._shadowRoot.getElementById("fontFamily").value;
+      this.activeCellColor = this._shadowRoot.getElementById("activeCellColor").value;
+      this.buttonColor = this._shadowRoot.getElementById("buttonColor").value;
+      this.buttonTextColor = this._shadowRoot.getElementById("buttonTextColor").value;
+
       this.dispatchEvent(new CustomEvent("propertiesChanged", {
         detail: {
           properties: this.getProperties()
         }
       }));
-    }
-
-    getProperties() {
-      const getVal = (id, isCheckbox = false) => {
-        const el = this._shadowRoot.getElementById(id);
-        if (!el) return undefined;
-        return isCheckbox ? el.checked : el.value;
-      };
-
-      return {
-        minYear: parseInt(getVal("minYear")),
-        maxYear: parseInt(getVal("maxYear")),
-        numericMonths: getVal("numericMonths", true),
-        monthBgColor: getVal("monthBgColor"),
-        quarterBgColor: getVal("quarterBgColor"),
-        fontColor: getVal("fontColor"),
-        fontFamily: getVal("fontFamily"),
-        activeCellColor: getVal("activeCellColor"),
-        buttonColor: getVal("buttonColor"),
-        buttonTextColor: getVal("buttonTextColor")
-      };
-    }
-
-    setProperties(properties) {
-      const setVal = (id, value, isCheckbox = false) => {
-        const el = this._shadowRoot.getElementById(id);
-        if (el) {
-          if (isCheckbox) {
-            el.checked = !!value;
-          } else {
-            el.value = value ?? "";
-          }
-        }
-      };
-
-      setVal("minYear", properties.minYear);
-      setVal("maxYear", properties.maxYear);
-      setVal("numericMonths", properties.numericMonths, true);
-      setVal("monthBgColor", properties.monthBgColor);
-      setVal("quarterBgColor", properties.quarterBgColor);
-      setVal("fontColor", properties.fontColor);
-      setVal("fontFamily", properties.fontFamily);
-      setVal("activeCellColor", properties.activeCellColor);
-      setVal("buttonColor", properties.buttonColor);
-      setVal("buttonTextColor", properties.buttonTextColor);
     }
   }
 
