@@ -5,8 +5,9 @@
       #root {
         width: 100%;
         height: 100%;
+        padding: 10px;
+        box-sizing: border-box;
         font-family: Arial, sans-serif;
-        margin: 10px;
         display: flex;
         flex-direction: column;
       }
@@ -40,21 +41,25 @@
         table-layout: fixed;
         border-collapse: collapse;
         box-sizing: border-box;
+        margin: 0 auto;
       }
       table, th, td {
         border: 1px solid #ccc;
       }
-      th {
-        background-color: var(--quarter-bg, #eeeeee);
-        cursor: pointer;
+      th, td {
+        width: 25%;
         padding: 10px;
         text-align: center;
+        cursor: pointer;
+        box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      th {
+        background-color: var(--quarter-bg, #eeeeee);
       }
       td {
         background-color: var(--month-bg, #ffffff);
-        cursor: pointer;
-        padding: 10px;
-        text-align: center;
       }
       .selected {
         background-color: var(--selected-bg, lightblue) !important;
