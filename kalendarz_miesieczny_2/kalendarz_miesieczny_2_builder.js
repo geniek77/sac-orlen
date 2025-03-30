@@ -46,13 +46,12 @@
       this._shadowRoot = this.attachShadow({ mode: "open" });
       this._shadowRoot.appendChild(template.content.cloneNode(true));
 
-      this._shadowRoot.getElementById("form").addEventListener("submit", e => {
+      this._shadowRoot.getElementById("form").addEventListener("submit", (e) => {
         e.preventDefault();
         this._firePropertiesChanged();
       });
     }
 
-    // Wysyłanie eventu do SAC
     _firePropertiesChanged() {
       this.dispatchEvent(new CustomEvent("propertiesChanged", {
         detail: {
@@ -61,7 +60,6 @@
       }));
     }
 
-    // Pobieranie wszystkich właściwości
     getProperties() {
       return {
         minYear: this.minYear,
@@ -77,7 +75,6 @@
       };
     }
 
-    // Indywidualne gettery i settery
     get minYear() {
       return parseInt(this._shadowRoot.getElementById("minYear").value);
     }
