@@ -35,9 +35,10 @@
       }
       table {
         width: 100%;
-        border-collapse: collapse;
-        margin: 0 auto;
-        box-sizing: border-box;
+		border-collapse: collapse;
+		margin-left: auto;
+		margin-right: auto;
+		box-sizing: border-box;
       }
       table, th, td {
         border: 1px solid #ccc;
