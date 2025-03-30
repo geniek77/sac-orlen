@@ -31,6 +31,9 @@
         padding: 5px 10px;
         margin: 0 5px;
         cursor: pointer;
+        background-color: var(--button-bg, #f0f0f0);
+        color: var(--button-text, #000000);
+        border: 1px solid #ccc;
       }
       table {
         width: 100%;
@@ -41,14 +44,20 @@
       table, th, td {
         border: 1px solid #ccc;
       }
-      th, td {
+      th {
+        background-color: var(--quarter-bg, #eeeeee);
+        cursor: pointer;
         padding: 10px;
         text-align: center;
+      }
+      td {
+        background-color: var(--month-bg, #ffffff);
         cursor: pointer;
-        box-sizing: border-box;
+        padding: 10px;
+        text-align: center;
       }
       .selected {
-        background-color: lightblue;
+        background-color: var(--selected-bg, lightblue) !important;
       }
     </style>
     <div id="root"></div>
@@ -74,25 +83,55 @@
     }
 
     onCustomWidgetBeforeUpdate(changedProperties) {
-      this.properties = { ...this.properties, ...changedProperties };
+      const defaults = {
+        minYear: 2000,
+        maxYear: 2035,
+        numericMonths: false,
+        monthBgColor: "#ffffff",
+        quarterBgColor: "#eeeeee",
+        fontColor: "#000000",
+        fontFamily: "Arial",
+        activeCellColor: "lightblue",
+        buttonColor: "#f0f0f0",
+        buttonTextColor: "#000000",
+        sliderColor: "#3399ff"
+      };
+      this.properties = Object.assign({}, defaults, this.properties, changedProperties);
     }
 
     onCustomWidgetAfterUpdate() {
       this.render();
     }
 
+    applyStyles() {
+      const styles = {
+        "--month-bg": this.properties.monthBgColor,
+        "--quarter-bg": this.properties.quarterBgColor,
+        "--font-color": this.properties.fontColor,
+        "--font-family": this.properties.fontFamily,
+        "--selected-bg": this.properties.activeCellColor,
+        "--button-bg": this.properties.buttonColor,
+        "--button-text": this.properties.buttonTextColor,
+        "--slider-color": this.properties.sliderColor
+      };
+      Object.entries(styles).forEach(([key, value]) => {
+        this._root.style.setProperty(key, value);
+      });
+    }
+
     render() {
-      const props = this.properties || {};
+      this.applyStyles();
+
       const t = {
-        months: props.numericMonths
+        months: this.properties.numericMonths
           ? ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
           : ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"],
         quarters: ["Q1", "Q2", "Q3", "Q4"]
       };
 
-      const sliderMin = parseInt(props.minYear || this._baseYear - 20);
-      const sliderMax = parseInt(props.maxYear || this._baseYear + 10);
-      const sliderColor = props.sliderColor || "#3399ff";
+      const sliderMin = this.properties.minYear;
+      const sliderMax = this.properties.maxYear;
+      const sliderColor = this.properties.sliderColor || "#3399ff";
 
       this._root.innerHTML = "";
 
@@ -125,7 +164,6 @@
       slider.min = sliderMin.toString();
       slider.max = sliderMax.toString();
       slider.value = this._year;
-      slider.style.setProperty("--slider-color", sliderColor);
       slider.addEventListener("input", () => {
         this._year = parseInt(slider.value);
         periodHeader.innerText = this.get_calmoth();
@@ -136,7 +174,6 @@
         }));
       });
       sliderContainer.appendChild(slider);
-
       sliderContainer.appendChild(createButton(">", 1));
       sliderContainer.appendChild(createButton(">>", 5));
       this._root.appendChild(sliderContainer);
@@ -152,15 +189,15 @@
           const allCells = table.querySelectorAll("th, td");
           allCells.forEach(cell => cell.classList.remove("selected"));
           th.classList.add("selected");
-
-          const lastMonthIndex = q * 3 + 2;
-          rows[3].children[q].classList.add("selected");
-          this._month = lastMonthIndex;
-
+          const td = rows[3].children[q];
+          if (td) {
+            td.classList.add("selected");
+            this._month = q * 3 + 2;
+          }
+          periodHeader.innerText = this.get_calmoth();
           this.dispatchEvent(new CustomEvent("onSelect", {
             detail: { type: "quarter", value: th.innerText, selected: true }
           }));
-          periodHeader.innerText = this.get_calmoth();
         });
         rows[0].appendChild(th);
 
@@ -174,10 +211,10 @@
             allCells.forEach(cell => cell.classList.remove("selected"));
             td.classList.add("selected");
             this._month = monthIndex;
+            periodHeader.innerText = this.get_calmoth();
             this.dispatchEvent(new CustomEvent("onSelect", {
               detail: { type: "month", value: td.innerText, selected: true }
             }));
-            periodHeader.innerText = this.get_calmoth();
           });
           rows[m + 1].appendChild(td);
         }
