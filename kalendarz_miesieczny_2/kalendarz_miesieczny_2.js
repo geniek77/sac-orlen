@@ -40,8 +40,10 @@
         border: 1px solid #ccc;
       }
       table {
-        margin: 0 auto;
-        width: 100%;
+        margin: 10px auto;
+        width: auto;
+        min-width: 300px;
+                max-width: 100%;
         table-layout: fixed;
         border-collapse: collapse;
         box-sizing: border-box;
@@ -61,7 +63,7 @@
     </style>
     <div id="root"></div>
   `;
-
+ 
   class KalendarzMiesieczny2 extends HTMLElement {
     constructor() {
       super();
@@ -74,7 +76,7 @@
       this.properties = {};
       this.render();
     }
-
+ 
     onCustomWidgetBeforeUpdate(changedProperties) {
       const defaults = {
         minYear: 2000,
@@ -92,17 +94,17 @@
       };
       this.properties = Object.assign({}, defaults, this.properties, changedProperties);
     }
-
+ 
     onCustomWidgetAfterUpdate() {
       this.render();
     }
-
+ 
     onCustomWidgetResize(width, height) {
       this._root.style.width = width + "px";
       this._root.style.height = height + "px";
       this.render();
     }
-
+ 
     applyStyles() {
       const styles = {
         "--month-bg": this.properties.monthBgColor,
@@ -119,10 +121,10 @@
         this._root.style.setProperty(key, value);
       });
     }
-
+ 
     render() {
       this.applyStyles();
-
+ 
       const userLang = (this.locale || navigator.language || "en").substring(0, 2);
       const translations = {
         pl: {
@@ -138,19 +140,19 @@
       };
       const t = translations[userLang] || translations.en;
       const self = this;
-
+ 
       const sliderMin = (this.properties && this.properties.minYear != null) ? this.properties.minYear : 2000;
       const sliderMax = (this.properties && this.properties.maxYear != null) ? this.properties.maxYear : 2035;
-
+ 
       this._root.innerHTML = "";
-
+ 
       const header = document.createElement("h2");
       header.innerText = this.get_calmoth();
       this._root.appendChild(header);
-
+ 
       const sliderContainer = document.createElement("div");
       sliderContainer.className = "slider-container";
-
+ 
       const createBtn = (label, step) => {
         const btn = document.createElement("button");
         btn.innerText = label;
@@ -164,10 +166,10 @@
         });
         return btn;
       };
-
+ 
       sliderContainer.appendChild(createBtn("<<", -5));
       sliderContainer.appendChild(createBtn("<", -1));
-
+ 
       const slider = document.createElement("input");
       slider.type = "range";
       slider.min = sliderMin;
@@ -182,16 +184,16 @@
           detail: { type: "year", value: slider.value, selected: true }
         }));
       });
-
-      sliderContainer.appendChild(slider);
+ 
+     sliderContainer.appendChild(slider);
       sliderContainer.appendChild(createBtn(">", 1));
       sliderContainer.appendChild(createBtn(">>", 5));
       this._root.appendChild(sliderContainer);
-
+ 
       const table = document.createElement("table");
       const rows = Array.from({ length: 4 }, () => document.createElement("tr"));
       rows.forEach(row => table.appendChild(row));
-
+ 
       for (let q = 0; q < 4; q++) {
         const th = document.createElement("th");
         th.innerText = t.quarters[q];
@@ -210,7 +212,7 @@
           }));
         });
         rows[0].appendChild(th);
-
+ 
         for (let m = 0; m < 3; m++) {
           const td = document.createElement("td");
           const mi = q * 3 + m;
@@ -231,36 +233,36 @@
           rows[m + 1].appendChild(td);
         }
       }
-
+ 
       this._root.appendChild(table);
     }
-
+ 
     get_calmoth() {
       return (this._month + 1).toString().padStart(2, "0") + "." + this._year;
     }
-
+ 
     get_calmoth_sap() {
       return this._year.toString() + (this._month + 1).toString().padStart(2, "0");
     }
-
+ 
     get_calquarter() {
       const quarter = Math.floor(this._month / 3) + 1;
       return this._year.toString() + quarter.toString();
     }
-
+ 
     set_calmoth(period) {
       const [mm, yyyy] = period.split(".");
       this._month = parseInt(mm) - 1;
       this._year = parseInt(yyyy);
       setTimeout(() => this.render(), 0);
     }
-
+ 
     set_calmoth_sap(period) {
       this._year = parseInt(period.substring(0, 4));
       this._month = parseInt(period.substring(4, 6)) - 1;
       setTimeout(() => this.render(), 0);
     }
   }
-
+ 
   customElements.define("com-sap-analytics-custom-widget-monthlycalendar2", KalendarzMiesieczny2);
 })();
