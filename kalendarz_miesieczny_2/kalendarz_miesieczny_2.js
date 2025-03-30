@@ -120,24 +120,23 @@
     }
 
     render() {
-      this.applyStyles();
+      const p = this.properties || {};
+      const sliderMin = (p.minYear !== undefined) ? p.minYear : 2000;
+      const sliderMax = (p.maxYear !== undefined) ? p.maxYear : 2035;
 
       const t = {
-        months: this.properties.numericMonths
+        months: p.numericMonths
           ? ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
           : ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"],
         quarters: ["Q1", "Q2", "Q3", "Q4"]
       };
 
-      const sliderMin = this.properties.minYear;
-      const sliderMax = this.properties.maxYear;
-      const sliderColor = this.properties.sliderColor || "#3399ff";
-
+      this.applyStyles();
       this._root.innerHTML = "";
 
-      const periodHeader = document.createElement("h2");
-      periodHeader.innerText = this.get_calmoth();
-      this._root.appendChild(periodHeader);
+      const header = document.createElement("h2");
+      header.innerText = this.get_calmoth();
+      this._root.appendChild(header);
 
       const sliderContainer = document.createElement("div");
       sliderContainer.className = "slider-container";
@@ -148,7 +147,7 @@
         btn.addEventListener("click", () => {
           this._year = Math.max(sliderMin, Math.min(sliderMax, this._year + change));
           slider.value = this._year;
-          periodHeader.innerText = this.get_calmoth();
+          header.innerText = this.get_calmoth();
           this.dispatchEvent(new CustomEvent("onSelect", {
             detail: { type: "year", value: this._year, selected: true }
           }));
@@ -166,13 +165,14 @@
       slider.value = this._year;
       slider.addEventListener("input", () => {
         this._year = parseInt(slider.value);
-        periodHeader.innerText = this.get_calmoth();
+        header.innerText = this.get_calmoth();
       });
       slider.addEventListener("change", () => {
         this.dispatchEvent(new CustomEvent("onSelect", {
           detail: { type: "year", value: this._year, selected: true }
         }));
       });
+
       sliderContainer.appendChild(slider);
       sliderContainer.appendChild(createButton(">", 1));
       sliderContainer.appendChild(createButton(">>", 5));
@@ -194,7 +194,7 @@
             td.classList.add("selected");
             this._month = q * 3 + 2;
           }
-          periodHeader.innerText = this.get_calmoth();
+          header.innerText = this.get_calmoth();
           this.dispatchEvent(new CustomEvent("onSelect", {
             detail: { type: "quarter", value: th.innerText, selected: true }
           }));
@@ -211,7 +211,7 @@
             allCells.forEach(cell => cell.classList.remove("selected"));
             td.classList.add("selected");
             this._month = monthIndex;
-            periodHeader.innerText = this.get_calmoth();
+            header.innerText = this.get_calmoth();
             this.dispatchEvent(new CustomEvent("onSelect", {
               detail: { type: "month", value: td.innerText, selected: true }
             }));
