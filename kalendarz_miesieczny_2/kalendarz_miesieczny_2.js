@@ -38,10 +38,11 @@
         border: 1px solid #ccc;
       }
 	  table {
-	    width: 100%;
-	    table-layout: fixed;
-	    border-collapse: collapse;
-	    box-sizing: border-box;
+		width: 100%;
+		table-layout: fixed;
+		border-collapse: collapse;
+		box-sizing: border-box;
+		margin: 0 auto; /* dodane wyśrodkowanie */
 	  }
 	  table, th, td {
 	    border: 1px solid #ccc;
