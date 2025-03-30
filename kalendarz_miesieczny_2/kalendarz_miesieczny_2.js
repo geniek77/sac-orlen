@@ -64,6 +64,7 @@
       this._baseYear = new Date().getFullYear();
       this._year = this._baseYear;
       this._month = new Date().getMonth();
+      this.properties = {}; // 🛡️ Zabezpieczenie – domyślna pusta konfiguracja
       this.render();
     }
 
@@ -82,16 +83,17 @@
     }
 
     render() {
+      const props = this.properties || {};
       const t = {
-        months: this.properties.numericMonths
+        months: props.numericMonths
           ? ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
           : ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"],
         quarters: ["Q1", "Q2", "Q3", "Q4"]
       };
 
-      const sliderMin = parseInt(this.properties.minYear || this._baseYear - 20);
-      const sliderMax = parseInt(this.properties.maxYear || this._baseYear + 10);
-      const sliderColor = this.properties.sliderColor || "#3399ff";
+      const sliderMin = parseInt(props.minYear || this._baseYear - 20);
+      const sliderMax = parseInt(props.maxYear || this._baseYear + 10);
+      const sliderColor = props.sliderColor || "#3399ff";
 
       this._root.innerHTML = "";
 
