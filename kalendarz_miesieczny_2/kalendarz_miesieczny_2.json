@@ -1,37 +1,77 @@
 {
-  "id": "com.sap.analytics.custom.widget.monthlycalendar-2",
+  "id": "com.sap.analytics.custom.widget.kalendarzmiesieczny2",
   "name": "Kalendarz Miesięczny 2",
-  "description": "Rozszerzony kalendarz miesięczny dla SAC",
-  "vendor": "ORLEN S.A.",
-  "version": "2.2.1",
+  "description": "Widget kalendarza miesięcznego z wyborem miesięcy, kwartałów i pełną konfiguracją wyglądu.",
+  "vendor": "G++ E.Sz dla ORLEN S.A.",
+  "version": "2.2.0",
   "newInstancePrefix": "kal_mies_2",
   "webcomponents": [
     {
       "kind": "main",
       "tag": "com-sap-analytics-custom-widget-monthlycalendar-2",
-      "url": "/kalendarz_miesieczny_2.js?v=2.2.1",
+      "url": "/kalendarz_miesieczny_2.js",
       "integrity": "",
       "ignoreIntegrity": true
     },
     {
       "kind": "builder",
       "tag": "com-sap-analytics-custom-widget-monthlycalendar-2-builder",
-      "url": "/kalendarz_miesieczny_2_builder.js?v=2.2.1",
+      "url": "/kalendarz_miesieczny_2_builder.js",
       "integrity": "",
       "ignoreIntegrity": true
     }
   ],
   "properties": {
-    "minYear": { "type": "number", "default": 2000 },
-    "maxYear": { "type": "number", "default": 2035 },
-    "numericMonths": { "type": "boolean", "default": false },
-    "monthBgColor": { "type": "string", "default": "#ffffff" },
-    "quarterBgColor": { "type": "string", "default": "#eeeeee" },
-    "fontColor": { "type": "string", "default": "#000000" },
-    "fontFamily": { "type": "string", "default": "Arial" },
-    "activeCellColor": { "type": "string", "default": "lightblue" },
-    "buttonColor": { "type": "string", "default": "#f0f0f0" },
-    "buttonTextColor": { "type": "string", "default": "#000000" }
+    "minYear": {
+      "type": "number",
+      "default": 2000,
+      "description": "Minimalny rok"
+    },
+    "maxYear": {
+      "type": "number",
+      "default": 2035,
+      "description": "Maksymalny rok"
+    },
+    "numericMonths": {
+      "type": "boolean",
+      "default": false,
+      "description": "Czy wyświetlać miesiące w formie numerycznej (np. 01, 02, 03)?"
+    },
+    "monthBgColor": {
+      "type": "string",
+      "default": "#ffffff",
+      "description": "Kolor tła komórek miesięcy"
+    },
+    "quarterBgColor": {
+      "type": "string",
+      "default": "#eeeeee",
+      "description": "Kolor tła nagłówków kwartałów"
+    },
+    "fontColor": {
+      "type": "string",
+      "default": "#000000",
+      "description": "Kolor tekstu"
+    },
+    "fontFamily": {
+      "type": "string",
+      "default": "Arial",
+      "description": "Rodzina czcionki, np. Arial"
+    },
+    "activeCellColor": {
+      "type": "string",
+      "default": "lightblue",
+      "description": "Kolor zaznaczonej komórki (miesiąc/kwartał)"
+    },
+    "buttonColor": {
+      "type": "string",
+      "default": "#f0f0f0",
+      "description": "Kolor tła przycisków"
+    },
+    "buttonTextColor": {
+      "type": "string",
+      "default": "#000000",
+      "description": "Kolor tekstu przycisków"
+    }
   },
   "methods": {
     "get_calmoth": { "returnType": "string" },
