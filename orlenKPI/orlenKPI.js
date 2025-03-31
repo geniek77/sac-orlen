@@ -2,6 +2,7 @@
   const template = document.createElement("template");
   template.innerHTML = `
   
+
 <style>
   :host {
     display: block;
@@ -31,26 +32,27 @@
 
   .kpi-main {
     display: flex;
-    margin-top: 10px;
+    align-items: flex-start;
     gap: 12px;
+    margin-top: 10px;
   }
 
-  .kpi-bar-column {
-    width: 24px;
+  .kpi-bar {
+    width: 20px;
     background: var(--bar-color, #006400);
-    min-height: 80px;
+    height: 80px;
   }
 
-  .kpi-content-column {
+  .kpi-content {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
   }
 
   .kpi-value {
     font-size: var(--main-value-font-size, 28px);
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .kpi-matrix {
@@ -61,20 +63,15 @@
 
   .kpi-line {
     display: flex;
-    gap: 12px;
     align-items: center;
+    gap: 10px;
   }
 
   .label-line {
     font-size: 12px;
     color: #666;
-    margin-left: 24px;
-    margin-bottom: 8px;
-  }
-
-  .arrow {
-    width: 12px;
-    height: 12px;
+    margin-left: 22px;
+    margin-bottom: 4px;
   }
 
   .arrow.up::before {
@@ -99,6 +96,7 @@
     font-weight: normal;
   }
 </style>
+
 
   <div id="root"></div>`;
 
@@ -188,6 +186,19 @@
     }
 
     render() {
+    const {
+      title = "EBITDA LIFO",
+      mainValue = "315,8",
+      deltaB = "+198",
+      deltaBPercent = "+168%",
+      deltaRR = "-521",
+      deltaRRPercent = "-254%",
+      labelB = "B",
+      labelRR = "R/R",
+      arrowDirectionB = "up",
+      arrowDirectionRR = "down"
+    } = this.properties;
+
       this.applyStyles();
 
       const {
@@ -212,32 +223,26 @@
     this._root.innerHTML = `
       <div class="kpi-container">
         <div class="kpi-header">
-          <div class="kpi-title">\${title}</div>
+          <div class="kpi-title">${title}</div>
           <div class="edit-icon" title="Edytuj">✎</div>
         </div>
         <div class="kpi-main">
-          <div class="kpi-bar-column">
-            <div class="kpi-bar"></div>
-          </div>
-          <div class="kpi-content-column">
-            <div class="kpi-value">\${mainValue}</div>
+          <div class="kpi-bar"></div>
+          <div class="kpi-content">
+            <div class="kpi-value">${mainValue}</div>
             <div class="kpi-matrix">
-              <div class="kpi-line-group">
-                <div class="kpi-line">
-                  <div class="arrow delta-b \${arrowDirectionB}"></div>
-                  <div class="delta-val">\${deltaB}</div>
-                  <div class="delta-pct">\${deltaBPercent}</div>
-                </div>
-                <div class="label-line">\${labelB}</div>
+              <div class="kpi-line">
+                <div class="arrow ${arrowDirectionB}"></div>
+                <div class="delta-val">${deltaB}</div>
+                <div class="delta-pct">${deltaBPercent}</div>
               </div>
-              <div class="kpi-line-group">
-                <div class="kpi-line">
-                  <div class="arrow delta-rr \${arrowDirectionRR}"></div>
-                  <div class="delta-val">\${deltaRR}</div>
-                  <div class="delta-pct">\${deltaRRPercent}</div>
-                </div>
-                <div class="label-line">\${labelRR}</div>
+              <div class="label-line">${labelB}</div>
+              <div class="kpi-line">
+                <div class="arrow ${arrowDirectionRR}"></div>
+                <div class="delta-val">${deltaRR}</div>
+                <div class="delta-pct">${deltaRRPercent}</div>
               </div>
+              <div class="label-line">${labelRR}</div>
             </div>
           </div>
         </div>
