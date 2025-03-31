@@ -23,9 +23,9 @@
 
     .edit-icon {
   position: absolute;
+  top: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  transform: none;
   font-size: 20px;
   color: gray;
   cursor: pointer;
@@ -191,6 +191,18 @@
       this._root.style.setProperty("--bg-up-color", bgUpColor);
       this._root.style.setProperty("--bg-down-color", bgDownColor);
       this._root.style.setProperty("--text-color-b", textColorB);
+      
+      this._root.style.setProperty("--title-font-size", this.properties.titleFontSize || "16px");
+      this._root.style.setProperty("--title-font-family", this.properties.titleFontFamily || "Arial");
+      this._root.style.setProperty("--main-value-font-size", this.properties.mainValueFontSize || "28px");
+      this._root.style.setProperty("--main-value-font-family", this.properties.mainValueFontFamily || "Arial");
+      this._root.style.setProperty("--delta-font-size", this.properties.deltaFontSize || "14px");
+      this._root.style.setProperty("--delta-font-family", this.properties.deltaFontFamily || "Arial");
+      this._root.style.setProperty("--delta-font-weight", this.properties.deltaFontWeight || "bold");
+      this._root.style.setProperty("--bar-color", this.properties.barColor || "#006400");
+      this._root.style.setProperty("--font-color", this.properties.fontColor || "#000000");
+      this._root.style.setProperty("--bg-up-color", this.properties.bgUpColor || "#dff0d8");
+      this._root.style.setProperty("--bg-down-color", this.properties.bgDownColor || "#f2dede");
       this._root.style.setProperty("--text-color-rr", textColorRR);
     }
 
