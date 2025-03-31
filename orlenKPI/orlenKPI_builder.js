@@ -54,23 +54,24 @@
           <option value="none">Brak</option>
         </select><br><br>
 
-        <h4>Styl czcionki</h4>
-        <label>Czcionka tytułu:</label><br>
-        <input type="text" id="titleFontFamily"><br>
-        <label>Rozmiar czcionki tytułu:</label><br>
-        <input type="text" id="titleFontSize"><br>
-        <label>Czcionka wartości głównej:</label><br>
-        <input type="text" id="mainValueFontFamily"><br>
-        <label>Rozmiar wartości głównej:</label><br>
-        <input type="text" id="mainValueFontSize"><br>
-        <label>Czcionka dla wartości delta:</label><br>
-        <input type="text" id="deltaFontFamily"><br>
-        <label>Rozmiar czcionki dla delta:</label><br>
-        <input type="text" id="deltaFontSize"><br>
-        <label>Krój czcionki dla delta (np. bold, italic):</label><br>
-        <input type="text" id="deltaFontWeight"><br>
+        
+<h4>Styl czcionki</h4>
+<label>Czcionka tytułu:</label><br>
+<input type="text" id="titleFontFamily"><br>
+<label>Rozmiar czcionki tytułu:</label><br>
+<input type="text" id="titleFontSize"><br>
+<label>Czcionka wartości głównej:</label><br>
+<input type="text" id="mainValueFontFamily"><br>
+<label>Rozmiar wartości głównej:</label><br>
+<input type="text" id="mainValueFontSize"><br>
+<label>Czcionka dla wartości delta:</label><br>
+<input type="text" id="deltaFontFamily"><br>
+<label>Rozmiar czcionki dla delta:</label><br>
+<input type="text" id="deltaFontSize"><br>
+<label>Krój czcionki dla delta (np. bold, italic):</label><br>
+<input type="text" id="deltaFontWeight"><br>
 
-        <button type="submit">Zapisz</button>
+<button type="submit">Zapisz</button>
       </fieldset>
     </form>
   `;
@@ -98,11 +99,15 @@
       const ids = [
         "arrowColorB", "arrowColorRR", "arrowDirectionB", "arrowDirectionRR",
         "barColor", "fontColor", "bgUpColor", "bgDownColor", "fontFamily", "fontSize",
-        "deltaFontFamily", "deltaFontSize", "deltaFontWeight",
+        "deltaFontFamily",
+        "deltaFontSize",
+        "deltaFontWeight",
         "labelB", "labelRR", "textColorB", "textColorRR",
-        "mainValueFontFamily", "mainValueFontSize",
+        "mainValueFontFamily",
+        "mainValueFontSize",
         "title", "mainValue", "deltaB", "deltaBPercent", "deltaRR", "deltaRRPercent",
-        "titleFontFamily", "titleFontSize"
+        "titleFontFamily",
+        "titleFontSize"
       ];
       const props = {};
       ids.forEach(id => {
@@ -116,11 +121,15 @@
       const ids = [
         "arrowColorB", "arrowColorRR", "arrowDirectionB", "arrowDirectionRR",
         "barColor", "fontColor", "bgUpColor", "bgDownColor", "fontFamily", "fontSize",
-        "deltaFontFamily", "deltaFontSize", "deltaFontWeight",
+        "deltaFontFamily",
+        "deltaFontSize",
+        "deltaFontWeight",
         "labelB", "labelRR", "textColorB", "textColorRR",
-        "mainValueFontFamily", "mainValueFontSize",
+        "mainValueFontFamily",
+        "mainValueFontSize",
         "title", "mainValue", "deltaB", "deltaBPercent", "deltaRR", "deltaRRPercent",
-        "titleFontFamily", "titleFontSize"
+        "titleFontFamily",
+        "titleFontSize"
       ];
       ids.forEach(id => {
         const el = this._shadowRoot.getElementById(id);
