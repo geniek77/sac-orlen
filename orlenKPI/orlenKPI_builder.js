@@ -83,7 +83,7 @@
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
       this._shadowRoot.appendChild(template.content.cloneNode(true));
-      const form = this._shadowRoot.querySelector("form");
+      const form = this._shadowRoot.getElementById("form");
       if (form) {
         form.addEventListener("submit", e => {
         e.preventDefault();
