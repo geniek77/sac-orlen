@@ -71,6 +71,36 @@
     </form>
   `;
 
+  
+const DEFAULTS = {
+  title: "EBITDA LIFO",
+  mainValue: "315,8",
+  titleFontFamily: "Arial",
+  titleFontSize: "16px",
+  mainValueFontFamily: "Arial",
+  mainValueFontSize: "28px",
+  barColor: "#006400",
+  fontColor: "#000000",
+  deltaB: "+198",
+  deltaBPercent: "+168%",
+  deltaRR: "-521",
+  deltaRRPercent: "-254%",
+  labelB: "B",
+  labelRR: "R/R",
+  textColorB: "#000000",
+  textColorRR: "#000000",
+  bgUpColor: "#dff0d8",
+  bgDownColor: "#f2dede",
+  deltaFontFamily: "Arial",
+  deltaFontSize: "14px",
+  deltaFontWeight: "bold",
+  arrowColorB: "#000000",
+  arrowDirectionB: "up",
+  arrowColorRR: "#000000",
+  arrowDirectionRR: "down"
+};
+
+
   class OrlenKPIBuilder extends HTMLElement {
     constructor() {
       super();
@@ -118,11 +148,10 @@
       ];
       ids.forEach(id => {
         const el = this._shadowRoot.getElementById(id);
-        if (el) el.value = properties[id] ?? el.value ?? "";
+        if (el) el.value = properties[id] ?? DEFAULTS[id] ?? el.value ?? "";
       });
     }
   }
 
   customElements.define("com-sap-analytics-custom-widget-orlenkpi-builder", OrlenKPIBuilder);
 })();
-

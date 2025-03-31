@@ -1,6 +1,6 @@
 {
   "id": "com.sap.analytics.custom.widget.orlenkpi",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "name": "orlenKPI",
   "description": "Widżet KPI z dynamiczną konfiguracją wyglądu i wartości",
   "vendor": "G++ E.Sz dla ORLEN S.A.",
@@ -121,142 +121,44 @@
       "type": "string",
       "default": "down",
       "description": "Kierunek trójkąta R/R (up/down/none)"
+    },
+    "titleFontFamily": {
+      "type": "string",
+      "default": "Arial",
+      "description": "Czcionka tytułu"
+    },
+    "titleFontSize": {
+      "type": "string",
+      "default": "16px",
+      "description": "Rozmiar czcionki tytułu"
+    },
+    "mainValueFontFamily": {
+      "type": "string",
+      "default": "Arial",
+      "description": "Czcionka wartości głównej"
+    },
+    "mainValueFontSize": {
+      "type": "string",
+      "default": "28px",
+      "description": "Rozmiar wartości głównej"
+    },
+    "deltaFontFamily": {
+      "type": "string",
+      "default": "Arial",
+      "description": "Czcionka wartości delta"
+    },
+    "deltaFontSize": {
+      "type": "string",
+      "default": "14px",
+      "description": "Rozmiar czcionki delta"
+    },
+    "deltaFontWeight": {
+      "type": "string",
+      "default": "bold",
+      "description": "Krój czcionki delta"
     }
   },
-  "methods": {
-    "getTitle": {
-      "returnType": "string"
-    },
-    "setTitle": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getMainValue": {
-      "returnType": "string"
-    },
-    "setMainValue": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getDeltaB": {
-      "returnType": "string"
-    },
-    "setDeltaB": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getDeltaRR": {
-      "returnType": "string"
-    },
-    "setDeltaRR": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getLabelB": {
-      "returnType": "string"
-    },
-    "setLabelB": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getLabelRR": {
-      "returnType": "string"
-    },
-    "setLabelRR": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getTextColorB": {
-      "returnType": "string"
-    },
-    "setTextColorB": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getTextColorRR": {
-      "returnType": "string"
-    },
-    "setTextColorRR": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getArrowColorB": {
-      "returnType": "string"
-    },
-    "setArrowColorB": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getArrowColorRR": {
-      "returnType": "string"
-    },
-    "setArrowColorRR": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getArrowDirectionB": {
-      "returnType": "string"
-    },
-    "setArrowDirectionB": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getArrowDirectionRR": {
-      "returnType": "string"
-    },
-    "setArrowDirectionRR": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    }
-  },
+  "methods": {},
   "events": {
     "onClick": {
       "description": "Zdarzenie po kliknięciu w cały widget"
@@ -266,4 +168,3 @@
     }
   }
 }
-

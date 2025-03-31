@@ -33,13 +33,11 @@
 }
 
     .kpi-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      width: 100%;
-      cursor: pointer;
-    }
+}
 
     .kpi-header {
   font-size: var(--title-font-size, 16px);
@@ -55,12 +53,11 @@
     }
 
     .kpi-main {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: flex-start;
-      width: 100%;
-    }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
 
     .kpi-bar {
       width: var(--bar-width, 10px);
