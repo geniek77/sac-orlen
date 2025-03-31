@@ -9,7 +9,6 @@
     }
 
     .kpi-container {
-      border: 1px solid #ccc;
       padding: 10px;
       position: relative;
       background: white;
@@ -169,7 +168,24 @@
         labelB: 'B',
         labelRR: 'R/R',
         arrowDirectionB: 'up',
-        arrowDirectionRR: 'down'
+        arrowDirectionRR: 'down',
+        barColor: '#006400',
+        fontColor: '#000000',
+        bgUpColor: '#dff0d8',
+        bgDownColor: '#f2dede',
+        fontFamily: 'Arial',
+        fontSize: '14px',
+        titleFontFamily: 'Arial',
+        titleFontSize: '16px',
+        mainValueFontFamily: 'Arial',
+        mainValueFontSize: '28px',
+        deltaFontFamily: 'Arial',
+        deltaFontSize: '14px',
+        deltaFontWeight: 'bold',
+        textColorB: '#006400',
+        textColorRR: '#a94442',
+        arrowColorB: '#006400',
+        arrowColorRR: '#a94442'
       };
     }
 
@@ -194,7 +210,7 @@
 
       styleProps.forEach(prop => {
         const cssVar = `--${prop.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
-        const value = this[prop] || this._properties[prop];
+        const value = this._properties[prop];
         if (value) {
           this._root.style.setProperty(cssVar, value);
         }
@@ -242,6 +258,36 @@
       }
     }
 
+    // Metody cyklu życia widgetu
+    onCustomWidgetAfterUpdate(changedProperties) {
+      Object.keys(changedProperties).forEach(prop => {
+        if (this._properties.hasOwnProperty(prop)) {
+          if (prop.includes('Value') || prop.includes('delta')) {
+            this._shouldAnimate = true;
+          }
+          this._properties[prop] = changedProperties[prop];
+        }
+      });
+      this._render();
+    }
+
+    onCustomWidgetBeforeUpdate(changedProperties) {
+      Object.keys(changedProperties).forEach(prop => {
+        if (this._properties.hasOwnProperty(prop)) {
+          this._properties[prop] = changedProperties[prop];
+        }
+      });
+    }
+
+    onCustomWidgetResize(width, height) {
+      const scale = Math.min(width / 300, 1.5);
+      this._root.style.setProperty('--title-font-size', `${Math.max(14, 16 * scale)}px`);
+      this._root.style.setProperty('--main-value-font-size', `${Math.max(20, 28 * scale)}px`);
+      this._root.style.setProperty('--delta-font-size', `${Math.max(12, 14 * scale)}px`);
+      this._root.style.setProperty('--bar-width', `${Math.max(15, 20 * scale)}px`);
+      this._root.style.setProperty('--bar-height', `${Math.max(60, 80 * scale)}px`);
+    }
+
     // Gettery i settery dla wszystkich właściwości
     get title() { return this._properties.title; }
     set title(value) { 
@@ -258,53 +304,168 @@
       }
     }
 
-    // ... (Analogiczne gettery/settery dla wszystkich pozostałych właściwości)
-
-    onCustomWidgetAfterUpdate(changedProperties) {
-      Object.keys(changedProperties).forEach(prop => {
-        if (this._properties.hasOwnProperty(prop)) {
-          if (prop.includes('Value') || prop.includes('delta')) {
-            this._shouldAnimate = true;
-          }
-          this._properties[prop] = changedProperties[prop];
-        }
-      });
-      this._render();
+    get deltaB() { return this._properties.deltaB; }
+    set deltaB(value) { 
+      if (this._properties.deltaB !== value) {
+        this._shouldAnimate = true;
+        this._properties.deltaB = value; 
+        this._render();
+      }
     }
 
-    onCustomWidgetResize(width, height) {
-      const scale = Math.min(width / 300, 1.5);
-      this._root.style.setProperty('--title-font-size', `${Math.max(14, 16 * scale)}px`);
-      this._root.style.setProperty('--main-value-font-size', `${Math.max(20, 28 * scale)}px`);
-      this._root.style.setProperty('--delta-font-size', `${Math.max(12, 14 * scale)}px`);
-      this._root.style.setProperty('--bar-width', `${Math.max(15, 20 * scale)}px`);
-      this._root.style.setProperty('--bar-height', `${Math.max(60, 80 * scale)}px`);
+    get deltaBPercent() { return this._properties.deltaBPercent; }
+    set deltaBPercent(value) { 
+      if (this._properties.deltaBPercent !== value) {
+        this._shouldAnimate = true;
+        this._properties.deltaBPercent = value; 
+        this._render();
+      }
+    }
+
+    get deltaRR() { return this._properties.deltaRR; }
+    set deltaRR(value) { 
+      if (this._properties.deltaRR !== value) {
+        this._shouldAnimate = true;
+        this._properties.deltaRR = value; 
+        this._render();
+      }
+    }
+
+    get deltaRRPercent() { return this._properties.deltaRRPercent; }
+    set deltaRRPercent(value) { 
+      if (this._properties.deltaRRPercent !== value) {
+        this._shouldAnimate = true;
+        this._properties.deltaRRPercent = value; 
+        this._render();
+      }
+    }
+
+    get labelB() { return this._properties.labelB; }
+    set labelB(value) { 
+      this._properties.labelB = value; 
+      this._render(); 
+    }
+
+    get labelRR() { return this._properties.labelRR; }
+    set labelRR(value) { 
+      this._properties.labelRR = value; 
+      this._render(); 
+    }
+
+    get arrowDirectionB() { return this._properties.arrowDirectionB; }
+    set arrowDirectionB(value) { 
+      this._properties.arrowDirectionB = value; 
+      this._render(); 
+    }
+
+    get arrowDirectionRR() { return this._properties.arrowDirectionRR; }
+    set arrowDirectionRR(value) { 
+      this._properties.arrowDirectionRR = value; 
+      this._render(); 
+    }
+
+    get barColor() { return this._properties.barColor; }
+    set barColor(value) { 
+      this._properties.barColor = value; 
+      this._render(); 
+    }
+
+    get fontColor() { return this._properties.fontColor; }
+    set fontColor(value) { 
+      this._properties.fontColor = value; 
+      this._render(); 
+    }
+
+    get bgUpColor() { return this._properties.bgUpColor; }
+    set bgUpColor(value) { 
+      this._properties.bgUpColor = value; 
+      this._render(); 
+    }
+
+    get bgDownColor() { return this._properties.bgDownColor; }
+    set bgDownColor(value) { 
+      this._properties.bgDownColor = value; 
+      this._render(); 
+    }
+
+    get fontFamily() { return this._properties.fontFamily; }
+    set fontFamily(value) { 
+      this._properties.fontFamily = value; 
+      this._render(); 
+    }
+
+    get fontSize() { return this._properties.fontSize; }
+    set fontSize(value) { 
+      this._properties.fontSize = value; 
+      this._render(); 
+    }
+
+    get titleFontFamily() { return this._properties.titleFontFamily; }
+    set titleFontFamily(value) { 
+      this._properties.titleFontFamily = value; 
+      this._render(); 
+    }
+
+    get titleFontSize() { return this._properties.titleFontSize; }
+    set titleFontSize(value) { 
+      this._properties.titleFontSize = value; 
+      this._render(); 
+    }
+
+    get mainValueFontFamily() { return this._properties.mainValueFontFamily; }
+    set mainValueFontFamily(value) { 
+      this._properties.mainValueFontFamily = value; 
+      this._render(); 
+    }
+
+    get mainValueFontSize() { return this._properties.mainValueFontSize; }
+    set mainValueFontSize(value) { 
+      this._properties.mainValueFontSize = value; 
+      this._render(); 
+    }
+
+    get deltaFontFamily() { return this._properties.deltaFontFamily; }
+    set deltaFontFamily(value) { 
+      this._properties.deltaFontFamily = value; 
+      this._render(); 
+    }
+
+    get deltaFontSize() { return this._properties.deltaFontSize; }
+    set deltaFontSize(value) { 
+      this._properties.deltaFontSize = value; 
+      this._render(); 
+    }
+
+    get deltaFontWeight() { return this._properties.deltaFontWeight; }
+    set deltaFontWeight(value) { 
+      this._properties.deltaFontWeight = value; 
+      this._render(); 
+    }
+
+    get textColorB() { return this._properties.textColorB; }
+    set textColorB(value) { 
+      this._properties.textColorB = value; 
+      this._render(); 
+    }
+
+    get textColorRR() { return this._properties.textColorRR; }
+    set textColorRR(value) { 
+      this._properties.textColorRR = value; 
+      this._render(); 
+    }
+
+    get arrowColorB() { return this._properties.arrowColorB; }
+    set arrowColorB(value) { 
+      this._properties.arrowColorB = value; 
+      this._render(); 
+    }
+
+    get arrowColorRR() { return this._properties.arrowColorRR; }
+    set arrowColorRR(value) { 
+      this._properties.arrowColorRR = value; 
+      this._render(); 
     }
   }
-
-  // Rejestracja wszystkich właściwości
-  const properties = [
-    'title', 'mainValue', 'deltaB', 'deltaBPercent', 'deltaRR', 'deltaRRPercent',
-    'labelB', 'labelRR', 'arrowDirectionB', 'arrowDirectionRR', 'barColor',
-    'fontColor', 'bgUpColor', 'bgDownColor', 'fontFamily', 'fontSize',
-    'titleFontFamily', 'titleFontSize', 'mainValueFontFamily', 'mainValueFontSize',
-    'deltaFontFamily', 'deltaFontSize', 'deltaFontWeight', 'textColorB', 'textColorRR',
-    'arrowColorB', 'arrowColorRR'
-  ];
-
-  properties.forEach(prop => {
-    Object.defineProperty(OrlenKPI.prototype, prop, {
-      get: function() { return this._properties[prop]; },
-      set: function(value) { 
-        const shouldAnimate = (prop.includes('Value') || prop.includes('delta'));
-        if (this._properties[prop] !== value) {
-          if (shouldAnimate) this._shouldAnimate = true;
-          this._properties[prop] = value;
-          this._render();
-        }
-      }
-    });
-  });
 
   customElements.define("com-sap-analytics-custom-widget-orlenkpi", OrlenKPI);
 })();
