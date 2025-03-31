@@ -22,16 +22,18 @@
     }
 
     .edit-icon {
-      position: absolute;
-      top: 50%; transform: translateY(-50%);
-      right: 8px;
-      font-size: 20px;
-      color: gray;
-      cursor: pointer;
-      z-index: 10;
-    }
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: gray;
+  cursor: pointer;
+  z-index: 10;
+}
 
     .kpi-box {
+  position: relative;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
