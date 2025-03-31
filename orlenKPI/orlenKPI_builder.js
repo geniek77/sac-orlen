@@ -98,9 +98,17 @@
       }));
     }
 
+    
     getProperties() {
       const ids = Object.keys(DEFAULTS);
       const props = {};
+      ids.forEach(id => {
+        const el = this._shadowRoot.getElementById(id);
+        props[id] = el?.value || "";
+      });
+      return props;
+    }
+    ;
       ids.forEach(id => {
         const el = this._shadowRoot.getElementById(id);
         props[id] = el?.value || "";

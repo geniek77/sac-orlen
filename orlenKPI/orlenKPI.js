@@ -101,6 +101,11 @@
   <div id="root"></div>`;
 
   class OrlenKPI extends HTMLElement {
+  onCustomWidgetBeforeUpdate(changedProperties) {
+    this.properties = changedProperties;
+    this.render();
+  }
+
     constructor() {
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
@@ -118,8 +123,7 @@
       });
     }
 
-    onCustomWidgetBeforeUpdate(changedProperties) {
-      this.properties = { ...this.properties, ...changedProperties };
+    ;
     }
 
     onCustomWidgetAfterUpdate() {
