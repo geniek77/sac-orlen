@@ -154,8 +154,8 @@
     applyStyles() {
       const {
         fontColor = "#000000",
-        fontFamily = "Arial",
-        fontSize = "14px",
+        
+        
         barColor = "#006400",
         bgUpColor = "#dff0d8",
         bgDownColor = "#f2dede",
@@ -196,30 +196,24 @@
       labelB = "B",
       labelRR = "R/R",
       arrowDirectionB = "up",
-      arrowDirectionRR = "down"
-    } = this.properties;
+      arrowDirectionRR = "down",
+      arrowColorB = "#006400",
+      arrowColorRR = "#a94442",
+      titleFontFamily = "Arial",
+      titleFontSize = "16px",
+      mainValueFontFamily = "Arial",
+      mainValueFontSize = "28px",
+      deltaFontFamily = "Arial",
+      deltaFontSize = "14px",
+      deltaFontWeight = "bold",
+      barColor = "#006400",
+      bgUpColor = "#dff0d8",
+      bgDownColor = "#f2dede",
+      fontColor = "#000000",
+      textColorB = "#006400",
+      textColorRR = "#a94442"
+} = this.properties;
 
-      this.applyStyles();
-
-      const {
-        title = "EBITDA LIFO",
-        mainValue = "315,8",
-        deltaB = "+198",
-        deltaBPercent = "+168%",
-        deltaRR = "-521",
-        deltaRRPercent = "-254%",
-        labelB = "B",
-        labelRR = "R/R",
-        arrowColorB = "#006400",
-        arrowColorRR = "#a94442",
-        arrowDirectionB = "up",
-        arrowDirectionRR = "down"
-      } = this.properties;
-
-      const arrowB = arrowDirectionB === "up" ? "▲" : arrowDirectionB === "down" ? "▼" : "";
-      const arrowRR = arrowDirectionRR === "up" ? "▲" : arrowDirectionRR === "down" ? "▼" : "";
-
-      
     this._root.innerHTML = `
       <div class="kpi-container">
         <div class="kpi-header">
