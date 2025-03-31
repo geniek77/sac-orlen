@@ -57,8 +57,6 @@
     fontColor: "#000000",
     bgUpColor: "#dff0d8",
     bgDownColor: "#f2dede",
-    fontFamily: "Arial",
-    fontSize: "14px",
     titleFontFamily: "Arial",
     titleFontSize: "16px",
     mainValueFontFamily: "Arial",
@@ -73,7 +71,9 @@
     arrowColorB: "#006400",
     arrowDirectionB: "up",
     arrowColorRR: "#a94442",
-    arrowDirectionRR: "down"
+    arrowDirectionRR: "down",
+    fontFamily: "Arial",
+    fontSize: "14px"
   };
 
   class OrlenKPIBuilder extends HTMLElement {
@@ -82,66 +82,46 @@
       this._shadowRoot = this.attachShadow({ mode: "open" });
       this._shadowRoot.appendChild(template.content.cloneNode(true));
       this._form = this._shadowRoot.getElementById("form");
-      this._form.addEventListener("submit", this._handleSubmit.bind(this));
-      this._initialized = false;
+      this._form.addEventListener("submit", this._onSubmit.bind(this));
     }
 
-    connectedCallback() {
-      this._initialized = true;
-      if (this._pendingProperties) {
-        this.setProperties(this._pendingProperties);
-        this._pendingProperties = null;
-      }
-    }
-
-    _handleSubmit(e) {
+    _onSubmit(e) {
       e.preventDefault();
-      this._firePropertiesChanged();
-    }
-
-    _firePropertiesChanged() {
       this.dispatchEvent(new CustomEvent("propertiesChanged", {
-        detail: { properties: this.getProperties() }
+        detail: {
+          properties: this._getFormData()
+        }
       }));
     }
 
-    getProperties() {
+    _getFormData() {
       const props = {};
-      Object.keys(DEFAULTS).forEach(id => {
-        const el = this._shadowRoot.getElementById(id);
-        props[id] = el ? el.value : DEFAULTS[id];
-      });
+      const elements = this._form.elements;
+      for (let i = 0; i < elements.length; i++) {
+        const el = elements[i];
+        if (el.id && el.id !== "form") {
+          props[el.id] = el.value || DEFAULTS[el.id];
+        }
+      }
       return props;
     }
 
     setProperties(properties) {
-      if (!this._initialized) {
-        this._pendingProperties = properties;
-        return;
-      }
+      if (!properties) return;
       
-      if (!this._shadowRoot) return;
-
       Object.keys(DEFAULTS).forEach(id => {
         const el = this._shadowRoot.getElementById(id);
-        if (!el) return;
-        
-        const defaultValue = DEFAULTS[id];
-        let newValue = properties[id];
-        
-        if (newValue === undefined || newValue === null) {
-          newValue = defaultValue;
-        }
-        
-        if (el.type === 'color') {
-          el.value = (newValue && typeof newValue === 'string' && newValue.startsWith('#')) ? newValue : defaultValue;
-        } 
-        else if (el.tagName === 'SELECT') {
-          const optionExists = Array.from(el.options).some(opt => opt.value === newValue);
-          el.value = optionExists ? newValue : defaultValue;
-        }
-        else {
-          el.value = newValue !== undefined ? newValue : defaultValue;
+        if (el) {
+          const value = properties[id] !== undefined ? properties[id] : DEFAULTS[id];
+          
+          if (el.type === "color" && !/^#([0-9A-F]{3}){1,2}$/i.test(value)) {
+            el.value = DEFAULTS[id];
+          } else if (el.tagName === "SELECT") {
+            const option = el.querySelector(`option[value="${value}"]`);
+            if (option) option.selected = true;
+          } else {
+            el.value = value;
+          }
         }
       });
     }
