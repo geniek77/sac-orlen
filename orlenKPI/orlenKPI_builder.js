@@ -84,7 +84,7 @@
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
       this._shadowRoot.appendChild(template.content.cloneNode(true));
-      this._shadowRoot.getElementById("form").addEventListener("submit", e => {
+      this._shadowRoot.getElementById("form").addEventListener("submit",function(e) {
         e.preventDefault();
         this._firePropertiesChanged();
       });
@@ -102,14 +102,14 @@
     getProperties() {
       const ids = Object.keys(DEFAULTS);
       const props = {};
-      ids.forEach(id => {
+      ids.forEach(function(id) {
         const el = this._shadowRoot.getElementById(id);
         props[id] = el ? el.value : "";
       });
       return props;
     }
     ;
-      ids.forEach(id => {
+      ids.forEach(function(id) {
         const el = this._shadowRoot.getElementById(id);
         props[id] = el ? el.value : "";
       });
@@ -118,7 +118,7 @@
 
     setProperties(properties) {
       const ids = Object.keys(DEFAULTS);
-      ids.forEach(id => {
+      ids.forEach(function(id) {
         const el = this._shadowRoot.getElementById(id);
         if (el) {
           if (properties[id] !== undefined && properties[id] !== "") { el.value = properties[id]; } else if (DEFAULTS[id]) { el.value = DEFAULTS[id]; } else if (el.value) { el.value = el.value; } else { el.value = ""; };

@@ -105,8 +105,7 @@
     this.properties = changedProperties;
     this.render();
   }
-
-    constructor() {
+constructor: function() {
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
       this._shadowRoot.appendChild(template.content.cloneNode(true));
@@ -125,8 +124,7 @@
 
     ;
     }
-
-    onCustomWidgetAfterUpdate() {
+onCustomWidgetAfterUpdate: function() {
       this.render();
     }
 
@@ -154,8 +152,7 @@
   this._root.style.setProperty("--label-width", labelWidth);
   this._root.style.setProperty("--cell-width", cellWidth);
 }
-
-    applyStyles() {
+applyStyles: function() {
       const {
         fontColor = "#000000",
         
@@ -188,8 +185,7 @@
       this._root.style.setProperty("--bg-down-color", this.properties.bgDownColor || "#f2dede");
       this._root.style.setProperty("--text-color-rr", textColorRR);
     }
-
-    render() {
+render: function() {
     const {
       title = "EBITDA LIFO",
       mainValue = "315,8",
@@ -260,41 +256,29 @@
         });
       }
     }
-
-    getTitle() { return this.properties.title; }
+getTitle: function() { return this.properties.title; }
     setTitle(value) { this.properties.title = value; this.render(); }
-
-    getMainValue() { return this.properties.mainValue; }
+getMainValue: function() { return this.properties.mainValue; }
     setMainValue(value) { this.properties.mainValue = value; this.render(); }
-
-    getDeltaB() { return this.properties.deltaB; }
+getDeltaB: function() { return this.properties.deltaB; }
     setDeltaB(value) { this.properties.deltaB = value; this.render(); }
-
-    getDeltaRR() { return this.properties.deltaRR; }
+getDeltaRR: function() { return this.properties.deltaRR; }
     setDeltaRR(value) { this.properties.deltaRR = value; this.render(); }
-
-    getLabelB() { return this.properties.labelB; }
+getLabelB: function() { return this.properties.labelB; }
     setLabelB(value) { this.properties.labelB = value; this.render(); }
-
-    getLabelRR() { return this.properties.labelRR; }
+getLabelRR: function() { return this.properties.labelRR; }
     setLabelRR(value) { this.properties.labelRR = value; this.render(); }
-
-    getTextColorB() { return this.properties.textColorB; }
+getTextColorB: function() { return this.properties.textColorB; }
     setTextColorB(value) { this.properties.textColorB = value; this.render(); }
-
-    getTextColorRR() { return this.properties.textColorRR; }
+getTextColorRR: function() { return this.properties.textColorRR; }
     setTextColorRR(value) { this.properties.textColorRR = value; this.render(); }
-
-    getArrowColorB() { return this.properties.arrowColorB; }
+getArrowColorB: function() { return this.properties.arrowColorB; }
     setArrowColorB(value) { this.properties.arrowColorB = value; this.render(); }
-
-    getArrowColorRR() { return this.properties.arrowColorRR; }
+getArrowColorRR: function() { return this.properties.arrowColorRR; }
     setArrowColorRR(value) { this.properties.arrowColorRR = value; this.render(); }
-
-    getArrowDirectionB() { return this.properties.arrowDirectionB; }
+getArrowDirectionB: function() { return this.properties.arrowDirectionB; }
     setArrowDirectionB(value) { this.properties.arrowDirectionB = value; this.render(); }
-
-    getArrowDirectionRR() { return this.properties.arrowDirectionRR; }
+getArrowDirectionRR: function() { return this.properties.arrowDirectionRR; }
     setArrowDirectionRR(value) { this.properties.arrowDirectionRR = value; this.render(); }
   }
 
