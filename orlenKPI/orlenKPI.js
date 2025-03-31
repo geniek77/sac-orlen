@@ -36,6 +36,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  flex-grow: 1;
   position: relative;
 }
 
@@ -53,11 +54,12 @@
     }
 
     .kpi-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-start;
+      width: 100%;
+    }
 
     .kpi-bar {
       width: var(--bar-width, 10px);
@@ -67,12 +69,10 @@
 
     .kpi-value {
   font-size: var(--main-value-font-size, 28px);
-  font-family: var(--main-value-font-family, Arial);
-
-      font-size: 28px;
-      font-weight: bold;
-      text-align: left;
-    }
+  font-weight: bold;
+  text-align: left;
+  flex: 0 0 auto;
+}
 
     .kpi-matrix {
       margin-top: 8px;
