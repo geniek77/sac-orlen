@@ -5,21 +5,22 @@
     :host {
       display: block;
       font-family: var(--font-family, Arial), sans-serif;
-      min-width: 150px;
+      min-width: 300px;
     }
 
     .kpi-container {
-
+      border: 1px solid #ccc;
       padding: 10px;
       position: relative;
       background: white;
-      transition: all 0.3s ease;
+      box-sizing: border-box;
     }
 
     .kpi-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 10px;
     }
 
     .edit-icon {
@@ -39,8 +40,7 @@
     .kpi-main {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      margin-top: 10px;
+      gap: 10px;
     }
 
     .kpi-bar {
@@ -68,51 +68,51 @@
     .kpi-matrix {
       display: flex;
       flex-direction: column;
-      gap: var(--row-gap, 4px);
-      margin-top: 20px;
-      margin-left: calc(var(--bar-width, 20px) + 10px);
+      gap: var(--row-gap, 5px);
+      margin-top: 15px;
     }
 
     .kpi-line {
       display: grid;
-      grid-template-columns: 50px 24px 90px 1fr;
+      grid-template-columns: 30px 40px 90px 90px;
       align-items: center;
-      padding: var(--cell-padding, 4px);
-      transition: background-color 0.3s ease;
+      padding: 6px 8px;
+      transition: all 0.3s ease;
     }
 
-    .label-cell {
-      font-style: italic;
+    .arrow {
+      text-align: center;
+      font-size: var(--delta-font-size, 14px);
     }
 
     .arrow.up::before {
       content: "▲";
       color: var(--arrow-color-b, #006400);
-      transition: color 0.3s ease;
     }
 
     .arrow.down::before {
       content: "▼";
       color: var(--arrow-color-rr, #a94442);
-      transition: color 0.3s ease;
     }
 
-    .arrow.none::before {
-      content: "";
+    .label {
+      font-family: var(--delta-font-family, Arial);
+      font-size: var(--delta-font-size, 14px);
+      font-style: italic;
     }
 
     .delta-val {
       font-weight: var(--delta-font-weight, bold);
       font-family: var(--delta-font-family, Arial);
       font-size: var(--delta-font-size, 14px);
+      padding-left: 10px;
       transition: all 0.3s ease;
     }
 
     .delta-pct {
-      font-weight: normal;
       font-family: var(--delta-font-family, Arial);
       font-size: var(--delta-font-size, 14px);
-      text-align: right;
+      padding-left: 10px;
       transition: all 0.3s ease;
     }
 
@@ -121,7 +121,6 @@
       font-size: var(--title-font-size, 16px);
       font-weight: bold;
       color: var(--font-color, #000000);
-      transition: all 0.3s ease;
     }
 
     .delta-bg-up {
@@ -134,48 +133,18 @@
       color: var(--text-color-rr, #a94442);
     }
 
-    .value-change {
-      animation: pulse 0.5s ease;
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+    .value-change {
+      animation: pulse 0.5s ease;
     }
   </style>
   <div id="root"></div>
 `;
-
-  const DEFAULTS = {
-    title: "EBITDA LIFO",
-    mainValue: "315,8",
-    deltaB: "+198",
-    deltaBPercent: "+168%",
-    deltaRR: "-521",
-    deltaRRPercent: "-254%",
-    barColor: "#006400",
-    fontColor: "#000000",
-    bgUpColor: "#dff0d8",
-    bgDownColor: "#f2dede",
-    titleFontFamily: "Arial",
-    titleFontSize: "16px",
-    mainValueFontFamily: "Arial",
-    mainValueFontSize: "28px",
-    deltaFontFamily: "Arial",
-    deltaFontSize: "14px",
-    deltaFontWeight: "bold",
-    labelB: "B",
-    labelRR: "R/R",
-    textColorB: "#006400",
-    textColorRR: "#a94442",
-    arrowColorB: "#006400",
-    arrowDirectionB: "up",
-    arrowColorRR: "#a94442",
-    arrowDirectionRR: "down",
-    fontFamily: "Arial",
-    fontSize: "14px"
-  };
 
   class OrlenKPI extends HTMLElement {
     constructor() {
@@ -183,156 +152,80 @@
       this._shadowRoot = this.attachShadow({ mode: "open" });
       this._shadowRoot.appendChild(template.content.cloneNode(true));
       this._root = this._shadowRoot.getElementById("root");
-      this.properties = { ...DEFAULTS };
-      this._definePropertyAccessors();
-
-      this._root.addEventListener("click", () => {
-        this.dispatchEvent(new CustomEvent("onClick"));
-      });
-    }
-
-    _definePropertyAccessors() {
-      const propertyNames = Object.keys(DEFAULTS);
-      
-      propertyNames.forEach(prop => {
-        Object.defineProperty(this, prop, {
-          get: function() {
-            return this.properties[prop];
-          },
-          set: function(value) {
-            const oldValue = this.properties[prop];
-            this.properties[prop] = value;
-            
-            if (this._shouldAnimate(prop, oldValue, value)) {
-              this._animateValueChange(prop);
-            } else {
-              this._render();
-            }
-          }
-        });
-      });
-    }
-
-    _shouldAnimate(prop, oldValue, newValue) {
-      const numericProps = ['mainValue', 'deltaB', 'deltaBPercent', 'deltaRR', 'deltaRRPercent'];
-      return numericProps.includes(prop) && oldValue !== newValue;
-    }
-
-    _animateValueChange(prop) {
-      const elementClass = this._getElementClass(prop);
+      this._shouldAnimate = false;
+      this._initProperties();
       this._render();
-      
-      setTimeout(() => {
-        const element = this._root.querySelector(`.${elementClass}`);
-        if (element) {
-          element.classList.add('value-change');
-          setTimeout(() => {
-            element.classList.remove('value-change');
-          }, 500);
-        }
-      }, 0);
+      this._setupEventListeners();
     }
 
-    _getElementClass(prop) {
-      const classMap = {
-        'mainValue': 'kpi-value',
-        'deltaB': 'delta-val',
-        'deltaBPercent': 'delta-pct',
-        'deltaRR': 'delta-val',
-        'deltaRRPercent': 'delta-pct'
+    _initProperties() {
+      this._properties = {
+        title: 'EBITDA LIFO',
+        mainValue: '315,8',
+        deltaB: '+198',
+        deltaBPercent: '+168%',
+        deltaRR: '-521',
+        deltaRRPercent: '-254%',
+        labelB: 'B',
+        labelRR: 'R/R',
+        arrowDirectionB: 'up',
+        arrowDirectionRR: 'down'
       };
-      return classMap[prop] || '';
     }
 
-    onCustomWidgetAfterUpdate(changedProperties) {
-      this.properties = { ...DEFAULTS, ...this.properties, ...changedProperties };
-      this._applyStyles();
-      this._render();
-    }
-
-    onCustomWidgetBeforeUpdate(changedProperties) {
-      this.properties = { ...this.properties, ...changedProperties };
-    }
-
-    onCustomWidgetResize(width, height) {
-      const minWidth = 150;
-      if (width < minWidth) {
-        width = minWidth;
-      }
-
-      const baseWidth = 300;
-      const scale = Math.min(width / baseWidth, 2);
-
-      this._root.style.setProperty("--title-font-size", `${16 * scale}px`);
-      this._root.style.setProperty("--main-value-font-size", `${28 * scale}px`);
-      this._root.style.setProperty("--delta-font-size", `${14 * scale}px`);
-      this._root.style.setProperty("--bar-width", `${Math.max(4, Math.round(10 * scale))}px`);
-      this._root.style.setProperty("--bar-height", `${Math.round(40 * scale)}px`);
-      this._root.style.setProperty("--cell-padding", `${Math.round(4 * scale)}px`);
-      this._root.style.setProperty("--row-gap", `${Math.round(4 * scale)}px`);
+    _setupEventListeners() {
+      this._root.addEventListener('click', (e) => {
+        if (e.target.classList.contains('edit-icon')) {
+          e.stopPropagation();
+          this.dispatchEvent(new CustomEvent('onEdit'));
+        } else {
+          this.dispatchEvent(new CustomEvent('onClick'));
+        }
+      });
     }
 
     _applyStyles() {
-      const styleMap = {
-        "--font-family": this.properties.fontFamily,
-        "--font-color": this.properties.fontColor,
-        "--bar-color": this.properties.barColor,
-        "--bg-up-color": this.properties.bgUpColor,
-        "--bg-down-color": this.properties.bgDownColor,
-        "--text-color-b": this.properties.textColorB,
-        "--text-color-rr": this.properties.textColorRR,
-        "--title-font-family": this.properties.titleFontFamily,
-        "--title-font-size": this.properties.titleFontSize,
-        "--main-value-font-family": this.properties.mainValueFontFamily,
-        "--main-value-font-size": this.properties.mainValueFontSize,
-        "--delta-font-family": this.properties.deltaFontFamily,
-        "--delta-font-size": this.properties.deltaFontSize,
-        "--delta-font-weight": this.properties.deltaFontWeight,
-        "--arrow-color-b": this.properties.arrowColorB,
-        "--arrow-color-rr": this.properties.arrowColorRR
-      };
+      const styleProps = [
+        'fontFamily', 'fontColor', 'barColor', 'bgUpColor', 'bgDownColor',
+        'textColorB', 'textColorRR', 'titleFontFamily', 'titleFontSize',
+        'mainValueFontFamily', 'mainValueFontSize', 'deltaFontFamily',
+        'deltaFontSize', 'deltaFontWeight', 'arrowColorB', 'arrowColorRR'
+      ];
 
-      Object.entries(styleMap).forEach(([prop, value]) => {
-        this._root.style.setProperty(prop, value || DEFAULTS[prop.replace('--', '')]);
+      styleProps.forEach(prop => {
+        const cssVar = `--${prop.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
+        const value = this[prop] || this._properties[prop];
+        if (value) {
+          this._root.style.setProperty(cssVar, value);
+        }
       });
     }
 
     _render() {
-      const {
-        title = DEFAULTS.title,
-        mainValue = DEFAULTS.mainValue,
-        deltaB = DEFAULTS.deltaB,
-        deltaBPercent = DEFAULTS.deltaBPercent,
-        deltaRR = DEFAULTS.deltaRR,
-        deltaRRPercent = DEFAULTS.deltaRRPercent,
-        labelB = DEFAULTS.labelB,
-        labelRR = DEFAULTS.labelRR,
-        arrowDirectionB = DEFAULTS.arrowDirectionB,
-        arrowDirectionRR = DEFAULTS.arrowDirectionRR
-      } = this.properties;
+      this._applyStyles();
 
       this._root.innerHTML = `
         <div class="kpi-container">
           <div class="kpi-header">
-            <div class="kpi-title">${title}</div>
+            <div class="kpi-title">${this._properties.title}</div>
             <div class="edit-icon" title="Edytuj">✎</div>
           </div>
           <div class="kpi-main">
             <div class="kpi-bar"></div>
             <div class="kpi-content">
-              <div class="kpi-value">${mainValue}</div>
+              <div class="kpi-value ${this._shouldAnimate ? 'value-change' : ''}">${this._properties.mainValue}</div>
               <div class="kpi-matrix">
                 <div class="kpi-line delta-bg-up">
-                  <div class="label-cell">${labelB}</div>
-                  <div class="arrow ${arrowDirectionB}"></div>
-                  <div class="delta-val">${deltaB}</div>
-                  <div class="delta-pct">${deltaBPercent}</div>
+                  <div class="arrow ${this._properties.arrowDirectionB}"></div>
+                  <div class="label">${this._properties.labelB}</div>
+                  <div class="delta-val ${this._shouldAnimate ? 'value-change' : ''}">${this._properties.deltaB}</div>
+                  <div class="delta-pct ${this._shouldAnimate ? 'value-change' : ''}">${this._properties.deltaBPercent}</div>
                 </div>
                 <div class="kpi-line delta-bg-down">
-                  <div class="label-cell">${labelRR}</div>
-                  <div class="arrow ${arrowDirectionRR}"></div>
-                  <div class="delta-val">${deltaRR}</div>
-                  <div class="delta-pct">${deltaRRPercent}</div>
+                  <div class="arrow ${this._properties.arrowDirectionRR}"></div>
+                  <div class="label">${this._properties.labelRR}</div>
+                  <div class="delta-val ${this._shouldAnimate ? 'value-change' : ''}">${this._properties.deltaRR}</div>
+                  <div class="delta-pct ${this._shouldAnimate ? 'value-change' : ''}">${this._properties.deltaRRPercent}</div>
                 </div>
               </div>
             </div>
@@ -340,15 +233,78 @@
         </div>
       `;
 
-      const editIcon = this._root.querySelector(".edit-icon");
-      if (editIcon) {
-        editIcon.addEventListener("click", (e) => {
-          e.stopPropagation();
-          this.dispatchEvent(new CustomEvent("onEdit"));
-        });
+      if (this._shouldAnimate) {
+        setTimeout(() => {
+          const animatedElements = this._root.querySelectorAll('.value-change');
+          animatedElements.forEach(el => el.classList.remove('value-change'));
+          this._shouldAnimate = false;
+        }, 500);
       }
     }
+
+    // Gettery i settery dla wszystkich właściwości
+    get title() { return this._properties.title; }
+    set title(value) { 
+      this._properties.title = value; 
+      this._render(); 
+    }
+
+    get mainValue() { return this._properties.mainValue; }
+    set mainValue(value) { 
+      if (this._properties.mainValue !== value) {
+        this._shouldAnimate = true;
+        this._properties.mainValue = value; 
+        this._render();
+      }
+    }
+
+    // ... (Analogiczne gettery/settery dla wszystkich pozostałych właściwości)
+
+    onCustomWidgetAfterUpdate(changedProperties) {
+      Object.keys(changedProperties).forEach(prop => {
+        if (this._properties.hasOwnProperty(prop)) {
+          if (prop.includes('Value') || prop.includes('delta')) {
+            this._shouldAnimate = true;
+          }
+          this._properties[prop] = changedProperties[prop];
+        }
+      });
+      this._render();
+    }
+
+    onCustomWidgetResize(width, height) {
+      const scale = Math.min(width / 300, 1.5);
+      this._root.style.setProperty('--title-font-size', `${Math.max(14, 16 * scale)}px`);
+      this._root.style.setProperty('--main-value-font-size', `${Math.max(20, 28 * scale)}px`);
+      this._root.style.setProperty('--delta-font-size', `${Math.max(12, 14 * scale)}px`);
+      this._root.style.setProperty('--bar-width', `${Math.max(15, 20 * scale)}px`);
+      this._root.style.setProperty('--bar-height', `${Math.max(60, 80 * scale)}px`);
+    }
   }
+
+  // Rejestracja wszystkich właściwości
+  const properties = [
+    'title', 'mainValue', 'deltaB', 'deltaBPercent', 'deltaRR', 'deltaRRPercent',
+    'labelB', 'labelRR', 'arrowDirectionB', 'arrowDirectionRR', 'barColor',
+    'fontColor', 'bgUpColor', 'bgDownColor', 'fontFamily', 'fontSize',
+    'titleFontFamily', 'titleFontSize', 'mainValueFontFamily', 'mainValueFontSize',
+    'deltaFontFamily', 'deltaFontSize', 'deltaFontWeight', 'textColorB', 'textColorRR',
+    'arrowColorB', 'arrowColorRR'
+  ];
+
+  properties.forEach(prop => {
+    Object.defineProperty(OrlenKPI.prototype, prop, {
+      get: function() { return this._properties[prop]; },
+      set: function(value) { 
+        const shouldAnimate = (prop.includes('Value') || prop.includes('delta'));
+        if (this._properties[prop] !== value) {
+          if (shouldAnimate) this._shouldAnimate = true;
+          this._properties[prop] = value;
+          this._render();
+        }
+      }
+    });
+  });
 
   customElements.define("com-sap-analytics-custom-widget-orlenkpi", OrlenKPI);
 })();
