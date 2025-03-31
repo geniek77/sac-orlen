@@ -104,14 +104,14 @@
       const props = {};
       ids.forEach(id => {
         const el = this._shadowRoot.getElementById(id);
-        props[id] = el?.value || "";
+        props[id] = el ? el.value : "";
       });
       return props;
     }
     ;
       ids.forEach(id => {
         const el = this._shadowRoot.getElementById(id);
-        props[id] = el?.value || "";
+        props[id] = el ? el.value : "";
       });
       return props;
     }
@@ -121,9 +121,7 @@
       ids.forEach(id => {
         const el = this._shadowRoot.getElementById(id);
         if (el) {
-          el.value = (properties[id] !== undefined && properties[id] !== "")
-            ? properties[id]
-            : (DEFAULTS[id] ?? el.value ?? "");
+          if (properties[id] !== undefined && properties[id] !== "") { el.value = properties[id]; } else if (DEFAULTS[id]) { el.value = DEFAULTS[id]; } else if (el.value) { el.value = el.value; } else { el.value = ""; };
         }
       });
     }
