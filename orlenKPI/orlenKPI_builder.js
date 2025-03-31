@@ -76,6 +76,10 @@
   };
 
   class OrlenKPIBuilder extends HTMLElement {
+    connectedCallback() {
+  this.setProperties({});
+}
+
     constructor() {
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });

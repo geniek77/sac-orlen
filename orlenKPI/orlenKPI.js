@@ -208,26 +208,42 @@
       const arrowB = arrowDirectionB === "up" ? "▲" : arrowDirectionB === "down" ? "▼" : "";
       const arrowRR = arrowDirectionRR === "up" ? "▲" : arrowDirectionRR === "down" ? "▼" : "";
 
-      this._root.innerHTML = `<div class="edit-icon" id="editIcon" title="Edytuj">✎</div>
-        <div class="kpi-box">
-          <div class="kpi-header">${title}</div>
-          <div class="kpi-main">
+      
+    this._root.innerHTML = `
+      <div class="kpi-container">
+        <div class="kpi-header">
+          <div class="kpi-title">\${title}</div>
+          <div class="edit-icon" title="Edytuj">✎</div>
+        </div>
+        <div class="kpi-main">
+          <div class="kpi-bar-column">
             <div class="kpi-bar"></div>
-            <div class="kpi-value">${mainValue}</div>
           </div>
-          <div class="kpi-matrix">
-            <div class="kpi-row">
-              <div class="kpi-label up" style="color: ${arrowColorB}">${arrowB}<br>${labelB}</div>
-              <div class="kpi-cell up">${deltaB}</div>
-              <div class="kpi-cell up">${deltaBPercent}</div>
-            </div>
-            <div class="kpi-row">
-              <div class="kpi-label down" style="color: ${arrowColorRR}">${arrowRR}<br>${labelRR}</div>
-              <div class="kpi-cell down">${deltaRR}</div>
-              <div class="kpi-cell down">${deltaRRPercent}</div>
+          <div class="kpi-content-column">
+            <div class="kpi-value">\${mainValue}</div>
+            <div class="kpi-matrix">
+              <div class="kpi-line-group">
+                <div class="kpi-line">
+                  <div class="arrow delta-b \${arrowDirectionB}"></div>
+                  <div class="delta-val">\${deltaB}</div>
+                  <div class="delta-pct">\${deltaBPercent}</div>
+                </div>
+                <div class="label-line">\${labelB}</div>
+              </div>
+              <div class="kpi-line-group">
+                <div class="kpi-line">
+                  <div class="arrow delta-rr \${arrowDirectionRR}"></div>
+                  <div class="delta-val">\${deltaRR}</div>
+                  <div class="delta-pct">\${deltaRRPercent}</div>
+                </div>
+                <div class="label-line">\${labelRR}</div>
+              </div>
             </div>
           </div>
-        </div>`;
+        </div>
+      </div>
+    `;
+    
 
       const editIcon = this._root.querySelector("#editIcon");
       if (editIcon) {

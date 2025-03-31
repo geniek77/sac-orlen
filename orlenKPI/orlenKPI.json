@@ -1,6 +1,6 @@
 {
   "id": "com.sap.analytics.custom.widget.orlenkpi",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "name": "orlenKPI",
   "description": "Widżet KPI z dynamiczną konfiguracją wyglądu i wartości",
   "vendor": "G++ E.Sz dla ORLEN S.A.",
