@@ -1,4 +1,3 @@
-
 (function () {
   const template = document.createElement("template");
   template.innerHTML = `
@@ -76,52 +75,52 @@
   };
 
   class OrlenKPIBuilder extends HTMLElement {
-    connectedCallback() {
-  this.setProperties({});
-}
-
     constructor() {
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
       this._shadowRoot.appendChild(template.content.cloneNode(true));
-      this._shadowRoot.getElementById("form").addEventListener("submit",function(e) {
-        e.preventDefault();
-        this._firePropertiesChanged();
-      });
+      this._form = this._shadowRoot.getElementById("form");
+      this._form.addEventListener("submit", this._handleSubmit.bind(this));
+    }
+
+    _handleSubmit(e) {
+      e.preventDefault();
+      this._firePropertiesChanged();
     }
 
     _firePropertiesChanged() {
       this.dispatchEvent(new CustomEvent("propertiesChanged", {
-        detail: {
-          properties: this.getProperties()
-        }
+        detail: { properties: this.getProperties() }
       }));
     }
 
-    
     getProperties() {
-      const ids = Object.keys(DEFAULTS);
       const props = {};
-      ids.forEach(function(id) {
+      Object.keys(DEFAULTS).forEach(id => {
         const el = this._shadowRoot.getElementById(id);
-        props[id] = el ? el.value : "";
-      });
-      return props;
-    }
-    ;
-      ids.forEach(function(id) {
-        const el = this._shadowRoot.getElementById(id);
-        props[id] = el ? el.value : "";
+        props[id] = el ? el.value : DEFAULTS[id];
       });
       return props;
     }
 
     setProperties(properties) {
-      const ids = Object.keys(DEFAULTS);
-      ids.forEach(function(id) {
+      Object.keys(DEFAULTS).forEach(id => {
         const el = this._shadowRoot.getElementById(id);
         if (el) {
-          if (properties[id] !== undefined && properties[id] !== "") { el.value = properties[id]; } else if (DEFAULTS[id]) { el.value = DEFAULTS[id]; } else if (el.value) { el.value = el.value; } else { el.value = ""; };
+          const defaultValue = DEFAULTS[id];
+          const newValue = properties[id] !== undefined ? properties[id] : defaultValue;
+          
+          if (el.type === "color" && !newValue.startsWith("#")) {
+            el.value = defaultValue; // Zabezpieczenie przed nieprawidłowymi wartościami kolorów
+          } else {
+            el.value = newValue;
+          }
+          
+          // Specjalna obsługa selectów
+          if (el.tagName === "SELECT") {
+            const option = el.querySelector(`option[value="${newValue}"]`);
+            if (option) option.selected = true;
+          }
         }
       });
     }
