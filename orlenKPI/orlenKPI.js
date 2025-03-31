@@ -1,121 +1,105 @@
 (function () {
   const template = document.createElement("template");
   template.innerHTML = `
-  <style>
-    :host {
-      display: block;
-      position: relative;
-    }
+  
+<style>
+  :host {
+    display: block;
+    font-family: Arial, sans-serif;
+  }
 
-    #root {
-      width: 100%;
-      height: 100%;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      box-sizing: border-box;
-      font-family: var(--font-family, Arial);
-      color: var(--font-color, #000);
-      font-size: var(--font-size, 14px);
-    }
+  .kpi-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    position: relative;
+  }
 
-    .edit-icon {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: none;
-  font-size: 20px;
-  color: gray;
-  cursor: pointer;
-  z-index: 10;
-}
+  .kpi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    .kpi-box {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  flex-grow: 1;
-  position: relative;
-}
+  .edit-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #888;
+  }
 
-    .kpi-header {
-  font-size: var(--title-font-size, 16px);
-  font-family: var(--title-font-family, Arial);
+  .kpi-main {
+    display: flex;
+    margin-top: 10px;
+    gap: 12px;
+  }
 
-  margin-top: -4px;
-  margin-bottom: 2px;
+  .kpi-bar-column {
+    width: 24px;
+    background: var(--bar-color, #006400);
+    min-height: 80px;
+  }
 
-      font-weight: bold;
-      font-size: 16px;
-      margin-bottom: 4px;
-      text-align: left;
-    }
+  .kpi-content-column {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
 
-    .kpi-main {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: flex-start;
-      width: 100%;
-    }
+  .kpi-value {
+    font-size: var(--main-value-font-size, 28px);
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
-    .kpi-bar {
-      width: var(--bar-width, 10px);
-      height: var(--bar-height, 40px);
-      background-color: var(--bar-color, #006400);
-    }
+  .kpi-matrix {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 
-    .kpi-value {
-  font-size: var(--main-value-font-size, 28px);
-  font-weight: bold;
-  text-align: left;
-  flex: 0 0 auto;
-}
+  .kpi-line {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
 
-    .kpi-matrix {
-      margin-top: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: var(--row-gap, 4px);
-    }
+  .label-line {
+    font-size: 12px;
+    color: #666;
+    margin-left: 24px;
+    margin-bottom: 8px;
+  }
 
-    .kpi-row {
-      display: flex;
-      justify-content: center;
-      gap: var(--row-gap, 4px);
-    }
+  .arrow {
+    width: 12px;
+    height: 12px;
+  }
 
-    .kpi-label {
-      width: var(--label-width, 40px);
-      text-align: center;
-      font-size: 12px;
-    }
+  .arrow.up::before {
+    content: "▲";
+    color: var(--arrow-color-b, green);
+  }
 
-    .kpi-cell {
-  font-size: var(--delta-font-size, 14px);
-  font-weight: var(--delta-font-weight, bold);
-  font-family: var(--delta-font-family, Arial);
+  .arrow.down::before {
+    content: "▼";
+    color: var(--arrow-color-rr, red);
+  }
 
-      width: var(--cell-width, 60px);
-      padding: var(--cell-padding, 4px);
-      text-align: center;
-      font-weight: bold;
-      font-size: 20px;
-      border-radius: 2px;
-    }
+  .arrow.none::before {
+    content: "";
+  }
 
-    .up {
-      background-color: var(--bg-up-color, #dff0d8);
-      color: var(--text-color-b, #006400);
-    }
+  .delta-val {
+    font-weight: bold;
+  }
 
-    .down {
-      background-color: var(--bg-down-color, #f2dede);
-      color: var(--text-color-rr, #a94442);
-    }
-  </style>
+  .delta-pct {
+    font-weight: normal;
+  }
+</style>
+
   <div id="root"></div>`;
 
   class OrlenKPI extends HTMLElement {
