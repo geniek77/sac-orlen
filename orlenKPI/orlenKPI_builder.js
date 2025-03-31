@@ -57,6 +57,8 @@
     fontColor: "#000000",
     bgUpColor: "#dff0d8",
     bgDownColor: "#f2dede",
+    fontFamily: "Arial",
+    fontSize: "14px",
     titleFontFamily: "Arial",
     titleFontSize: "16px",
     mainValueFontFamily: "Arial",
@@ -81,6 +83,15 @@
       this._shadowRoot.appendChild(template.content.cloneNode(true));
       this._form = this._shadowRoot.getElementById("form");
       this._form.addEventListener("submit", this._handleSubmit.bind(this));
+      this._initialized = false;
+    }
+
+    connectedCallback() {
+      this._initialized = true;
+      if (this._pendingProperties) {
+        this.setProperties(this._pendingProperties);
+        this._pendingProperties = null;
+      }
     }
 
     _handleSubmit(e) {
@@ -104,23 +115,33 @@
     }
 
     setProperties(properties) {
+      if (!this._initialized) {
+        this._pendingProperties = properties;
+        return;
+      }
+      
+      if (!this._shadowRoot) return;
+
       Object.keys(DEFAULTS).forEach(id => {
         const el = this._shadowRoot.getElementById(id);
-        if (el) {
-          const defaultValue = DEFAULTS[id];
-          const newValue = properties[id] !== undefined ? properties[id] : defaultValue;
-          
-          if (el.type === "color" && !newValue.startsWith("#")) {
-            el.value = defaultValue; // Zabezpieczenie przed nieprawidłowymi wartościami kolorów
-          } else {
-            el.value = newValue;
-          }
-          
-          // Specjalna obsługa selectów
-          if (el.tagName === "SELECT") {
-            const option = el.querySelector(`option[value="${newValue}"]`);
-            if (option) option.selected = true;
-          }
+        if (!el) return;
+        
+        const defaultValue = DEFAULTS[id];
+        let newValue = properties[id];
+        
+        if (newValue === undefined || newValue === null) {
+          newValue = defaultValue;
+        }
+        
+        if (el.type === 'color') {
+          el.value = (newValue && typeof newValue === 'string' && newValue.startsWith('#')) ? newValue : defaultValue;
+        } 
+        else if (el.tagName === 'SELECT') {
+          const optionExists = Array.from(el.options).some(opt => opt.value === newValue);
+          el.value = optionExists ? newValue : defaultValue;
+        }
+        else {
+          el.value = newValue !== undefined ? newValue : defaultValue;
         }
       });
     }
