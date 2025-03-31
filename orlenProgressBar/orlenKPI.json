@@ -1,0 +1,268 @@
+{
+  "id": "com.sap.analytics.custom.widget.orlenkpi",
+  "version": "1.0.2",
+  "name": "orlenKPI",
+  "description": "Widżet KPI z dynamiczną konfiguracją wyglądu i wartości",
+  "vendor": "G++ E.Sz dla ORLEN S.A.",
+  "newInstancePrefix": "orlen_kpi",
+  "webcomponents": [
+    {
+      "kind": "main",
+      "tag": "com-sap-analytics-custom-widget-orlenkpi",
+      "url": "/orlenKPI.js",
+      "integrity": "",
+      "ignoreIntegrity": true
+    },
+    {
+      "kind": "builder",
+      "tag": "com-sap-analytics-custom-widget-orlenkpi-builder",
+      "url": "/orlenKPI_builder.js",
+      "integrity": "",
+      "ignoreIntegrity": true
+    }
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "default": "EBITDA LIFO",
+      "description": "Tytuł KPI"
+    },
+    "mainValue": {
+      "type": "string",
+      "default": "315,8",
+      "description": "Wartość główna"
+    },
+    "deltaB": {
+      "type": "string",
+      "default": "+198",
+      "description": "Zmiana B"
+    },
+    "deltaBPercent": {
+      "type": "string",
+      "default": "+168%",
+      "description": "Zmiana B w %"
+    },
+    "deltaRR": {
+      "type": "string",
+      "default": "-521",
+      "description": "Zmiana R/R"
+    },
+    "deltaRRPercent": {
+      "type": "string",
+      "default": "-254%",
+      "description": "Zmiana R/R w %"
+    },
+    "barColor": {
+      "type": "string",
+      "default": "#006400",
+      "description": "Kolor słupka"
+    },
+    "fontColor": {
+      "type": "string",
+      "default": "#000000",
+      "description": "Kolor tekstu"
+    },
+    "bgUpColor": {
+      "type": "string",
+      "default": "#dff0d8",
+      "description": "Tło wartości B"
+    },
+    "bgDownColor": {
+      "type": "string",
+      "default": "#f2dede",
+      "description": "Tło wartości R/R"
+    },
+    "fontFamily": {
+      "type": "string",
+      "default": "Arial",
+      "description": "Rodzaj czcionki"
+    },
+    "fontSize": {
+      "type": "string",
+      "default": "14px",
+      "description": "Rozmiar czcionki"
+    },
+    "labelB": {
+      "type": "string",
+      "default": "B",
+      "description": "Etykieta zmiany B"
+    },
+    "labelRR": {
+      "type": "string",
+      "default": "R/R",
+      "description": "Etykieta zmiany R/R"
+    },
+    "textColorB": {
+      "type": "string",
+      "default": "#006400",
+      "description": "Kolor tekstu wartości B"
+    },
+    "textColorRR": {
+      "type": "string",
+      "default": "#a94442",
+      "description": "Kolor tekstu wartości R/R"
+    },
+    "arrowColorB": {
+      "type": "string",
+      "default": "#006400",
+      "description": "Kolor trójkąta B"
+    },
+    "arrowColorRR": {
+      "type": "string",
+      "default": "#a94442",
+      "description": "Kolor trójkąta R/R"
+    },
+    "arrowDirectionB": {
+      "type": "string",
+      "default": "up",
+      "description": "Kierunek trójkąta B (up/down/none)"
+    },
+    "arrowDirectionRR": {
+      "type": "string",
+      "default": "down",
+      "description": "Kierunek trójkąta R/R (up/down/none)"
+    }
+  },
+  "methods": {
+    "getTitle": {
+      "returnType": "string"
+    },
+    "setTitle": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getMainValue": {
+      "returnType": "string"
+    },
+    "setMainValue": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getDeltaB": {
+      "returnType": "string"
+    },
+    "setDeltaB": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getDeltaRR": {
+      "returnType": "string"
+    },
+    "setDeltaRR": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getLabelB": {
+      "returnType": "string"
+    },
+    "setLabelB": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getLabelRR": {
+      "returnType": "string"
+    },
+    "setLabelRR": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getTextColorB": {
+      "returnType": "string"
+    },
+    "setTextColorB": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getTextColorRR": {
+      "returnType": "string"
+    },
+    "setTextColorRR": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getArrowColorB": {
+      "returnType": "string"
+    },
+    "setArrowColorB": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getArrowColorRR": {
+      "returnType": "string"
+    },
+    "setArrowColorRR": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getArrowDirectionB": {
+      "returnType": "string"
+    },
+    "setArrowDirectionB": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getArrowDirectionRR": {
+      "returnType": "string"
+    },
+    "setArrowDirectionRR": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "events": {
+    "onClick": {
+      "description": "Zdarzenie po kliknięciu w cały widget"
+    },
+    "onEdit": {
+      "description": "Zdarzenie po kliknięciu w ikonę edycji"
+    }
+  }
+}
