@@ -158,7 +158,239 @@
       "description": "Krój czcionki delta"
     }
   },
-  "methods": {},
+  "methods": {
+    "getTitle": {
+      "returnType": "string"
+    },
+    "setTitle": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getMainValue": {
+      "returnType": "string"
+    },
+    "setMainValue": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getDeltaB": {
+      "returnType": "string"
+    },
+    "setDeltaB": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getDeltaBPercent": {
+      "returnType": "string"
+    },
+    "setDeltaBPercent": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getDeltaRR": {
+      "returnType": "string"
+    },
+    "setDeltaRR": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getDeltaRRPercent": {
+      "returnType": "string"
+    },
+    "setDeltaRRPercent": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getLabelB": {
+      "returnType": "string"
+    },
+    "setLabelB": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getLabelRR": {
+      "returnType": "string"
+    },
+    "setLabelRR": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getTextColorB": {
+      "returnType": "string"
+    },
+    "setTextColorB": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getTextColorRR": {
+      "returnType": "string"
+    },
+    "setTextColorRR": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getArrowColorB": {
+      "returnType": "string"
+    },
+    "setArrowColorB": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getArrowColorRR": {
+      "returnType": "string"
+    },
+    "setArrowColorRR": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getArrowDirectionB": {
+      "returnType": "string"
+    },
+    "setArrowDirectionB": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getArrowDirectionRR": {
+      "returnType": "string"
+    },
+    "setArrowDirectionRR": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getTitleFontFamily": {
+      "returnType": "string"
+    },
+    "setTitleFontFamily": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getTitleFontSize": {
+      "returnType": "string"
+    },
+    "setTitleFontSize": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getMainValueFontFamily": {
+      "returnType": "string"
+    },
+    "setMainValueFontFamily": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getMainValueFontSize": {
+      "returnType": "string"
+    },
+    "setMainValueFontSize": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getDeltaFontFamily": {
+      "returnType": "string"
+    },
+    "setDeltaFontFamily": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getDeltaFontSize": {
+      "returnType": "string"
+    },
+    "setDeltaFontSize": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getDeltaFontWeight": {
+      "returnType": "string"
+    },
+    "setDeltaFontWeight": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    }
+  },
   "events": {
     "onClick": {
       "description": "Zdarzenie po kliknięciu w cały widget"
