@@ -25,7 +25,7 @@
       position: absolute;
       top: 6px;
       right: 8px;
-      font-size: 17px;
+      font-size: 20px;
       color: gray;
       cursor: pointer;
       z-index: 10;
@@ -62,7 +62,7 @@
 
     .kpi-bar {
       width: var(--bar-width, 10px);
-      height: 40px;
+      height: var(--bar-height, 40px);
       background-color: var(--bar-color, #006400);
     }
 
@@ -79,17 +79,17 @@
       margin-top: 8px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: var(--row-gap, 4px);
     }
 
     .kpi-row {
       display: flex;
       justify-content: center;
-      gap: 4px;
+      gap: var(--row-gap, 4px);
     }
 
     .kpi-label {
-      width: 40px;
+      width: var(--label-width, 40px);
       text-align: center;
       font-size: 12px;
     }
@@ -99,11 +99,11 @@
   font-weight: var(--delta-font-weight, bold);
   font-family: var(--delta-font-family, Arial);
 
-      width: 60px;
-      padding: 4px;
+      width: var(--cell-width, 60px);
+      padding: var(--cell-padding, 4px);
       text-align: center;
       font-weight: bold;
-      font-size: 17px;
+      font-size: 20px;
       border-radius: 2px;
     }
 
@@ -146,14 +146,29 @@
     }
 
     onCustomWidgetResize(width, height) {
-      const baseWidth = 300;
-      const baseFontSize = 14;
-      const scale = Math.min(width / baseWidth, 2);
-      const fontSize = (baseFontSize * scale).toFixed(1) + "px";
-      const barWidth = Math.max(4, Math.round(10 * scale)) + "px";
-      this._root.style.setProperty("--font-size", fontSize);
-      this._root.style.setProperty("--bar-width", barWidth);
-    }
+  const baseWidth = 300;
+  const scale = Math.min(width / baseWidth, 2);
+
+  const titleSize = (16 * scale).toFixed(1) + "px";
+  const mainSize = (28 * scale).toFixed(1) + "px";
+  const deltaSize = (14 * scale).toFixed(1) + "px";
+  const barWidth = Math.max(4, Math.round(10 * scale)) + "px";
+  const barHeight = Math.round(40 * scale) + "px";
+  const cellPadding = Math.round(4 * scale) + "px";
+  const rowGap = Math.round(4 * scale) + "px";
+  const labelWidth = Math.round(40 * scale) + "px";
+  const cellWidth = Math.round(60 * scale) + "px";
+
+  this._root.style.setProperty("--title-font-size", titleSize);
+  this._root.style.setProperty("--main-value-font-size", mainSize);
+  this._root.style.setProperty("--delta-font-size", deltaSize);
+  this._root.style.setProperty("--bar-width", barWidth);
+  this._root.style.setProperty("--bar-height", barHeight);
+  this._root.style.setProperty("--cell-padding", cellPadding);
+  this._root.style.setProperty("--row-gap", rowGap);
+  this._root.style.setProperty("--label-width", labelWidth);
+  this._root.style.setProperty("--cell-width", cellWidth);
+}
 
     applyStyles() {
       const {
