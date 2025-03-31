@@ -83,9 +83,13 @@
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
       this._shadowRoot.appendChild(template.content.cloneNode(true));
-      this._shadowRoot.getElementById("form").addEventListener("submit", e => {
+      const form = this._shadowRoot.querySelector("form");
+      if (form) {
+        form.addEventListener("submit", e => {
         e.preventDefault();
         this._firePropertiesChanged();
+        });
+      }
       });
     }
 

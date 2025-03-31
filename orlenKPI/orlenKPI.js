@@ -23,7 +23,7 @@
 
     .edit-icon {
       position: absolute;
-      top: 6px;
+      top: 50%; transform: translateY(-50%);
       right: 8px;
       font-size: 20px;
       color: gray;
