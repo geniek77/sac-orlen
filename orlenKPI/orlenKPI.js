@@ -300,3 +300,4 @@
 
   customElements.define("com-sap-analytics-custom-widget-orlenkpi", OrlenKPI);
 })();
+

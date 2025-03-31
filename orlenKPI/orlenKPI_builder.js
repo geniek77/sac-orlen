@@ -125,3 +125,4 @@
 
   customElements.define("com-sap-analytics-custom-widget-orlenkpi-builder", OrlenKPIBuilder);
 })();
+
