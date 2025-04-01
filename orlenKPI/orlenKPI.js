@@ -1,5 +1,5 @@
 (function () {
-  const template = document.createElement("template"); 
+  const template = document.createElement("template");
   template.innerHTML = `
   <style>
     :host {
@@ -7,22 +7,22 @@
       font-family: var(--font-family, "'72'"), sans-serif;
       min-width: 300px;
     }
-
+ 
     .kpi-container {
-
-      padding: 10px;
+      padding: 20px;
       position: relative;
-      background: white;
+      background: transparent;
       box-sizing: border-box;
     }
-
+ 
     .kpi-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
+      margin-top: 10px;
     }
-
+ 
     .edit-icon {
       position: absolute;
       top: 8px;
@@ -32,30 +32,31 @@
       color: #888;
       transition: transform 0.2s ease;
     }
-
+ 
     .edit-icon:hover {
       transform: scale(1.1);
     }
-
+ 
     .kpi-main {
       display: flex;
       align-items: flex-start;
       gap: 10px;
     }
-
+ 
     .kpi-bar {
       width: var(--bar-width, 20px);
-      background: var(--bar-color, #006400);
-      height: calc(var(--bar-height, 80px) + 20px); // Wydłużenie słupka
-      transition: all 0.5s ease;
+      background-color: var(--bar-color, #006400);
+      height: calc(var(--bar-height, 80px));
+      transition: background-color 0.5s ease, opacity 0.5s ease;
+      opacity: 1;
     }
-
+ 
     .kpi-content {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
     }
-
+ 
     .kpi-value {
       font-size: var(--main-value-font-size, 28px);
       font-family: var(--main-value-font-family, "'72'");
@@ -64,23 +65,23 @@
       color: var(--font-color, #000000);
       transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-
+ 
     .kpi-matrix {
-		display: flex;
-		flex-direction: column;
-		gap: var(--row-gap, 5px);
-		margin-top: 20px; // Zmiana z 30px na 20px
-		position: relative;
-		top: 20px; // Dodatkowe przesunięcie w dół
+      display: flex;
+      flex-direction: column;
+      gap: var(--row-gap, 5px);
+      margin-top: 30px;
+      position: relative;
+      top: 10px;
     }
-
+ 
     .kpi-line {
       display: grid;
       grid-template-columns: 30px 40px 90px 90px;
       align-items: center;
       transition: all 0.3s ease;
     }
-
+ 
     .delta-b {
       font-family: var(--delta-b-font-family, "'72'");
       font-size: var(--delta-b-font-size, 14px);
@@ -90,7 +91,7 @@
       padding: var(--delta-b-padding, 6px 8px);
       border-radius: var(--delta-b-border-radius, 4px);
     }
-
+ 
     .delta-rr {
       font-family: var(--delta-rr-font-family, "'72'");
       font-size: var(--delta-rr-font-size, 14px);
@@ -100,50 +101,50 @@
       padding: var(--delta-rr-padding, 6px 8px);
       border-radius: var(--delta-rr-border-radius, 4px);
     }
-
+ 
     .arrow {
       text-align: center;
     }
-
+ 
     .arrow.up::before {
       content: "▲";
       color: var(--arrow-color-b, #006400);
     }
-
+ 
     .arrow.down::before {
       content: "▼";
       color: var(--arrow-color-rr, #a94442);
     }
-
+ 
     .label {
       font-style: italic;
     }
-
+ 
     .delta-val, .delta-pct {
       padding-left: 10px;
       transition: all 0.3s ease;
     }
-
+ 
     .kpi-title {
       font-family: var(--title-font-family, "'72'");
       font-size: var(--title-font-size, 16px);
       font-weight: var(--title-font-weight, bold);
       color: var(--font-color, #000000);
     }
-
+ 
     @keyframes pulse {
       0% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.05); opacity: 0.8; }
       100% { transform: scale(1); opacity: 1; }
     }
-
+ 
     .value-change {
       animation: pulse 0.5s ease;
     }
   </style>
   <div id="root"></div>
 `;
-
+ 
   class OrlenKPI extends HTMLElement {
     constructor() {
       super();
@@ -155,7 +156,7 @@
       this._render();
       this._setupEventListeners();
     }
-
+ 
     _getDefaultProperties() {
       return {
         title: 'EBITDA LIFO',
@@ -192,10 +193,11 @@
         deltaRRBorderRadius: '4px'
       };
     }
-	
-	getDefaultProperties() {
-	  return this._getDefaultProperties();
-	}
+               
+    getDefaultProperties() {
+      return this._getDefaultProperties();
+    }
+
     _setupEventListeners() {
       this._root.addEventListener('click', (e) => {
         if (e.target.classList.contains('edit-icon')) {
@@ -206,7 +208,7 @@
         }
       });
     }
-
+ 
     _applyStyles() {
       const styleMap = {
         '--font-color': this._props.fontColor,
@@ -232,16 +234,16 @@
         '--arrow-color-b': this._props.arrowColorB,
         '--arrow-color-rr': this._props.arrowColorRR
       };
-
+ 
       Object.entries(styleMap).forEach(([prop, value]) => {
         this._root.style.setProperty(prop, value);
       });
     }
-
+ 
     _render() {
       try {
         this._applyStyles();
-
+ 
         this._root.innerHTML = `
           <div class="kpi-container">
             <div class="kpi-header">
@@ -270,7 +272,7 @@
             </div>
           </div>
         `;
-
+ 
         if (this._shouldAnimate) {
           setTimeout(() => {
             try {
@@ -289,13 +291,13 @@
         </div>`;
       }
     }
-
+ 
     onCustomWidgetBeforeUpdate(changedProps) {
       if (changedProps && Object.keys(changedProps).length > 0) {
         console.log("Aktualizacja właściwości widgetu:", changedProps);
       }
     }
-
+ 
     onCustomWidgetAfterUpdate(changedProps) {
       try {
         this._props = { ...this._props, ...changedProps };
@@ -307,7 +309,7 @@
         this._render();
       }
     }
-
+ 
     onCustomWidgetResize(width, height) {
       const scale = Math.min(width / 300, 1.5);
       this._root.style.setProperty('--title-font-size', `${Math.max(14, 16 * scale)}px`);
@@ -315,9 +317,9 @@
       this._root.style.setProperty('--delta-b-font-size', `${Math.max(12, 14 * scale)}px`);
       this._root.style.setProperty('--delta-rr-font-size', `${Math.max(12, 14 * scale)}px`);
       this._root.style.setProperty('--bar-width', `${Math.max(15, 20 * scale)}px`);
-  	  this._root.style.setProperty('--bar-height', `${Math.max(60, 80 * scale) + 20}px`);
+      this._root.style.setProperty('--bar-height', `${Math.max(60, 80 * scale)}px`);
     }
-
+ 
     // Gettery i Settery
     getTitle() { return this._props.title; }
     setTitle(value) { this._props.title = value; this._render(); }
@@ -368,7 +370,18 @@
     getDeltaRRFontSize() { return this._props.deltaRRFontSize; }
     setDeltaRRFontSize(value) { this._props.deltaRRFontSize = value; this._render(); }
     getBarColor() { return this._props.barColor; }
-    setBarColor(value) { this._props.barColor = value; this._render(); }
+    setBarColor(value) { 
+      this._props.barColor = value;
+      const bar = this._shadowRoot.querySelector('.kpi-bar');
+      if (bar) {
+        bar.style.opacity = 0;
+        setTimeout(() => {
+          bar.style.backgroundColor = value;
+          bar.style.opacity = 1;
+        }, 10);
+      }
+      this._render();
+    }
     getFontColor() { return this._props.fontColor; }
     setFontColor(value) { this._props.fontColor = value; this._render(); }
     getDeltaBBackgroundColor() { return this._props.deltaBBackgroundColor; }
@@ -379,12 +392,11 @@
     setDeltaBPadding(value) { this._props.deltaBPadding = value; this._render(); }
     getDeltaRRPadding() { return this._props.deltaRRPadding; }
     setDeltaRRPadding(value) { this._props.deltaRRPadding = value; this._render(); }
-	getDeltaBBorderRadius() { return this._props.deltaBBorderRadius; }
-	setDeltaBBorderRadius(value) { this._props.deltaBBorderRadius = value; this._render(); }
-	getDeltaRRBorderRadius() { return this._props.deltaRRBorderRadius; }
-	setDeltaRRBorderRadius(value) { this._props.deltaRRBorderRadius = value; this._render(); }
-	  } // Koniec klasy OrlenKPI
+    getDeltaBBorderRadius() { return this._props.deltaBBorderRadius; }
+    setDeltaBBorderRadius(value) { this._props.deltaBBorderRadius = value; this._render(); }
+    getDeltaRRBorderRadius() { return this._props.deltaRRBorderRadius; }
+    setDeltaRRBorderRadius(value) { this._props.deltaRRBorderRadius = value; this._render(); }
+  }
 
-	  // Rejestracja komponentu
-	  customElements.define("com-sap-analytics-custom-widget-orlenkpi", OrlenKPI);
-	})(); // Zamknięcie IIFE
+  customElements.define("com-sap-analytics-custom-widget-orlenkpi", OrlenKPI);
+})();

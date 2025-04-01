@@ -1,6 +1,6 @@
 {
   "id": "com.sap.analytics.custom.widget.orlenkpi",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "name": "orlenKPI",
   "description": "Widżet KPI z pełną konfiguracją stylów i czcionek SAP",
   "vendor": "G++ E.Sz dla ORLEN S.A.",
@@ -184,255 +184,73 @@
     }
   },
   "methods": {
-    "getTitle": {
-      "returnType": "string"
-    },
-    "setTitle": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getMainValue": {
-      "returnType": "string"
-    },
-    "setMainValue": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getDeltaB": {
-      "returnType": "string"
-    },
-    "setDeltaB": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getDeltaBPercent": {
-      "returnType": "string"
-    },
-    "setDeltaBPercent": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getDeltaRR": {
-      "returnType": "string"
-    },
-    "setDeltaRR": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getDeltaRRPercent": {
-      "returnType": "string"
-    },
-    "setDeltaRRPercent": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getLabelB": {
-      "returnType": "string"
-    },
-    "setLabelB": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getLabelRR": {
-      "returnType": "string"
-    },
-    "setLabelRR": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getTextColorB": {
-      "returnType": "string"
-    },
-    "setTextColorB": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getTextColorRR": {
-      "returnType": "string"
-    },
-    "setTextColorRR": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getArrowColorB": {
-      "returnType": "string"
-    },
-    "setArrowColorB": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getArrowColorRR": {
-      "returnType": "string"
-    },
-    "setArrowColorRR": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getArrowDirectionB": {
-      "returnType": "string"
-    },
-    "setArrowDirectionB": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getArrowDirectionRR": {
-      "returnType": "string"
-    },
-    "setArrowDirectionRR": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getTitleFontFamily": {
-      "returnType": "string"
-    },
-    "setTitleFontFamily": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getTitleFontWeight": {
-      "returnType": "string"
-    },
-    "setTitleFontWeight": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getMainValueFontFamily": {
-      "returnType": "string"
-    },
-    "setMainValueFontFamily": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getMainValueFontWeight": {
-      "returnType": "string"
-    },
-    "setMainValueFontWeight": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getDeltaBFontFamily": {
-      "returnType": "string"
-    },
-    "setDeltaBFontFamily": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getDeltaBFontWeight": {
-      "returnType": "string"
-    },
-    "setDeltaBFontWeight": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getDeltaRRFontFamily": {
-      "returnType": "string"
-    },
-    "setDeltaRRFontFamily": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    },
-    "getDeltaRRFontWeight": {
-      "returnType": "string"
-    },
-    "setDeltaRRFontWeight": {
-      "parameters": [
-        {
-          "name": "value",
-          "type": "string"
-        }
-      ]
-    }
+    "getTitle": { "returnType": "string" },
+    "setTitle": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getMainValue": { "returnType": "string" },
+    "setMainValue": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaB": { "returnType": "string" },
+    "setDeltaB": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaBPercent": { "returnType": "string" },
+    "setDeltaBPercent": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaRR": { "returnType": "string" },
+    "setDeltaRR": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaRRPercent": { "returnType": "string" },
+    "setDeltaRRPercent": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getLabelB": { "returnType": "string" },
+    "setLabelB": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getLabelRR": { "returnType": "string" },
+    "setLabelRR": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getTextColorB": { "returnType": "string" },
+    "setTextColorB": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getTextColorRR": { "returnType": "string" },
+    "setTextColorRR": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getArrowColorB": { "returnType": "string" },
+    "setArrowColorB": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getArrowColorRR": { "returnType": "string" },
+    "setArrowColorRR": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getArrowDirectionB": { "returnType": "string" },
+    "setArrowDirectionB": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getArrowDirectionRR": { "returnType": "string" },
+    "setArrowDirectionRR": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getTitleFontFamily": { "returnType": "string" },
+    "setTitleFontFamily": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getTitleFontWeight": { "returnType": "string" },
+    "setTitleFontWeight": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getMainValueFontFamily": { "returnType": "string" },
+    "setMainValueFontFamily": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getMainValueFontWeight": { "returnType": "string" },
+    "setMainValueFontWeight": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaBFontFamily": { "returnType": "string" },
+    "setDeltaBFontFamily": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaBFontWeight": { "returnType": "string" },
+    "setDeltaBFontWeight": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaRRFontFamily": { "returnType": "string" },
+    "setDeltaRRFontFamily": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaRRFontWeight": { "returnType": "string" },
+    "setDeltaRRFontWeight": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaBFontSize": { "returnType": "string" },
+    "setDeltaBFontSize": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaRRFontSize": { "returnType": "string" },
+    "setDeltaRRFontSize": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getBarColor": { "returnType": "string" },
+    "setBarColor": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getFontColor": { "returnType": "string" },
+    "setFontColor": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaBBackgroundColor": { "returnType": "string" },
+    "setDeltaBBackgroundColor": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaRRBackgroundColor": { "returnType": "string" },
+    "setDeltaRRBackgroundColor": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaBPadding": { "returnType": "string" },
+    "setDeltaBPadding": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaRRPadding": { "returnType": "string" },
+    "setDeltaRRPadding": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaBBorderRadius": { "returnType": "string" },
+    "setDeltaBBorderRadius": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getDeltaRRBorderRadius": { "returnType": "string" },
+    "setDeltaRRBorderRadius": { "parameters": [{ "name": "value", "type": "string" }] }
   },
   "events": {
-    "onClick": {
-      "description": "Zdarzenie po kliknięciu w cały widget"
-    },
-    "onEdit": {
-      "description": "Zdarzenie po kliknięciu w ikonę edycji"
-    }
+    "onClick": { "description": "Zdarzenie po kliknięciu w cały widget" },
+    "onEdit": { "description": "Zdarzenie po kliknięciu w ikonę edycji" }
   }
 }

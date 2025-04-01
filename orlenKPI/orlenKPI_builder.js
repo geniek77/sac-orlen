@@ -73,6 +73,8 @@
             <option value="down">▼ Dół</option>
             <option value="none">Brak</option>
           </select><br>
+          <label>Padding:</label><br><input type="text" id="deltaBPadding"><br>
+          <label>Zaokrąglenie rogów:</label><br><input type="text" id="deltaBBorderRadius"><br>
         </fieldset>
 
         <fieldset>
@@ -98,6 +100,8 @@
             <option value="down">▼ Dół</option>
             <option value="none">Brak</option>
           </select><br>
+          <label>Padding:</label><br><input type="text" id="deltaRRPadding"><br>
+          <label>Zaokrąglenie rogów:</label><br><input type="text" id="deltaRRBorderRadius"><br>
         </fieldset>
 
         <fieldset>
@@ -161,7 +165,11 @@
     arrowDirectionB: "up",
     arrowDirectionRR: "down",
     deltaBBackgroundColor: "#dff0d8",
-    deltaRRBackgroundColor: "#f2dede"
+    deltaRRBackgroundColor: "#f2dede",
+    deltaBPadding: "6px 8px",
+    deltaRRPadding: "6px 8px",
+    deltaBBorderRadius: "4px",
+    deltaRRBorderRadius: "4px"
   };
 
   class OrlenKPIBuilder extends HTMLElement {
@@ -171,24 +179,21 @@
       this._shadowRoot.appendChild(template.content.cloneNode(true));
       this._form = this._shadowRoot.getElementById("form");
       this._form.addEventListener("submit", this._onSubmit.bind(this));
-	  // Inicjalizacja domyślnych wartości przy tworzeniu buildera
-	  this.setProperties(DEFAULTS);
-	  //this._initDefaultValues();
+      this._initDefaultValues();
     }
 
-	_initDefaultValues() {
-	  Object.keys(DEFAULTS).forEach(id => {
-	    const el = this._shadowRoot.getElementById(id);
-	    if (el) el.value = DEFAULTS[id];
-	  });
-	}
+    _initDefaultValues() {
+      Object.keys(DEFAULTS).forEach(id => {
+        const el = this._shadowRoot.getElementById(id);
+        if (el) el.value = DEFAULTS[id];
+      });
+    }
+
     _onSubmit(e) {
       e.preventDefault();
       const formData = this._getFormData();
       
-      // Walidacja wybranych czcionek
-      const sapFonts = ["'72'", "'72-Light'", "'72-Bold'", "'72-Condensed'"];
-      if (!sapFonts.includes(formData.titleFontFamily)) {
+      if (!["'72'", "'72-Light'", "'72-Bold'", "'72-Condensed'"].includes(formData.titleFontFamily)) {
         alert('Dla lepszej spójności zalecane jest użycie czcionek SAP');
       }
       
@@ -209,33 +214,33 @@
       return props;
     }
 
-	  setProperties(properties) {
-	    const propsToSet = properties || DEFAULTS;
-	    
-	    Object.keys(DEFAULTS).forEach(id => {
-	      const el = this._shadowRoot.getElementById(id);
-	      if (el) {
-	        const value = propsToSet[id] !== undefined ? propsToSet[id] : DEFAULTS[id];
-	        
-	        if (el.tagName === "SELECT") {
-	          const option = el.querySelector(`option[value="${value}"]`);
-	          if (option) {
-	            option.selected = true;
-	          } else {
-	            const defaultOption = el.querySelector(`option[value="${DEFAULTS[id]}"]`);
-	            if (defaultOption) defaultOption.selected = true;
-	          }
-	        } else if (el.type === "color" && !/^#([0-9A-F]{3}){1,2}$/i.test(value)) {
-	          el.value = DEFAULTS[id];
-	        } else if (id.includes('FontSize') && !value.match(/^\d+(\.\d+)?(px|rem|em|%)$/)) {
-	          el.value = DEFAULTS[id];
-	        } else {
-	          el.value = value;
-	        }
-	      }
-	    });
-	  }
-	}
+    setProperties(properties) {
+      const propsToSet = properties || DEFAULTS;
+      
+      Object.keys(DEFAULTS).forEach(id => {
+        const el = this._shadowRoot.getElementById(id);
+        if (el) {
+          const value = propsToSet[id] !== undefined ? propsToSet[id] : DEFAULTS[id];
+          
+          if (el.tagName === "SELECT") {
+            const option = el.querySelector(`option[value="${value}"]`);
+            if (option) {
+              option.selected = true;
+            } else {
+              const defaultOption = el.querySelector(`option[value="${DEFAULTS[id]}"]`);
+              if (defaultOption) defaultOption.selected = true;
+            }
+          } else if (el.type === "color" && !/^#([0-9A-F]{3}){1,2}$/i.test(value)) {
+            el.value = DEFAULTS[id];
+          } else if (id.includes('FontSize') && !value.match(/^\d+(\.\d+)?(px|rem|em|%)$/)) {
+            el.value = DEFAULTS[id];
+          } else {
+            el.value = value;
+          }
+        }
+      });
+    }
+  }
 
   customElements.define("com-sap-analytics-custom-widget-orlenkpi-builder", OrlenKPIBuilder);
 })();
