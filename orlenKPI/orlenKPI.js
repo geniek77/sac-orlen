@@ -190,7 +190,10 @@
         deltaRRBorderRadius: '4px'
       };
     }
-
+	
+	getDefaultProperties() {
+	  return this._getDefaultProperties();
+	}
     _setupEventListeners() {
       this._root.addEventListener('click', (e) => {
         if (e.target.classList.contains('edit-icon')) {

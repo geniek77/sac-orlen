@@ -171,8 +171,17 @@
       this._shadowRoot.appendChild(template.content.cloneNode(true));
       this._form = this._shadowRoot.getElementById("form");
       this._form.addEventListener("submit", this._onSubmit.bind(this));
+	  // Inicjalizacja domyślnych wartości przy tworzeniu buildera
+	  this.setProperties(DEFAULTS);
+	  this._initDefaultValues();
     }
 
+	_initDefaultValues() {
+	  Object.keys(DEFAULTS).forEach(id => {
+	    const el = this._shadowRoot.getElementById(id);
+	    if (el) el.value = DEFAULTS[id];
+	  });
+	}
     _onSubmit(e) {
       e.preventDefault();
       const formData = this._getFormData();
@@ -200,33 +209,33 @@
       return props;
     }
 
-    setProperties(properties) {
-      if (!properties) return;
-      
-      Object.keys(DEFAULTS).forEach(id => {
-        const el = this._shadowRoot.getElementById(id);
-        if (el) {
-          const value = properties[id] !== undefined ? properties[id] : DEFAULTS[id];
-          
-          if (el.type === "color" && !/^#([0-9A-F]{3}){1,2}$/i.test(value)) {
-            el.value = DEFAULTS[id];
-          } else if (el.tagName === "SELECT") {
-            const option = el.querySelector(`option[value="${value}"]`);
-            if (option) {
-              option.selected = true;
-            } else {
-              const defaultOption = el.querySelector(`option[value="${DEFAULTS[id]}"]`);
-              if (defaultOption) defaultOption.selected = true;
-            }
-          } else if (id.includes('FontSize') && !value.match(/^\d+(\.\d+)?(px|rem|em|%)$/)) {
-            el.value = DEFAULTS[id];
-          } else {
-            el.value = value;
-          }
-        }
-      });
-    }
-  }
+	  setProperties(properties) {
+	    const propsToSet = properties || DEFAULTS;
+	    
+	    Object.keys(DEFAULTS).forEach(id => {
+	      const el = this._shadowRoot.getElementById(id);
+	      if (el) {
+	        const value = propsToSet[id] !== undefined ? propsToSet[id] : DEFAULTS[id];
+	        
+	        if (el.tagName === "SELECT") {
+	          const option = el.querySelector(`option[value="${value}"]`);
+	          if (option) {
+	            option.selected = true;
+	          } else {
+	            const defaultOption = el.querySelector(`option[value="${DEFAULTS[id]}"]`);
+	            if (defaultOption) defaultOption.selected = true;
+	          }
+	        } else if (el.type === "color" && !/^#([0-9A-F]{3}){1,2}$/i.test(value)) {
+	          el.value = DEFAULTS[id];
+	        } else if (id.includes('FontSize') && !value.match(/^\d+(\.\d+)?(px|rem|em|%)$/)) {
+	          el.value = DEFAULTS[id];
+	        } else {
+	          el.value = value;
+	        }
+	      }
+	    });
+	  }
+	}
 
   customElements.define("com-sap-analytics-custom-widget-orlenkpi-builder", OrlenKPIBuilder);
 })();
