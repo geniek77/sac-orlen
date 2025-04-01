@@ -4,7 +4,7 @@
   <style>
     :host {
       display: block;
-      font-family: var(--font-family, Arial), sans-serif;
+      font-family: var(--font-family, "'72'"), sans-serif;
       min-width: 300px;
     }
 
@@ -58,8 +58,8 @@
 
     .kpi-value {
       font-size: var(--main-value-font-size, 28px);
-      font-family: var(--main-value-font-family, Arial);
-      font-weight: bold;
+      font-family: var(--main-value-font-family, "'72'");
+      font-weight: var(--main-value-font-weight, bold);
       margin-bottom: 8px;
       color: var(--font-color, #000000);
       transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -76,13 +76,31 @@
       display: grid;
       grid-template-columns: 30px 40px 90px 90px;
       align-items: center;
-      padding: 6px 8px;
       transition: all 0.3s ease;
+    }
+
+    .delta-b {
+      font-family: var(--delta-b-font-family, "'72'");
+      font-size: var(--delta-b-font-size, 14px);
+      font-weight: var(--delta-b-font-weight, bold);
+      background-color: var(--delta-b-bg-color, #dff0d8);
+      color: var(--delta-b-text-color, #006400);
+      padding: var(--delta-b-padding, 6px 8px);
+      border-radius: var(--delta-b-border-radius, 4px);
+    }
+
+    .delta-rr {
+      font-family: var(--delta-rr-font-family, "'72'");
+      font-size: var(--delta-rr-font-size, 14px);
+      font-weight: var(--delta-rr-font-weight, bold);
+      background-color: var(--delta-rr-bg-color, #f2dede);
+      color: var(--delta-rr-text-color, #a94442);
+      padding: var(--delta-rr-padding, 6px 8px);
+      border-radius: var(--delta-rr-border-radius, 4px);
     }
 
     .arrow {
       text-align: center;
-      font-size: var(--delta-font-size, 14px);
     }
 
     .arrow.up::before {
@@ -96,41 +114,19 @@
     }
 
     .label {
-      font-family: var(--delta-font-family, Arial);
-      font-size: var(--delta-font-size, 14px);
       font-style: italic;
     }
 
-    .delta-val {
-      font-weight: var(--delta-font-weight, bold);
-      font-family: var(--delta-font-family, Arial);
-      font-size: var(--delta-font-size, 14px);
-      padding-left: 10px;
-      transition: all 0.3s ease;
-    }
-
-    .delta-pct {
-      font-family: var(--delta-font-family, Arial);
-      font-size: var(--delta-font-size, 14px);
+    .delta-val, .delta-pct {
       padding-left: 10px;
       transition: all 0.3s ease;
     }
 
     .kpi-title {
-      font-family: var(--title-font-family, Arial);
+      font-family: var(--title-font-family, "'72'");
       font-size: var(--title-font-size, 16px);
-      font-weight: bold;
+      font-weight: var(--title-font-weight, bold);
       color: var(--font-color, #000000);
-    }
-
-    .delta-bg-up {
-      background-color: var(--bg-up-color, #dff0d8);
-      color: var(--text-color-b, #006400);
-    }
-
-    .delta-bg-down {
-      background-color: var(--bg-down-color, #f2dede);
-      color: var(--text-color-rr, #a94442);
     }
 
     @keyframes pulse {
@@ -172,21 +168,26 @@
         arrowDirectionRR: 'down',
         barColor: '#006400',
         fontColor: '#000000',
-        bgUpColor: '#dff0d8',
-        bgDownColor: '#f2dede',
-        fontFamily: 'Arial',
-        fontSize: '14px',
-        titleFontFamily: 'Arial',
-        titleFontSize: '16px',
-        mainValueFontFamily: 'Arial',
-        mainValueFontSize: '28px',
-        deltaFontFamily: 'Arial',
-        deltaFontSize: '14px',
-        deltaFontWeight: 'bold',
+        titleFontFamily: "'72'",
+        titleFontWeight: 'bold',
+        mainValueFontFamily: "'72'",
+        mainValueFontWeight: 'bold',
+        deltaBFontFamily: "'72'",
+        deltaBFontWeight: 'bold',
+        deltaRRFontFamily: "'72'",
+        deltaRRFontWeight: 'bold',
+        deltaBFontSize: '14px',
+        deltaRRFontSize: '14px',
         textColorB: '#006400',
         textColorRR: '#a94442',
         arrowColorB: '#006400',
-        arrowColorRR: '#a94442'
+        arrowColorRR: '#a94442',
+        deltaBBackgroundColor: '#dff0d8',
+        deltaRRBackgroundColor: '#f2dede',
+        deltaBPadding: '6px 8px',
+        deltaRRPadding: '6px 8px',
+        deltaBBorderRadius: '4px',
+        deltaRRBorderRadius: '4px'
       };
     }
 
@@ -203,20 +204,26 @@
 
     _applyStyles() {
       const styleMap = {
-        '--font-family': this._props.fontFamily,
         '--font-color': this._props.fontColor,
         '--bar-color': this._props.barColor,
-        '--bg-up-color': this._props.bgUpColor,
-        '--bg-down-color': this._props.bgDownColor,
-        '--text-color-b': this._props.textColorB,
-        '--text-color-rr': this._props.textColorRR,
         '--title-font-family': this._props.titleFontFamily,
-        '--title-font-size': this._props.titleFontSize,
+        '--title-font-weight': this._props.titleFontWeight,
         '--main-value-font-family': this._props.mainValueFontFamily,
-        '--main-value-font-size': this._props.mainValueFontSize,
-        '--delta-font-family': this._props.deltaFontFamily,
-        '--delta-font-size': this._props.deltaFontSize,
-        '--delta-font-weight': this._props.deltaFontWeight,
+        '--main-value-font-weight': this._props.mainValueFontWeight,
+        '--delta-b-font-family': this._props.deltaBFontFamily,
+        '--delta-b-font-weight': this._props.deltaBFontWeight,
+        '--delta-b-font-size': this._props.deltaBFontSize,
+        '--delta-b-bg-color': this._props.deltaBBackgroundColor,
+        '--delta-b-text-color': this._props.textColorB,
+        '--delta-b-padding': this._props.deltaBPadding,
+        '--delta-b-border-radius': this._props.deltaBBorderRadius,
+        '--delta-rr-font-family': this._props.deltaRRFontFamily,
+        '--delta-rr-font-weight': this._props.deltaRRFontWeight,
+        '--delta-rr-font-size': this._props.deltaRRFontSize,
+        '--delta-rr-bg-color': this._props.deltaRRBackgroundColor,
+        '--delta-rr-text-color': this._props.textColorRR,
+        '--delta-rr-padding': this._props.deltaRRPadding,
+        '--delta-rr-border-radius': this._props.deltaRRBorderRadius,
         '--arrow-color-b': this._props.arrowColorB,
         '--arrow-color-rr': this._props.arrowColorRR
       };
@@ -227,125 +234,152 @@
     }
 
     _render() {
-      this._applyStyles();
+      try {
+        this._applyStyles();
 
-      this._root.innerHTML = `
-        <div class="kpi-container">
-          <div class="kpi-header">
-            <div class="kpi-title">${this._props.title}</div>
-            <div class="edit-icon" title="Edytuj">✎</div>
-          </div>
-          <div class="kpi-main">
-            <div class="kpi-bar"></div>
-            <div class="kpi-content">
-              <div class="kpi-value ${this._shouldAnimate ? 'value-change' : ''}">${this._props.mainValue}</div>
-              <div class="kpi-matrix">
-                <div class="kpi-line delta-bg-up">
-                  <div class="arrow ${this._props.arrowDirectionB}"></div>
-                  <div class="label">${this._props.labelB}</div>
-                  <div class="delta-val ${this._shouldAnimate ? 'value-change' : ''}">${this._props.deltaB}</div>
-                  <div class="delta-pct ${this._shouldAnimate ? 'value-change' : ''}">${this._props.deltaBPercent}</div>
-                </div>
-                <div class="kpi-line delta-bg-down">
-                  <div class="arrow ${this._props.arrowDirectionRR}"></div>
-                  <div class="label">${this._props.labelRR}</div>
-                  <div class="delta-val ${this._shouldAnimate ? 'value-change' : ''}">${this._props.deltaRR}</div>
-                  <div class="delta-pct ${this._shouldAnimate ? 'value-change' : ''}">${this._props.deltaRRPercent}</div>
+        this._root.innerHTML = `
+          <div class="kpi-container">
+            <div class="kpi-header">
+              <div class="kpi-title">${this._props.title}</div>
+              <div class="edit-icon" title="Edytuj">✎</div>
+            </div>
+            <div class="kpi-main">
+              <div class="kpi-bar"></div>
+              <div class="kpi-content">
+                <div class="kpi-value ${this._shouldAnimate ? 'value-change' : ''}">${this._props.mainValue}</div>
+                <div class="kpi-matrix">
+                  <div class="kpi-line delta-b">
+                    <div class="arrow ${this._props.arrowDirectionB}"></div>
+                    <div class="label">${this._props.labelB}</div>
+                    <div class="delta-val ${this._shouldAnimate ? 'value-change' : ''}">${this._props.deltaB}</div>
+                    <div class="delta-pct ${this._shouldAnimate ? 'value-change' : ''}">${this._props.deltaBPercent}</div>
+                  </div>
+                  <div class="kpi-line delta-rr">
+                    <div class="arrow ${this._props.arrowDirectionRR}"></div>
+                    <div class="label">${this._props.labelRR}</div>
+                    <div class="delta-val ${this._shouldAnimate ? 'value-change' : ''}">${this._props.deltaRR}</div>
+                    <div class="delta-pct ${this._shouldAnimate ? 'value-change' : ''}">${this._props.deltaRRPercent}</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      `;
+        `;
 
-      if (this._shouldAnimate) {
-        setTimeout(() => {
-          const elements = this._root.querySelectorAll('.value-change');
-          elements.forEach(el => el.classList.remove('value-change'));
-          this._shouldAnimate = false;
-        }, 500);
+        if (this._shouldAnimate) {
+          setTimeout(() => {
+            try {
+              const elements = this._root.querySelectorAll('.value-change');
+              elements.forEach(el => el.classList.remove('value-change'));
+              this._shouldAnimate = false;
+            } catch (error) {
+              console.error('Błąd podczas czyszczenia animacji:', error);
+            }
+          }, 500);
+        }
+      } catch (error) {
+        console.error('Błąd renderowania:', error);
+        this._root.innerHTML = `<div class="kpi-container" style="color:red;padding:20px;">
+          Błąd podczas renderowania widżetu. Sprawdź konfigurację.
+        </div>`;
       }
     }
 
-	onCustomWidgetBeforeUpdate(changedProps) {
-	  // Metoda wywoływana przed aktualizacją właściwości
-	  // Można tutaj dodać walidację lub przygotowanie danych
-	  if (changedProps && Object.keys(changedProps).length > 0) {
-	    console.log("Widget będzie zaktualizowany z nowymi właściwościami:", changedProps);
-	  }
-	}
+    onCustomWidgetBeforeUpdate(changedProps) {
+      if (changedProps && Object.keys(changedProps).length > 0) {
+        console.log("Aktualizacja właściwości widgetu:", changedProps);
+      }
+    }
 
-	onCustomWidgetAfterUpdate(changedProps) {
-	  this._props = { ...this._props, ...changedProps };
-	  this._shouldAnimate = true;
-	  this._render();
-	}
+    onCustomWidgetAfterUpdate(changedProps) {
+      try {
+        this._props = { ...this._props, ...changedProps };
+        this._shouldAnimate = true;
+        this._render();
+      } catch (error) {
+        console.error('Błąd aktualizacji:', error);
+        this._props = this._getDefaultProperties();
+        this._render();
+      }
+    }
 
     onCustomWidgetResize(width, height) {
       const scale = Math.min(width / 300, 1.5);
       this._root.style.setProperty('--title-font-size', `${Math.max(14, 16 * scale)}px`);
       this._root.style.setProperty('--main-value-font-size', `${Math.max(20, 28 * scale)}px`);
-      this._root.style.setProperty('--delta-font-size', `${Math.max(12, 14 * scale)}px`);
+      this._root.style.setProperty('--delta-b-font-size', `${Math.max(12, 14 * scale)}px`);
+      this._root.style.setProperty('--delta-rr-font-size', `${Math.max(12, 14 * scale)}px`);
       this._root.style.setProperty('--bar-width', `${Math.max(15, 20 * scale)}px`);
       this._root.style.setProperty('--bar-height', `${Math.max(60, 80 * scale)}px`);
     }
 
+    // Gettery i Settery
     getTitle() { return this._props.title; }
-    getMainValue() { return this._props.mainValue; }
-    getDeltaB() { return this._props.deltaB; }
-    getDeltaBPercent() { return this._props.deltaBPercent; }
-    getDeltaRR() { return this._props.deltaRR; }
-    getDeltaRRPercent() { return this._props.deltaRRPercent; }
-    getLabelB() { return this._props.labelB; }
-    getLabelRR() { return this._props.labelRR; }
-    getTextColorB() { return this._props.textColorB; }
-    getTextColorRR() { return this._props.textColorRR; }
-    getArrowColorB() { return this._props.arrowColorB; }
-    getArrowColorRR() { return this._props.arrowColorRR; }
-    getArrowDirectionB() { return this._props.arrowDirectionB; }
-    getArrowDirectionRR() { return this._props.arrowDirectionRR; }
-    getTitleFontFamily() { return this._props.titleFontFamily; }
-    getTitleFontSize() { return this._props.titleFontSize; }
-    getMainValueFontFamily() { return this._props.mainValueFontFamily; }
-    getMainValueFontSize() { return this._props.mainValueFontSize; }
-    getDeltaFontFamily() { return this._props.deltaFontFamily; }
-    getDeltaFontSize() { return this._props.deltaFontSize; }
-    getDeltaFontWeight() { return this._props.deltaFontWeight; }
-    getBarColor() { return this._props.barColor; }
-    getFontColor() { return this._props.fontColor; }
-    getBgUpColor() { return this._props.bgUpColor; }
-    getBgDownColor() { return this._props.bgDownColor; }
-    getFontFamily() { return this._props.fontFamily; }
-    getFontSize() { return this._props.fontSize; }
-
     setTitle(value) { this._props.title = value; this._render(); }
+    getMainValue() { return this._props.mainValue; }
     setMainValue(value) { this._props.mainValue = value; this._shouldAnimate = true; this._render(); }
+    getDeltaB() { return this._props.deltaB; }
     setDeltaB(value) { this._props.deltaB = value; this._shouldAnimate = true; this._render(); }
+    getDeltaBPercent() { return this._props.deltaBPercent; }
     setDeltaBPercent(value) { this._props.deltaBPercent = value; this._shouldAnimate = true; this._render(); }
+    getDeltaRR() { return this._props.deltaRR; }
     setDeltaRR(value) { this._props.deltaRR = value; this._shouldAnimate = true; this._render(); }
+    getDeltaRRPercent() { return this._props.deltaRRPercent; }
     setDeltaRRPercent(value) { this._props.deltaRRPercent = value; this._shouldAnimate = true; this._render(); }
+    getLabelB() { return this._props.labelB; }
     setLabelB(value) { this._props.labelB = value; this._render(); }
+    getLabelRR() { return this._props.labelRR; }
     setLabelRR(value) { this._props.labelRR = value; this._render(); }
+    getTextColorB() { return this._props.textColorB; }
     setTextColorB(value) { this._props.textColorB = value; this._render(); }
+    getTextColorRR() { return this._props.textColorRR; }
     setTextColorRR(value) { this._props.textColorRR = value; this._render(); }
+    getArrowColorB() { return this._props.arrowColorB; }
     setArrowColorB(value) { this._props.arrowColorB = value; this._render(); }
+    getArrowColorRR() { return this._props.arrowColorRR; }
     setArrowColorRR(value) { this._props.arrowColorRR = value; this._render(); }
+    getArrowDirectionB() { return this._props.arrowDirectionB; }
     setArrowDirectionB(value) { this._props.arrowDirectionB = value; this._render(); }
+    getArrowDirectionRR() { return this._props.arrowDirectionRR; }
     setArrowDirectionRR(value) { this._props.arrowDirectionRR = value; this._render(); }
+    getTitleFontFamily() { return this._props.titleFontFamily; }
     setTitleFontFamily(value) { this._props.titleFontFamily = value; this._render(); }
-    setTitleFontSize(value) { this._props.titleFontSize = value; this._render(); }
+    getTitleFontWeight() { return this._props.titleFontWeight; }
+    setTitleFontWeight(value) { this._props.titleFontWeight = value; this._render(); }
+    getMainValueFontFamily() { return this._props.mainValueFontFamily; }
     setMainValueFontFamily(value) { this._props.mainValueFontFamily = value; this._render(); }
-    setMainValueFontSize(value) { this._props.mainValueFontSize = value; this._render(); }
-    setDeltaFontFamily(value) { this._props.deltaFontFamily = value; this._render(); }
-    setDeltaFontSize(value) { this._props.deltaFontSize = value; this._render(); }
-    setDeltaFontWeight(value) { this._props.deltaFontWeight = value; this._render(); }
+    getMainValueFontWeight() { return this._props.mainValueFontWeight; }
+    setMainValueFontWeight(value) { this._props.mainValueFontWeight = value; this._render(); }
+    getDeltaBFontFamily() { return this._props.deltaBFontFamily; }
+    setDeltaBFontFamily(value) { this._props.deltaBFontFamily = value; this._render(); }
+    getDeltaBFontWeight() { return this._props.deltaBFontWeight; }
+    setDeltaBFontWeight(value) { this._props.deltaBFontWeight = value; this._render(); }
+    getDeltaRRFontFamily() { return this._props.deltaRRFontFamily; }
+    setDeltaRRFontFamily(value) { this._props.deltaRRFontFamily = value; this._render(); }
+    getDeltaRRFontWeight() { return this._props.deltaRRFontWeight; }
+    setDeltaRRFontWeight(value) { this._props.deltaRRFontWeight = value; this._render(); }
+    getDeltaBFontSize() { return this._props.deltaBFontSize; }
+    setDeltaBFontSize(value) { this._props.deltaBFontSize = value; this._render(); }
+    getDeltaRRFontSize() { return this._props.deltaRRFontSize; }
+    setDeltaRRFontSize(value) { this._props.deltaRRFontSize = value; this._render(); }
+    getBarColor() { return this._props.barColor; }
     setBarColor(value) { this._props.barColor = value; this._render(); }
+    getFontColor() { return this._props.fontColor; }
     setFontColor(value) { this._props.fontColor = value; this._render(); }
-    setBgUpColor(value) { this._props.bgUpColor = value; this._render(); }
-    setBgDownColor(value) { this._props.bgDownColor = value; this._render(); }
-    setFontFamily(value) { this._props.fontFamily = value; this._render(); }
-    setFontSize(value) { this._props.fontSize = value; this._render(); }
-  }
+    getDeltaBBackgroundColor() { return this._props.deltaBBackgroundColor; }
+    setDeltaBBackgroundColor(value) { this._props.deltaBBackgroundColor = value; this._render(); }
+    getDeltaRRBackgroundColor() { return this._props.deltaRRBackgroundColor; }
+    setDeltaRRBackgroundColor(value) { this._props.deltaRRBackgroundColor = value; this._render(); }
+    getDeltaBPadding() { return this._props.deltaBPadding; }
+    setDeltaBPadding(value) { this._props.deltaBPadding = value; this._render(); }
+    getDeltaRRPadding() { return this._props.deltaRRPadding; }
+    setDeltaRRPadding(value) { this._props.deltaRRPadding = value; this._render(); }
+	getDeltaBBorderRadius() { return this._props.deltaBBorderRadius; }
+	setDeltaBBorderRadius(value) { this._props.deltaBBorderRadius = value; this._render(); }
+	getDeltaRRBorderRadius() { return this._props.deltaRRBorderRadius; }
+	setDeltaRRBorderRadius(value) { this._props.deltaRRBorderRadius = value; this._render(); }
+	  } // Koniec klasy OrlenKPI
 
-  customElements.define("com-sap-analytics-custom-widget-orlenkpi", OrlenKPI);
-})();
+	  // Rejestracja komponentu
+	  customElements.define("com-sap-analytics-custom-widget-orlenkpi", OrlenKPI);
+	})(); // Zamknięcie IIFE
