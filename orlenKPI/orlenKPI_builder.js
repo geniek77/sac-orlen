@@ -25,6 +25,7 @@
             <option value="bold">Bold</option>
             <option value="600">Semi Bold</option>
           </select><br>
+          <label>Rozmiar czcionki:</label><br><input type="text" id="titleFontSize"><br>
         </fieldset>
 
         <fieldset>
@@ -64,6 +65,7 @@
             <option value="bold">Bold</option>
           </select><br>
           <label>Rozmiar czcionki:</label><br><input type="text" id="deltaBFontSize"><br>
+          <label>Rozmiar etykiety:</label><br><input type="text" id="labelBFontSize"><br>
           <label>Tło:</label><br><input type="color" id="deltaBBackgroundColor"><br>
           <label>Kolor tekstu:</label><br><input type="color" id="textColorB"><br>
           <label>Kolor strzałki:</label><br><input type="color" id="arrowColorB"><br>
@@ -91,6 +93,7 @@
             <option value="bold">Bold</option>
           </select><br>
           <label>Rozmiar czcionki:</label><br><input type="text" id="deltaRRFontSize"><br>
+          <label>Rozmiar etykiety:</label><br><input type="text" id="labelRRFontSize"><br>
           <label>Tło:</label><br><input type="color" id="deltaRRBackgroundColor"><br>
           <label>Kolor tekstu:</label><br><input type="color" id="textColorRR"><br>
           <label>Kolor strzałki:</label><br><input type="color" id="arrowColorRR"><br>
@@ -146,6 +149,7 @@
     deltaRRPercent: "-254%",
     titleFontFamily: "'72'",
     titleFontWeight: "bold",
+    titleFontSize: "16px",
     mainValueFontFamily: "'72'",
     mainValueFontWeight: "bold",
     deltaBFontFamily: "'72'",
@@ -158,6 +162,8 @@
     fontColor: "#000000",
     labelB: "B",
     labelRR: "R/R",
+    labelBFontSize: "12px",
+    labelRRFontSize: "12px",
     textColorB: "#006400",
     textColorRR: "#a94442",
     arrowColorB: "#006400",

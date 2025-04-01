@@ -118,6 +118,7 @@
  
     .label {
       font-style: italic;
+      font-size: var(--label-font-size, 12px);
     }
  
     .delta-val, .delta-pct {
@@ -173,6 +174,7 @@
         fontColor: '#000000',
         titleFontFamily: "'72'",
         titleFontWeight: 'bold',
+        titleFontSize: '16px',
         mainValueFontFamily: "'72'",
         mainValueFontWeight: 'bold',
         deltaBFontFamily: "'72'",
@@ -181,6 +183,8 @@
         deltaRRFontWeight: 'bold',
         deltaBFontSize: '14px',
         deltaRRFontSize: '14px',
+        labelBFontSize: '12px',
+        labelRRFontSize: '12px',
         textColorB: '#006400',
         textColorRR: '#a94442',
         arrowColorB: '#006400',
@@ -215,6 +219,7 @@
         '--bar-color': this._props.barColor,
         '--title-font-family': this._props.titleFontFamily,
         '--title-font-weight': this._props.titleFontWeight,
+        '--title-font-size': this._props.titleFontSize,
         '--main-value-font-family': this._props.mainValueFontFamily,
         '--main-value-font-weight': this._props.mainValueFontWeight,
         '--delta-b-font-family': this._props.deltaBFontFamily,
@@ -232,7 +237,9 @@
         '--delta-rr-padding': this._props.deltaRRPadding,
         '--delta-rr-border-radius': this._props.deltaRRBorderRadius,
         '--arrow-color-b': this._props.arrowColorB,
-        '--arrow-color-rr': this._props.arrowColorRR
+        '--arrow-color-rr': this._props.arrowColorRR,
+        '--label-font-size': this._props.labelBFontSize,
+        '--label-rr-font-size': this._props.labelRRFontSize
       };
  
       Object.entries(styleMap).forEach(([prop, value]) => {
@@ -353,6 +360,8 @@
     setTitleFontFamily(value) { this._props.titleFontFamily = value; this._render(); }
     getTitleFontWeight() { return this._props.titleFontWeight; }
     setTitleFontWeight(value) { this._props.titleFontWeight = value; this._render(); }
+    getTitleFontSize() { return this._props.titleFontSize; }
+    setTitleFontSize(value) { this._props.titleFontSize = value; this._render(); }
     getMainValueFontFamily() { return this._props.mainValueFontFamily; }
     setMainValueFontFamily(value) { this._props.mainValueFontFamily = value; this._render(); }
     getMainValueFontWeight() { return this._props.mainValueFontWeight; }
@@ -369,6 +378,10 @@
     setDeltaBFontSize(value) { this._props.deltaBFontSize = value; this._render(); }
     getDeltaRRFontSize() { return this._props.deltaRRFontSize; }
     setDeltaRRFontSize(value) { this._props.deltaRRFontSize = value; this._render(); }
+    getLabelBFontSize() { return this._props.labelBFontSize; }
+    setLabelBFontSize(value) { this._props.labelBFontSize = value; this._render(); }
+    getLabelRRFontSize() { return this._props.labelRRFontSize; }
+    setLabelRRFontSize(value) { this._props.labelRRFontSize = value; this._render(); }
     getBarColor() { return this._props.barColor; }
     setBarColor(value) { 
       this._props.barColor = value;

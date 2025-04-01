@@ -1,6 +1,6 @@
 {
   "id": "com.sap.analytics.custom.widget.orlenkpi",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "name": "orlenKPI",
   "description": "Widżet KPI z pełną konfiguracją stylów i czcionek SAP",
   "vendor": "G++ E.Sz dla ORLEN S.A.",
@@ -72,6 +72,11 @@
       "default": "bold",
       "description": "Krój czcionki tytułu"
     },
+    "titleFontSize": {
+      "type": "string",
+      "default": "16px",
+      "description": "Rozmiar czcionki tytułu"
+    },
     "mainValueFontFamily": {
       "type": "string",
       "default": "'72'",
@@ -121,6 +126,16 @@
       "type": "string",
       "default": "R/R",
       "description": "Etykieta zmiany R/R"
+    },
+    "labelBFontSize": {
+      "type": "string",
+      "default": "12px",
+      "description": "Rozmiar czcionki etykiety B"
+    },
+    "labelRRFontSize": {
+      "type": "string",
+      "default": "12px",
+      "description": "Rozmiar czcionki etykiety R/R"
     },
     "textColorB": {
       "type": "string",
@@ -216,6 +231,8 @@
     "setTitleFontFamily": { "parameters": [{ "name": "value", "type": "string" }] },
     "getTitleFontWeight": { "returnType": "string" },
     "setTitleFontWeight": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getTitleFontSize": { "returnType": "string" },
+    "setTitleFontSize": { "parameters": [{ "name": "value", "type": "string" }] },
     "getMainValueFontFamily": { "returnType": "string" },
     "setMainValueFontFamily": { "parameters": [{ "name": "value", "type": "string" }] },
     "getMainValueFontWeight": { "returnType": "string" },
@@ -232,6 +249,10 @@
     "setDeltaBFontSize": { "parameters": [{ "name": "value", "type": "string" }] },
     "getDeltaRRFontSize": { "returnType": "string" },
     "setDeltaRRFontSize": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getLabelBFontSize": { "returnType": "string" },
+    "setLabelBFontSize": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getLabelRRFontSize": { "returnType": "string" },
+    "setLabelRRFontSize": { "parameters": [{ "name": "value", "type": "string" }] },
     "getBarColor": { "returnType": "string" },
     "setBarColor": { "parameters": [{ "name": "value", "type": "string" }] },
     "getFontColor": { "returnType": "string" },
