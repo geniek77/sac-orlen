@@ -9,7 +9,7 @@
     }
 
     .kpi-container {
-      border: 1px solid #ccc;
+
       padding: 10px;
       position: relative;
       background: white;
@@ -69,7 +69,7 @@
       display: flex;
       flex-direction: column;
       gap: var(--row-gap, 5px);
-      margin-top: 15px;
+      margin-top: 30px;
     }
 
     .kpi-line {
