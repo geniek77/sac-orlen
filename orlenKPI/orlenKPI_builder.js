@@ -7,43 +7,130 @@
 
         <label>Tytuł:</label><br><input type="text" id="title"><br>
         <label>Wartość główna:</label><br><input type="text" id="mainValue"><br>
-        <label>Delta B:</label><br><input type="text" id="deltaB"><br>
-        <label>Delta B %:</label><br><input type="text" id="deltaBPercent"><br>
-        <label>Delta R/R:</label><br><input type="text" id="deltaRR"><br>
-        <label>Delta R/R %:</label><br><input type="text" id="deltaRRPercent"><br>
-        <label>Kolor słupka:</label><br><input type="color" id="barColor"><br>
-        <label>Kolor tekstu:</label><br><input type="color" id="fontColor"><br>
-        <label>Tło wartości B:</label><br><input type="color" id="bgUpColor"><br>
-        <label>Tło wartości R/R:</label><br><input type="color" id="bgDownColor"><br>
-        <label>Czcionka tytułu:</label><br><input type="text" id="titleFontFamily"><br>
-        <label>Rozmiar tytułu:</label><br><input type="text" id="titleFontSize"><br>
-        <label>Czcionka główna:</label><br><input type="text" id="mainValueFontFamily"><br>
-        <label>Rozmiar głównej:</label><br><input type="text" id="mainValueFontSize"><br>
-        <label>Czcionka delta:</label><br><input type="text" id="deltaFontFamily"><br>
-        <label>Rozmiar delta:</label><br><input type="text" id="deltaFontSize"><br>
-        <label>Krój delta:</label><br><input type="text" id="deltaFontWeight"><br>
-        <label>Etykieta B:</label><br><input type="text" id="labelB"><br>
-        <label>Etykieta R/R:</label><br><input type="text" id="labelRR"><br>
-        <label>Kolor tekstu B:</label><br><input type="color" id="textColorB"><br>
-        <label>Kolor tekstu R/R:</label><br><input type="color" id="textColorRR"><br>
-        <label>Kolor trójkąta B:</label><br><input type="color" id="arrowColorB"><br>
-        <label>Kierunek trójkąta B:</label><br>
-        <select id="arrowDirectionB">
-          <option value="up">▲ Góra</option>
-          <option value="down">▼ Dół</option>
-          <option value="none">Brak</option>
-        </select><br>
-        <label>Kolor trójkąta R/R:</label><br><input type="color" id="arrowColorRR"><br>
-        <label>Kierunek trójkąta R/R:</label><br>
-        <select id="arrowDirectionRR">
-          <option value="up">▲ Góra</option>
-          <option value="down">▼ Dół</option>
-          <option value="none">Brak</option>
-        </select><br>
+        
+        <fieldset>
+          <legend>Styl tytułu</legend>
+          <label>Czcionka:</label>
+          <select id="titleFontFamily">
+            <option value="'72'">72 (SAP Default)</option>
+            <option value="'72-Light'">72 Light</option>
+            <option value="'72-Bold'">72 Bold</option>
+            <option value="'72-Condensed'">72 Condensed</option>
+            <option value="Arial">Arial</option>
+            <option value="Helvetica">Helvetica</option>
+          </select><br>
+          <label>Krój:</label>
+          <select id="titleFontWeight">
+            <option value="normal">Normal</option>
+            <option value="bold">Bold</option>
+            <option value="600">Semi Bold</option>
+          </select><br>
+        </fieldset>
+
+        <fieldset>
+          <legend>Styl wartości głównej</legend>
+          <label>Czcionka:</label>
+          <select id="mainValueFontFamily">
+            <option value="'72'">72 (SAP Default)</option>
+            <option value="'72-Bold'">72 Bold</option>
+            <option value="Arial">Arial</option>
+          </select><br>
+          <label>Krój:</label>
+          <select id="mainValueFontWeight">
+            <option value="bold">Bold</option>
+            <option value="600">Semi Bold</option>
+          </select><br>
+        </fieldset>
+
+        <fieldset>
+          <legend>Wartości Delta</legend>
+          <label>Delta B:</label><br><input type="text" id="deltaB"><br>
+          <label>Delta B %:</label><br><input type="text" id="deltaBPercent"><br>
+          <label>Delta R/R:</label><br><input type="text" id="deltaRR"><br>
+          <label>Delta R/R %:</label><br><input type="text" id="deltaRRPercent"><br>
+        </fieldset>
+
+        <fieldset>
+          <legend>Styl Delta B</legend>
+          <label>Czcionka:</label>
+          <select id="deltaBFontFamily">
+            <option value="'72'">72 (SAP Default)</option>
+            <option value="'72-Light'">72 Light</option>
+            <option value="Arial">Arial</option>
+          </select><br>
+          <label>Krój:</label>
+          <select id="deltaBFontWeight">
+            <option value="normal">Normal</option>
+            <option value="bold">Bold</option>
+          </select><br>
+          <label>Rozmiar czcionki:</label><br><input type="text" id="deltaBFontSize"><br>
+          <label>Tło:</label><br><input type="color" id="deltaBBackgroundColor"><br>
+          <label>Kolor tekstu:</label><br><input type="color" id="textColorB"><br>
+          <label>Kolor strzałki:</label><br><input type="color" id="arrowColorB"><br>
+          <label>Kierunek strzałki:</label><br>
+          <select id="arrowDirectionB">
+            <option value="up">▲ Góra</option>
+            <option value="down">▼ Dół</option>
+            <option value="none">Brak</option>
+          </select><br>
+        </fieldset>
+
+        <fieldset>
+          <legend>Styl Delta R/R</legend>
+          <label>Czcionka:</label>
+          <select id="deltaRRFontFamily">
+            <option value="'72'">72 (SAP Default)</option>
+            <option value="'72-Light'">72 Light</option>
+            <option value="Arial">Arial</option>
+          </select><br>
+          <label>Krój:</label>
+          <select id="deltaRRFontWeight">
+            <option value="normal">Normal</option>
+            <option value="bold">Bold</option>
+          </select><br>
+          <label>Rozmiar czcionki:</label><br><input type="text" id="deltaRRFontSize"><br>
+          <label>Tło:</label><br><input type="color" id="deltaRRBackgroundColor"><br>
+          <label>Kolor tekstu:</label><br><input type="color" id="textColorRR"><br>
+          <label>Kolor strzałki:</label><br><input type="color" id="arrowColorRR"><br>
+          <label>Kierunek strzałki:</label><br>
+          <select id="arrowDirectionRR">
+            <option value="up">▲ Góra</option>
+            <option value="down">▼ Dół</option>
+            <option value="none">Brak</option>
+          </select><br>
+        </fieldset>
+
+        <fieldset>
+          <legend>Ogólne style</legend>
+          <label>Kolor słupka:</label><br><input type="color" id="barColor"><br>
+          <label>Kolor tekstu:</label><br><input type="color" id="fontColor"><br>
+          <label>Etykieta B:</label><br><input type="text" id="labelB"><br>
+          <label>Etykieta R/R:</label><br><input type="text" id="labelRR"><br>
+        </fieldset>
 
         <br><button type="submit">Zapisz</button>
       </fieldset>
     </form>
+    <style>
+      select, input[type="text"], input[type="color"] {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      fieldset {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        padding: 10px;
+      }
+      legend {
+        font-weight: bold;
+      }
+      select option {
+        font-family: inherit;
+      }
+      select option[value^="'72"] {
+        font-family: '72', sans-serif;
+      }
+    </style>
   `;
 
   const DEFAULTS = {
@@ -53,27 +140,28 @@
     deltaBPercent: "+168%",
     deltaRR: "-521",
     deltaRRPercent: "-254%",
+    titleFontFamily: "'72'",
+    titleFontWeight: "bold",
+    mainValueFontFamily: "'72'",
+    mainValueFontWeight: "bold",
+    deltaBFontFamily: "'72'",
+    deltaBFontWeight: "bold",
+    deltaRRFontFamily: "'72'",
+    deltaRRFontWeight: "bold",
+    deltaBFontSize: "14px",
+    deltaRRFontSize: "14px",
     barColor: "#006400",
     fontColor: "#000000",
-    bgUpColor: "#dff0d8",
-    bgDownColor: "#f2dede",
-    titleFontFamily: "Arial",
-    titleFontSize: "16px",
-    mainValueFontFamily: "Arial",
-    mainValueFontSize: "28px",
-    deltaFontFamily: "Arial",
-    deltaFontSize: "14px",
-    deltaFontWeight: "bold",
     labelB: "B",
     labelRR: "R/R",
     textColorB: "#006400",
     textColorRR: "#a94442",
     arrowColorB: "#006400",
-    arrowDirectionB: "up",
     arrowColorRR: "#a94442",
+    arrowDirectionB: "up",
     arrowDirectionRR: "down",
-    fontFamily: "Arial",
-    fontSize: "14px"
+    deltaBBackgroundColor: "#dff0d8",
+    deltaRRBackgroundColor: "#f2dede"
   };
 
   class OrlenKPIBuilder extends HTMLElement {
@@ -87,10 +175,16 @@
 
     _onSubmit(e) {
       e.preventDefault();
+      const formData = this._getFormData();
+      
+      // Walidacja wybranych czcionek
+      const sapFonts = ["'72'", "'72-Light'", "'72-Bold'", "'72-Condensed'"];
+      if (!sapFonts.includes(formData.titleFontFamily)) {
+        alert('Dla lepszej spójności zalecane jest użycie czcionek SAP');
+      }
+      
       this.dispatchEvent(new CustomEvent("propertiesChanged", {
-        detail: {
-          properties: this._getFormData()
-        }
+        detail: { properties: formData }
       }));
     }
 
@@ -118,7 +212,14 @@
             el.value = DEFAULTS[id];
           } else if (el.tagName === "SELECT") {
             const option = el.querySelector(`option[value="${value}"]`);
-            if (option) option.selected = true;
+            if (option) {
+              option.selected = true;
+            } else {
+              const defaultOption = el.querySelector(`option[value="${DEFAULTS[id]}"]`);
+              if (defaultOption) defaultOption.selected = true;
+            }
+          } else if (id.includes('FontSize') && !value.match(/^\d+(\.\d+)?(px|rem|em|%)$/)) {
+            el.value = DEFAULTS[id];
           } else {
             el.value = value;
           }

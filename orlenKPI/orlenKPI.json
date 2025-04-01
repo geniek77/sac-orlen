@@ -1,8 +1,8 @@
 {
   "id": "com.sap.analytics.custom.widget.orlenkpi",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "name": "orlenKPI",
-  "description": "Widżet KPI z dynamiczną konfiguracją wyglądu i wartości",
+  "description": "Widżet KPI z pełną konfiguracją stylów i czcionek SAP",
   "vendor": "G++ E.Sz dla ORLEN S.A.",
   "newInstancePrefix": "orlen_kpi",
   "webcomponents": [
@@ -62,25 +62,55 @@
       "default": "#000000",
       "description": "Kolor tekstu"
     },
-    "bgUpColor": {
+    "titleFontFamily": {
       "type": "string",
-      "default": "#dff0d8",
-      "description": "Tło wartości B"
+      "default": "'72'",
+      "description": "Czcionka tytułu (np. '72', '72-Bold', 'Arial')"
     },
-    "bgDownColor": {
+    "titleFontWeight": {
       "type": "string",
-      "default": "#f2dede",
-      "description": "Tło wartości R/R"
+      "default": "bold",
+      "description": "Krój czcionki tytułu"
     },
-    "fontFamily": {
+    "mainValueFontFamily": {
       "type": "string",
-      "default": "Arial",
-      "description": "Rodzaj czcionki"
+      "default": "'72'",
+      "description": "Czcionka wartości głównej"
     },
-    "fontSize": {
+    "mainValueFontWeight": {
+      "type": "string",
+      "default": "bold",
+      "description": "Krój czcionki wartości głównej"
+    },
+    "deltaBFontFamily": {
+      "type": "string",
+      "default": "'72'",
+      "description": "Czcionka delty B"
+    },
+    "deltaBFontWeight": {
+      "type": "string",
+      "default": "bold",
+      "description": "Krój czcionki delty B"
+    },
+    "deltaRRFontFamily": {
+      "type": "string",
+      "default": "'72'",
+      "description": "Czcionka delty R/R"
+    },
+    "deltaRRFontWeight": {
+      "type": "string",
+      "default": "bold",
+      "description": "Krój czcionki delty R/R"
+    },
+    "deltaBFontSize": {
       "type": "string",
       "default": "14px",
-      "description": "Rozmiar czcionki"
+      "description": "Rozmiar czcionki delty B"
+    },
+    "deltaRRFontSize": {
+      "type": "string",
+      "default": "14px",
+      "description": "Rozmiar czcionki delty R/R"
     },
     "labelB": {
       "type": "string",
@@ -107,55 +137,30 @@
       "default": "#006400",
       "description": "Kolor trójkąta B"
     },
-    "arrowColorRR": {
-      "type": "string",
-      "default": "#a94442",
-      "description": "Kolor trójkąta R/R"
-    },
     "arrowDirectionB": {
       "type": "string",
       "default": "up",
       "description": "Kierunek trójkąta B (up/down/none)"
+    },
+    "arrowColorRR": {
+      "type": "string",
+      "default": "#a94442",
+      "description": "Kolor trójkąta R/R"
     },
     "arrowDirectionRR": {
       "type": "string",
       "default": "down",
       "description": "Kierunek trójkąta R/R (up/down/none)"
     },
-    "titleFontFamily": {
+    "deltaBBackgroundColor": {
       "type": "string",
-      "default": "Arial",
-      "description": "Czcionka tytułu"
+      "default": "#dff0d8",
+      "description": "Tło delty B"
     },
-    "titleFontSize": {
+    "deltaRRBackgroundColor": {
       "type": "string",
-      "default": "16px",
-      "description": "Rozmiar czcionki tytułu"
-    },
-    "mainValueFontFamily": {
-      "type": "string",
-      "default": "Arial",
-      "description": "Czcionka wartości głównej"
-    },
-    "mainValueFontSize": {
-      "type": "string",
-      "default": "28px",
-      "description": "Rozmiar wartości głównej"
-    },
-    "deltaFontFamily": {
-      "type": "string",
-      "default": "Arial",
-      "description": "Czcionka wartości delta"
-    },
-    "deltaFontSize": {
-      "type": "string",
-      "default": "14px",
-      "description": "Rozmiar czcionki delta"
-    },
-    "deltaFontWeight": {
-      "type": "string",
-      "default": "bold",
-      "description": "Krój czcionki delta"
+      "default": "#f2dede",
+      "description": "Tło delty R/R"
     }
   },
   "methods": {
@@ -324,10 +329,10 @@
         }
       ]
     },
-    "getTitleFontSize": {
+    "getTitleFontWeight": {
       "returnType": "string"
     },
-    "setTitleFontSize": {
+    "setTitleFontWeight": {
       "parameters": [
         {
           "name": "value",
@@ -346,10 +351,10 @@
         }
       ]
     },
-    "getMainValueFontSize": {
+    "getMainValueFontWeight": {
       "returnType": "string"
     },
-    "setMainValueFontSize": {
+    "setMainValueFontWeight": {
       "parameters": [
         {
           "name": "value",
@@ -357,10 +362,10 @@
         }
       ]
     },
-    "getDeltaFontFamily": {
+    "getDeltaBFontFamily": {
       "returnType": "string"
     },
-    "setDeltaFontFamily": {
+    "setDeltaBFontFamily": {
       "parameters": [
         {
           "name": "value",
@@ -368,10 +373,10 @@
         }
       ]
     },
-    "getDeltaFontSize": {
+    "getDeltaBFontWeight": {
       "returnType": "string"
     },
-    "setDeltaFontSize": {
+    "setDeltaBFontWeight": {
       "parameters": [
         {
           "name": "value",
@@ -379,10 +384,21 @@
         }
       ]
     },
-    "getDeltaFontWeight": {
+    "getDeltaRRFontFamily": {
       "returnType": "string"
     },
-    "setDeltaFontWeight": {
+    "setDeltaRRFontFamily": {
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    "getDeltaRRFontWeight": {
+      "returnType": "string"
+    },
+    "setDeltaRRFontWeight": {
       "parameters": [
         {
           "name": "value",
