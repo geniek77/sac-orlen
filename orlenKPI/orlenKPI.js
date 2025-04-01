@@ -69,7 +69,7 @@
       display: flex;
       flex-direction: column;
       gap: var(--row-gap, 5px);
-      margin-top: 30px;
+      margin-top: 80px;
     }
 
     .kpi-line {
