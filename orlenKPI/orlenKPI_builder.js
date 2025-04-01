@@ -173,7 +173,7 @@
       this._form.addEventListener("submit", this._onSubmit.bind(this));
 	  // Inicjalizacja domyślnych wartości przy tworzeniu buildera
 	  this.setProperties(DEFAULTS);
-	  this._initDefaultValues();
+	  //this._initDefaultValues();
     }
 
 	_initDefaultValues() {

@@ -161,6 +161,26 @@
       "type": "string",
       "default": "#f2dede",
       "description": "Tło delty R/R"
+    },
+    "deltaBPadding": {
+      "type": "string",
+      "default": "6px 8px",
+      "description": "Padding delty B"
+    },
+    "deltaRRPadding": {
+      "type": "string",
+      "default": "6px 8px",
+      "description": "Padding delty R/R"
+    },
+    "deltaBBorderRadius": {
+      "type": "string",
+      "default": "4px",
+      "description": "Zaokrąglenie rogów delty B"
+    },
+    "deltaRRBorderRadius": {
+      "type": "string",
+      "default": "4px",
+      "description": "Zaokrąglenie rogów delty R/R"
     }
   },
   "methods": {

@@ -46,7 +46,7 @@
     .kpi-bar {
       width: var(--bar-width, 20px);
       background: var(--bar-color, #006400);
-      height: var(--bar-height, 80px);
+      height: calc(var(--bar-height, 80px) + 20px); // Wydłużenie słupka
       transition: all 0.5s ease;
     }
 
@@ -66,10 +66,12 @@
     }
 
     .kpi-matrix {
-      display: flex;
-      flex-direction: column;
-      gap: var(--row-gap, 5px);
-      margin-top: 80px;
+		display: flex;
+		flex-direction: column;
+		gap: var(--row-gap, 5px);
+		margin-top: 20px; // Zmiana z 30px na 20px
+		position: relative;
+		top: 20px; // Dodatkowe przesunięcie w dół
     }
 
     .kpi-line {
@@ -313,7 +315,7 @@
       this._root.style.setProperty('--delta-b-font-size', `${Math.max(12, 14 * scale)}px`);
       this._root.style.setProperty('--delta-rr-font-size', `${Math.max(12, 14 * scale)}px`);
       this._root.style.setProperty('--bar-width', `${Math.max(15, 20 * scale)}px`);
-      this._root.style.setProperty('--bar-height', `${Math.max(60, 80 * scale)}px`);
+  	  this._root.style.setProperty('--bar-height', `${Math.max(60, 80 * scale) + 20}px`);
     }
 
     // Gettery i Settery
