@@ -106,15 +106,25 @@
       text-align: center;
     }
  
-    .arrow.up::before {
-      content: "▲";
-      color: var(--arrow-color-b, #006400);
-    }
- 
-    .arrow.down::before {
-      content: "▼";
-      color: var(--arrow-color-rr, #a94442);
-    }
+	.arrow-b.up::before {
+	  content: "▲";
+	  color: var(--arrow-color-b, #006400);
+	}
+
+	.arrow-b.down::before {
+	  content: "▼";
+	  color: var(--arrow-color-b, #006400);
+	}
+
+	.arrow-rr.up::before {
+	  content: "▲";
+	  color: var(--arrow-color-rr, #a94442);
+	}
+
+	.arrow-rr.down::before {
+	  content: "▼";
+	  color: var(--arrow-color-rr, #a94442);
+	}
  
     .label {
       font-style: italic;
@@ -263,13 +273,13 @@
                 <div class="kpi-value ${this._shouldAnimate ? 'value-change' : ''}">${this._props.mainValue}</div>
                 <div class="kpi-matrix">
                   <div class="kpi-line delta-b">
-                    <div class="arrow ${this._props.arrowDirectionB}"></div>
+                    <div class="arrow-b ${this._props.arrowDirectionB}"></div>
                     <div class="label">${this._props.labelB}</div>
                     <div class="delta-val ${this._shouldAnimate ? 'value-change' : ''}">${this._props.deltaB}</div>
                     <div class="delta-pct ${this._shouldAnimate ? 'value-change' : ''}">${this._props.deltaBPercent}</div>
                   </div>
                   <div class="kpi-line delta-rr">
-                    <div class="arrow ${this._props.arrowDirectionRR}"></div>
+                    <div class="arrow-rr ${this._props.arrowDirectionRR}"></div>
                     <div class="label">${this._props.labelRR}</div>
                     <div class="delta-val ${this._shouldAnimate ? 'value-change' : ''}">${this._props.deltaRR}</div>
                     <div class="delta-pct ${this._shouldAnimate ? 'value-change' : ''}">${this._props.deltaRRPercent}</div>
