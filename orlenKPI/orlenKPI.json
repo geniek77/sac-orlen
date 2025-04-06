@@ -1,8 +1,8 @@
 {
   "id": "com.sap.analytics.custom.widget.orlenkpi",
-  "version": "1.2.9",
+  "version": "1.3.0",
   "name": "orlenKPI",
-  "description": "Widżet KPI z pełną konfiguracją stylów i czcionek SAP",
+  "description": "Widget KPI",
   "vendor": "G++ E.Sz dla ORLEN S.A.",
   "newInstancePrefix": "orlen_kpi",
   "webcomponents": [
