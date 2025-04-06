@@ -236,8 +236,8 @@
         '--delta-rr-text-color': this._props.textColorRR,
         '--delta-rr-padding': this._props.deltaRRPadding,
         '--delta-rr-border-radius': this._props.deltaRRBorderRadius,
-        '--arrow-color-b': this._props.arrowColorB,
-        '--arrow-color-rr': this._props.arrowColorRR,
+		'--arrow-color-b': this._props.arrowColorB,
+		'--arrow-color-rr': this._props.arrowColorRR, // Poprawiona literówka 
         '--label-font-size': this._props.labelBFontSize,
         '--label-rr-font-size': this._props.labelRRFontSize
       };
