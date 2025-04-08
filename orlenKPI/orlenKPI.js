@@ -8,12 +8,14 @@
       min-width: 300px;
     }
  
-    .kpi-container {
-      padding: 20px;
-      position: relative;
-      background: transparent;
-      box-sizing: border-box;
-    }
+	.kpi-container {
+	  padding: 20px;
+	  position: relative;
+	  background: transparent;
+	  box-sizing: border-box;
+	  max-width: 100%;
+	  overflow: hidden;
+	}
  
     .kpi-header {
       display: flex;
@@ -75,9 +77,10 @@
       top: 10px;
     }
  
-    .kpi-line {
-      display: grid;
-      grid-template-columns: 30px 40px 90px 90px;
+	.kpi-line {
+	  display: grid;
+	  grid-template-columns: auto 1fr 1fr 1fr;
+	  gap: 8px;
       align-items: center;
       transition: all 0.3s ease;
     }
