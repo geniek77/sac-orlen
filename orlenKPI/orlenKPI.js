@@ -15,11 +15,11 @@
 	  box-sizing: border-box;
 	  max-width: 100%;
 	  overflow: hidden;
-	  border: var(--kpi-border, 0px solid #ccc);
 	  cursor: pointer;
 	  transition: border 0.3s ease;
+	  border-top: var(--kpibordersize, solid #ccc);	
 	}
- 
+
     .kpi-header {
       display: flex;
       justify-content: space-between;
@@ -177,6 +177,7 @@
     _getDefaultProperties() {
       return {
         title: 'EBITDA LIFO',
+		kpibordersize: '0px',
         mainValue: '315,8',
         deltaB: '+198',
         deltaBPercent: '+168%',
@@ -256,7 +257,7 @@
 		'--arrow-color-rr': this._props.arrowColorRR, // Poprawiona literówka 
         '--label-font-size': this._props.labelBFontSize,
         '--label-rr-font-size': this._props.labelRRFontSize,
-		'--kpi-border': this._props.kpiBorder 
+		'--kpi-border': this._props.kpibordersize
       };
  
       Object.entries(styleMap).forEach(([prop, value]) => {
@@ -347,6 +348,8 @@
     // Gettery i Settery
     getTitle() { return this._props.title; }
     setTitle(value) { this._props.title = value; this._render(); }
+	getkpiBorder() { return this._props.kpibordersize; }
+	setkpiBorder(value) { this._props.kpibordersize = value; this._render(); }	
     getMainValue() { return this._props.mainValue; }
     setMainValue(value) { this._props.mainValue = value; this._shouldAnimate = true; this._render(); }
     getDeltaB() { return this._props.deltaB; }
