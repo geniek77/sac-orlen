@@ -113,6 +113,8 @@
           <label>Kolor tekstu:</label><br><input type="color" id="fontColor"><br>
           <label>Etykieta B:</label><br><input type="text" id="labelB"><br>
           <label>Etykieta R/R:</label><br><input type="text" id="labelRR"><br>
+		  <label>Obramowanie (np. 2px solid #ccc):</label><br>
+		  <input type="text" id="kpiBorder"><br>
         </fieldset>
 
         <br><button type="submit">Zapisz</button>

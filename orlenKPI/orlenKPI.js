@@ -15,6 +15,9 @@
 	  box-sizing: border-box;
 	  max-width: 100%;
 	  overflow: hidden;
+	  border: 2px solid #ccc;
+	  cursor: pointer;
+	  transition: border 0.3s ease;
 	}
  
     .kpi-header {
@@ -252,7 +255,8 @@
 		'--arrow-color-b': this._props.arrowColorB,
 		'--arrow-color-rr': this._props.arrowColorRR, // Poprawiona literówka 
         '--label-font-size': this._props.labelBFontSize,
-        '--label-rr-font-size': this._props.labelRRFontSize
+        '--label-rr-font-size': this._props.labelRRFontSize,
+		'--kpi-border': this._props.kpiBorder 
       };
  
       Object.entries(styleMap).forEach(([prop, value]) => {

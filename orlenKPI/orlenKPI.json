@@ -196,11 +196,18 @@
       "type": "string",
       "default": "4px",
       "description": "Zaokrąglenie rogów delty R/R"
-    }
+    },
+    "kpiBorder": {
+  	"type": "string",
+  	"default": "2px solid #ccc",
+  	"description": "Obramowanie kontenera (np. '1px solid #000')"
+	}
   },
   "methods": {
     "getTitle": { "returnType": "string" },
     "setTitle": { "parameters": [{ "name": "value", "type": "string" }] },
+    "getkpiBorder": { "returnType": "string" },
+    "setkpiBorder": { "parameters": [{ "name": "value", "type": "string" }] },
     "getMainValue": { "returnType": "string" },
     "setMainValue": { "parameters": [{ "name": "value", "type": "string" }] },
     "getDeltaB": { "returnType": "string" },
@@ -268,7 +275,7 @@
     "getDeltaBBorderRadius": { "returnType": "string" },
     "setDeltaBBorderRadius": { "parameters": [{ "name": "value", "type": "string" }] },
     "getDeltaRRBorderRadius": { "returnType": "string" },
-    "setDeltaRRBorderRadius": { "parameters": [{ "name": "value", "type": "string" }] }
+    "setDeltaRRBorderRadius": { "parameters": [{ "name": "value", "type": "string" }] }   
   },
   "events": {
     "onClick": { "description": "Zdarzenie po kliknięciu w cały widget" },
