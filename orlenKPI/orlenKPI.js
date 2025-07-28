@@ -15,7 +15,7 @@
 	  box-sizing: border-box;
 	  max-width: 100%;
 	  overflow: hidden;
-	  border: 2px solid #ccc;
+	  border: var(--kpi-border, 0px solid #ccc);
 	  cursor: pointer;
 	  transition: border 0.3s ease;
 	}
