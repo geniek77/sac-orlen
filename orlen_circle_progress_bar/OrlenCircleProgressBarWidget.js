@@ -3,16 +3,34 @@
   template.innerHTML = `
     <style>
       :host {
-          display: inline-block;
-          position: relative;
-          width: 100px;
-          height: 100px;
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        box-sizing: border-box;
+
+        /* Domyślne wartości (nadpisywane przez ResizeObserver) */
+        --size: 100px;
+        --inner: calc(var(--size) * 0.8);
+        --font: calc(var(--size) * 0.22);
+
+        min-width: 24px;
+        min-height: 24px;
+      }
+
+      #container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       #progress-spinner {
         border-radius: 50%;
-        height: 100px;
-        width: 100px;
+        width: var(--size);
+        height: var(--size);
       }
 
       #middle-circle {
@@ -21,25 +39,25 @@
         left: 50%;
         transform: translate(-50%, -50%);
         border-radius: 50%;
-        height: 80px;
-        width: 80px;
+
+        width: var(--inner);
+        height: var(--inner);
+
         background-color: rgb(248, 248, 248);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: large;
+
+        font-size: var(--font);
         font-weight: bold;
+        line-height: 1;
+        user-select: none;
+        pointer-events: none;
       }
     </style>
-    <div
-      style="
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      "
-    >
-      <div id="middle-circle">10%</div>
+
+    <div id="container">
+      <div id="middle-circle">0%</div>
       <div id="progress-spinner"></div>
     </div>
   `;
@@ -52,6 +70,8 @@
 
       this._props = {};
       this._intervalId = null;
+
+      this._resizeObserver = null;
 
       // Emit SAC event declared in manifest ("events": { "onClick": ... })
       this.addEventListener("click", () => {
@@ -85,8 +105,43 @@
       return this._props && this._props.emptyBarColor;
     }
 
+    _updateSize() {
+      const rect = this.getBoundingClientRect();
+      const w = rect.width || 0;
+      const h = rect.height || 0;
+
+      // Jeśli SAC chwilowo raportuje 0 wysokości, fallback na width
+      const base = Math.min(w || 0, h || w || 0) || 100;
+
+      // Minimalny sensowny rozmiar
+      const size = Math.max(24, Math.floor(base));
+
+      // Zmienna CSS steruje rozmiarem kółka/wnętrza/fontu
+      this.style.setProperty("--size", `${size}px`);
+    }
+
     async connectedCallback() {
+      if (!this._resizeObserver) {
+        this._resizeObserver = new ResizeObserver(() => {
+          // Przy resize nie restartujemy animacji — tylko zmieniamy rozmiar
+          this._updateSize();
+        });
+      }
+
+      this._resizeObserver.observe(this);
+
+      this._updateSize();
       this.initMain();
+    }
+
+    disconnectedCallback() {
+      if (this._resizeObserver) {
+        this._resizeObserver.disconnect();
+      }
+      if (this._intervalId) {
+        clearInterval(this._intervalId);
+        this._intervalId = null;
+      }
     }
 
     async initMain() {
@@ -95,19 +150,13 @@
       if (!progressBar || !progressText) return;
 
       const barColor =
-        this._props && this._props.barColor != null
-          ? this._props.barColor
-          : "#03ff4f";
+        this._props && this._props.barColor != null ? this._props.barColor : "#03ff4f";
       const emptyBarColor =
-        this._props && this._props.emptyBarColor != null
-          ? this._props.emptyBarColor
-          : "#ededed";
+        this._props && this._props.emptyBarColor != null ? this._props.emptyBarColor : "#ededed";
 
       // Raw value shown as text (can be >100 or negative)
       let rawPercentage =
-        this._props && this._props.percentage != null
-          ? Number(this._props.percentage)
-          : 75;
+        this._props && this._props.percentage != null ? Number(this._props.percentage) : 75;
       if (!Number.isFinite(rawPercentage)) rawPercentage = 75;
 
       // Fill for the ring is clamped to 0..100
@@ -120,8 +169,7 @@
       }
 
       // Start state
-      progressBar.style.background =
-        "conic-gradient(" + barColor + " 0%, " + emptyBarColor + " 0%)";
+      progressBar.style.background = `conic-gradient(${barColor} 0%, ${emptyBarColor} 0%)`;
       progressText.innerText = "0%";
 
       // Fixed-duration animation (~1s)
@@ -135,34 +183,16 @@
         const fill = Math.round(fillTarget * t);
         const shown = Math.round(rawPercentage * t);
 
-        progressBar.style.background =
-          "conic-gradient(" +
-          barColor +
-          " " +
-          fill +
-          "%, " +
-          emptyBarColor +
-          " " +
-          fill +
-          "%)";
-        progressText.innerText = shown + "%";
+        progressBar.style.background = `conic-gradient(${barColor} ${fill}%, ${emptyBarColor} ${fill}%)`;
+        progressText.innerText = `${shown}%`;
 
         if (t >= 1) {
           clearInterval(this._intervalId);
           this._intervalId = null;
 
           // Ensure final values are exact
-          progressBar.style.background =
-            "conic-gradient(" +
-            barColor +
-            " " +
-            fillTarget +
-            "%, " +
-            emptyBarColor +
-            " " +
-            fillTarget +
-            "%)";
-          progressText.innerText = rawPercentage + "%";
+          progressBar.style.background = `conic-gradient(${barColor} ${fillTarget}%, ${emptyBarColor} ${fillTarget}%)`;
+          progressText.innerText = `${rawPercentage}%`;
         }
       }, 20);
     }
