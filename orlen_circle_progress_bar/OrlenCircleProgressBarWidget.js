@@ -9,7 +9,7 @@
         position: relative;
         box-sizing: border-box;
 
-        /* Domyślne wartości (nadpisywane przez ResizeObserver) */
+        /* sterowanie rozmiarem */
         --size: 100px;
         --inner: calc(var(--size) * 0.8);
         --font: calc(var(--size) * 0.22);
@@ -105,46 +105,53 @@
       return this._props && this._props.emptyBarColor;
     }
 
-    _updateSize() {
-      const rect = this.getBoundingClientRect();
-      const w = rect.width || 0;
-      const h = rect.height || 0;
+    _applySize(width, height) {
+      const w = Number(width) || 0;
+      const h = Number(height) || 0;
 
-      // Jeśli SAC chwilowo raportuje 0 wysokości, fallback na width
+      // jeśli SAC poda 0 (np. chwilowo), nie psuj rozmiaru
+      if (w <= 0 && h <= 0) return;
+
       const base = Math.min(w || 0, h || w || 0) || 100;
-
-      // Minimalny sensowny rozmiar
       const size = Math.max(24, Math.floor(base));
-
-      // Zmienna CSS steruje rozmiarem kółka/wnętrza/fontu
       this.style.setProperty("--size", `${size}px`);
     }
 
-    async connectedCallback() {
+    // ✅ SAC callback – najpewniejszy sposób reagowania na resize w SAC
+    onCustomWidgetResize(width, height) {
+      this._applySize(width, height);
+    }
+
+    connectedCallback() {
+      // wymuś zajmowanie całego pola widgetu w SAC
+      this.style.display = "block";
+      this.style.width = "100%";
+      this.style.height = "100%";
+
+      // fallback: działa, gdy SAC zmienia layout (ale nie zawsze łapie transformacje)
       if (!this._resizeObserver) {
-        this._resizeObserver = new ResizeObserver(() => {
-          // Przy resize nie restartujemy animacji — tylko zmieniamy rozmiar
-          this._updateSize();
+        this._resizeObserver = new ResizeObserver((entries) => {
+          const cr = entries?.[0]?.contentRect;
+          if (cr) this._applySize(cr.width, cr.height);
         });
       }
-
       this._resizeObserver.observe(this);
 
-      this._updateSize();
+      // startowe ustawienie rozmiaru
+      this._applySize(this.clientWidth, this.clientHeight);
+
       this.initMain();
     }
 
     disconnectedCallback() {
-      if (this._resizeObserver) {
-        this._resizeObserver.disconnect();
-      }
+      if (this._resizeObserver) this._resizeObserver.disconnect();
       if (this._intervalId) {
         clearInterval(this._intervalId);
         this._intervalId = null;
       }
     }
 
-    async initMain() {
+    initMain() {
       const progressBar = this.shadowRoot.querySelector("#progress-spinner");
       const progressText = this.shadowRoot.querySelector("#middle-circle");
       if (!progressBar || !progressText) return;
@@ -173,7 +180,7 @@
       progressText.innerText = "0%";
 
       // Fixed-duration animation (~1s)
-      const frames = 50; // 50 * 20ms = ~1000ms
+      const frames = 50;
       let frame = 0;
 
       this._intervalId = setInterval(() => {
@@ -190,7 +197,6 @@
           clearInterval(this._intervalId);
           this._intervalId = null;
 
-          // Ensure final values are exact
           progressBar.style.background = `conic-gradient(${barColor} ${fillTarget}%, ${emptyBarColor} ${fillTarget}%)`;
           progressText.innerText = `${rawPercentage}%`;
         }
@@ -198,13 +204,10 @@
     }
 
     onCustomWidgetBeforeUpdate(changedProperties) {
-      this._props = {
-        ...this._props,
-        ...changedProperties,
-      };
+      this._props = { ...this._props, ...changedProperties };
     }
 
-    onCustomWidgetAfterUpdate(changedProperties) {
+    onCustomWidgetAfterUpdate() {
       this.initMain();
     }
   }
