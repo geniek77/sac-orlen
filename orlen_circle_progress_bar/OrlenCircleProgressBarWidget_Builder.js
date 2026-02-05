@@ -28,112 +28,123 @@
     input {
         width: 100%;
         padding: 10px;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        font-size: 13px;
-        box-sizing: border-box;
-        margin-bottom: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
     }
-
 
     input[type="color"] {
-	-webkit-appearance: none;
-	border: none;
-	width: 32px;
-	height: 32px;
-}
-input[type="color"]::-webkit-color-swatch-wrapper {
-	padding: 0;
-}
-input[type="color"]::-webkit-color-swatch {
-	border: none;
-}
+        padding: 0;
+        height: 30px;
+        border: none;
+    }
 
+    input[type="number"] {
+        width: 93%;
+    }
 
-    select {
-        width: 100%;
-        padding: 10px;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        font-size: 13px;
-        box-sizing: border-box;
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    .label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
         margin-bottom: 10px;
     }
 
-    input[type="submit"] {
-        background-color: #487cac;
-        color: white;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        font-size: 14px;
-        cursor: pointer;
-        width: 100%;
+    .container .label {
+        width: 150px;
     }
 
-    #label {
-        width: 140px;
+    .container input {
+        flex: 1;
+    }
+
+    .spacer {
+        margin-bottom: 10px;
+    }
+
+    .header-row td {
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 </style>
+
 <form id="form">
     <table>
+        <tr class="header-row">
+            <td colspan="2">
+                <h2>Circle Progress Bar</h2>
+            </td>
+        </tr>
+
         <tr>
-    <td>
-    <p>Percentage</p>
-    <input id="builder_percentage" type="number" placeholder="Enter Percentage">
-    </td>
-    </tr>
-    <tr>
-    <td>
-    <p>Bar Color</p>
-    <input id="builder_barColor" type="color" placeholder="Enter Bar Color">
-    </td>
-    </tr>
-    <tr>
-    <td>
-    <p>Empty Bar Color</p>
-    <input id="builder_emptyBarColor" type="color" placeholder="Enter Empty Bar Color">
-    </td>
-    </tr>
-    
+            <td class="label">Percentage:</td>
+            <td>
+                <input id="builder_percentage" type="number" min="-999999" max="999999" step="1" />
+            </td>
+        </tr>
+
+        <tr>
+            <td class="label">Bar Color:</td>
+            <td>
+                <input id="builder_barColor" type="color" />
+            </td>
+        </tr>
+
+        <tr>
+            <td class="label">Empty Bar Color:</td>
+            <td>
+                <input id="builder_emptyBarColor" type="color" />
+            </td>
+        </tr>
     </table>
-    <input value="Update Settings" type="submit">
-    <br>
-    <p>Developed by <a target="_blank" href="https://linkedin.com/in/itsrohitchouhan">Rohit Chouhan</a></p>
 </form>
-`;
-   class OrlenCircleProgressBarWidgetBuilderPanel extends HTMLElement {
+   `;
+
+   class WidgetBuilder extends HTMLElement {
       constructor() {
          super();
-         this._shadowRoot = this.attachShadow({
-            mode: "open"
-         });
+         this._shadowRoot = this.attachShadow({ mode: "open" });
          this._shadowRoot.appendChild(template.content.cloneNode(true));
-         this._shadowRoot
-            .getElementById("form")
-            .addEventListener("submit", this._submit.bind(this));
+         this._shadowRoot.getElementById("form").addEventListener("change", this._submit.bind(this));
       }
+
       _submit(e) {
          e.preventDefault();
-         this.dispatchEvent(
-            new CustomEvent("propertiesChanged", {
-               detail: {
-                  properties: {
-                     percentage: this.percentage,
-                     barColor: this.barColor,
-                     emptyBarColor: this.emptyBarColor
-                  },
-               },
-            })
-         );
+         this.dispatchEvent(new CustomEvent("propertiesChanged", {
+            detail: {
+               properties: {
+                  percentage: this.percentage,
+                  barColor: this.barColor,
+                  emptyBarColor: this.emptyBarColor
+               }
+            }
+         }));
       }
 
       set percentage(_percentage) {
          this._shadowRoot.getElementById("builder_percentage").value = _percentage;
       }
-	  get percentage() {
-	    return Number(this._shadowRoot.getElementById("builder_percentage").value);
-	  }
+      get percentage() {
+         return Number(this._shadowRoot.getElementById("builder_percentage").value);
+      }
 
       set barColor(_barColor) {
          this._shadowRoot.getElementById("builder_barColor").value = _barColor;
@@ -148,9 +159,7 @@ input[type="color"]::-webkit-color-swatch {
       get emptyBarColor() {
          return this._shadowRoot.getElementById("builder_emptyBarColor").value;
       }
-
    }
-   customElements.define("com-orlen-sap-orlencircleprogressbarwidget-builder",
-      OrlenCircleProgressBarWidgetBuilderPanel
-   );
+
+   customElements.define("com-orlen-sap-orlencircleprogressbarwidget-builder", WidgetBuilder);
 })();
