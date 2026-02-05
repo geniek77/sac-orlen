@@ -51,12 +51,14 @@
                     "description": "Percentage"
                 }
             ],
-            "body": "this.percentage = percentage;"
+            "body": "this._props=this._props||{}; this._props.percentage=percentage; this.dispatchEvent(new CustomEvent('propertiesChanged',{detail:{properties:{percentage:percentage}}}));"
+            
         },
         "getPercentage": {
             "returnType": "integer",
             "description": "Return Percentage",
-            "body": "return this.percentage;"
+            "body": "return (this._props && this._props.percentage != null) ? this._props.percentage : 0;"
+
         },
         "setBarColor": {
             "description": "Set Bar Color",
@@ -67,12 +69,13 @@
                     "description": "Bar Color"
                 }
             ],
-            "body": "this.barColor = barColor;"
+            "body": "this._props=this._props||{}; this._props.barColor=barColor; this.dispatchEvent(new CustomEvent('propertiesChanged',{detail:{properties:{barColor:barColor}}}));"
+
         },
         "getBarColor": {
             "returnType": "string",
             "description": "Return Bar Color",
-            "body": "return this.barColor;"
+            "body": "return (this._props && this._props.barColor != null) ? this._props.barColor : '';"
         },
         "setEmptyBarColor": {
             "description": "Set Empty Bar Color",
@@ -83,12 +86,13 @@
                     "description": "Empty Bar Color"
                 }
             ],
-            "body": "this.emptyBarColor = emptyBarColor;"
+            "body": "this._props=this._props||{}; this._props.emptyBarColor=emptyBarColor; this.dispatchEvent(new CustomEvent('propertiesChanged',{detail:{properties:{emptyBarColor:emptyBarColor}}}));"
+
         },
         "getEmptyBarColor": {
             "returnType": "string",
             "description": "Return Empty Bar Color",
-            "body": "return this.emptyBarColor;"
+            "body": "return (this._props && this._props.emptyBarColor != null) ? this._props.emptyBarColor : '';"
         }
     },
     "events": {

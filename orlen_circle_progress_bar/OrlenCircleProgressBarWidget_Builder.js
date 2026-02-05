@@ -131,9 +131,9 @@ input[type="color"]::-webkit-color-swatch {
       set percentage(_percentage) {
          this._shadowRoot.getElementById("builder_percentage").value = _percentage;
       }
-      get percentage() {
-         return this._shadowRoot.getElementById("builder_percentage").value;
-      }
+	  get percentage() {
+	    return Number(this._shadowRoot.getElementById("builder_percentage").value);
+	  }
 
       set barColor(_barColor) {
          this._shadowRoot.getElementById("builder_barColor").value = _barColor;
