@@ -1,25 +1,25 @@
 {
-    "id": "com.rohitchouhan.sap.circleprogressbarwidget",
+    "id": "com.orlen.sap.orlencircleprogressbarwidget",
     "version": "1.0.0",
-    "name": "Circle Progress Bar Widget",
-    "description": "SAC Custom Widget to add beautiful and animated circle progress bar in SAP Analytics Cloud Application",
-    "newInstancePrefix": "CircleProgressBarWidget",
-    "vendor": "Rohit Chouhan",
+    "name": "Orlen Circle Progress Bar Widget",
+    "description": "Orlen circle progress bar",
+    "newInstancePrefix": "OrlenCircleProgressBarWidget",
+    "vendor": "G++ E.Sz dla Orlen S.A",
     "eula": "",
-    "license": "MIT",
-    "icon": "https:\/\/raw.githubusercontent.com\/SAP-Custom-Widget\/CircleProgressBarWidget\/main\/icon.png",
+    "license": "",
+    "icon": "",
     "webcomponents": [
         {
             "kind": "main",
-            "tag": "com-rohitchouhan-sap-circleprogressbarwidget",
-            "url": "https:\/\/cdn.jsdelivr.net\/gh\/SAP-Custom-Widget\/CircleProgressBarWidget@1.0.0\/CircleProgressBarWidget.js",
+            "tag": "com-orlen-sap-orlencircleprogressbarwidget",
+            "url": "/OrlenCircleProgressBarWidget.js",
             "integrity": "",
             "ignoreIntegrity": true
         },
         {
             "kind": "builder",
-            "tag": "com-rohitchouhan-sap-circleprogressbarwidget-builder",
-            "url": "https:\/\/cdn.jsdelivr.net\/gh\/SAP-Custom-Widget\/CircleProgressBarWidget@1.0.0\/CircleProgressBarWidget_Builder.js",
+            "tag": "com-orlen-sap-orlencircleprogressbarwidget-builder",
+            "url": "/OrlenCircleProgressBarWidget_Builder.js",
             "integrity": "",
             "ignoreIntegrity": true
         }

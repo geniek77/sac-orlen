@@ -90,5 +90,5 @@
       this.initMain();
     }
   }
-  customElements.define("com-rohitchouhan-sap-circleprogressbarwidget", Widget);
+  customElements.define("com-orlen-sap-orlencircleprogressbarwidget", Widget);
 })();

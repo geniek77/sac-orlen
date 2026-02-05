@@ -102,7 +102,7 @@ input[type="color"]::-webkit-color-swatch {
     <p>Developed by <a target="_blank" href="https://linkedin.com/in/itsrohitchouhan">Rohit Chouhan</a></p>
 </form>
 `;
-   class CircleProgressBarWidgetBuilderPanel extends HTMLElement {
+   class OrlenCircleProgressBarWidgetBuilderPanel extends HTMLElement {
       constructor() {
          super();
          this._shadowRoot = this.attachShadow({
@@ -150,7 +150,7 @@ input[type="color"]::-webkit-color-swatch {
       }
 
    }
-   customElements.define("com-rohitchouhan-sap-circleprogressbarwidget-builder",
-      CircleProgressBarWidgetBuilderPanel
+   customElements.define("com-orlen-sap-orlencircleprogressbarwidget-builder",
+      OrlenCircleProgressBarWidgetBuilderPanel
    );
 })();
