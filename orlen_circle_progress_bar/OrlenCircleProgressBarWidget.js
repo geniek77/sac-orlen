@@ -4,18 +4,13 @@
     <style>
       :host {
         display: block;
+        position: relative;
         width: 100%;
         height: 100%;
-        position: relative;
         box-sizing: border-box;
 
-        /* sterowanie rozmiarem */
+        /* sterowane z JS */
         --size: 100px;
-        --inner: calc(var(--size) * 0.8);
-        --font: calc(var(--size) * 0.22);
-
-        min-width: 24px;
-        min-height: 24px;
       }
 
       #container {
@@ -40,15 +35,12 @@
         transform: translate(-50%, -50%);
         border-radius: 50%;
 
-        width: var(--inner);
-        height: var(--inner);
-
+        /* rozmiary ustawiane w JS jako inline style (pewniejsze niż same CSS var) */
         background-color: rgb(248, 248, 248);
         display: flex;
         align-items: center;
         justify-content: center;
 
-        font-size: var(--font);
         font-weight: bold;
         line-height: 1;
         user-select: none;
@@ -72,6 +64,9 @@
       this._intervalId = null;
 
       this._resizeObserver = null;
+      this._rafId = null;
+      this._lastW = 0;
+      this._lastH = 0;
 
       // Emit SAC event declared in manifest ("events": { "onClick": ... })
       this.addEventListener("click", () => {
@@ -106,29 +101,77 @@
     }
 
     _applySize(width, height) {
-      const w = Number(width) || 0;
-      const h = Number(height) || 0;
+      const progressBar = this.shadowRoot.querySelector("#progress-spinner");
+      const progressText = this.shadowRoot.querySelector("#middle-circle");
+      if (!progressBar || !progressText) return;
 
-      // jeśli SAC poda 0 (np. chwilowo), nie psuj rozmiaru
-      if (w <= 0 && h <= 0) return;
+      let w = Number(width);
+      let h = Number(height);
 
-      const base = Math.min(w || 0, h || w || 0) || 100;
-      const size = Math.max(24, Math.floor(base));
+      // fallback: bierz z bounding rect (łapie też zmiany przez transform/layout)
+      if (!Number.isFinite(w) || w <= 0 || !Number.isFinite(h) || h <= 0) {
+        const r = this.getBoundingClientRect();
+        w = r.width;
+        h = r.height;
+      }
+
+      if (!Number.isFinite(w) || !Number.isFinite(h) || w <= 0 || h <= 0) return;
+
+      const size = Math.max(24, Math.floor(Math.min(w, h)));
+      const inner = Math.max(18, Math.floor(size * 0.8));
+      const fontPx = Math.max(10, Math.floor(size * 0.22));
+
+      // CSS var (dla progress-spinner)
       this.style.setProperty("--size", `${size}px`);
+
+      // Inline (pewniej niż tylko var)
+      progressBar.style.width = `${size}px`;
+      progressBar.style.height = `${size}px`;
+
+      progressText.style.width = `${inner}px`;
+      progressText.style.height = `${inner}px`;
+      progressText.style.fontSize = `${fontPx}px`;
     }
 
-    // ✅ SAC callback – najpewniejszy sposób reagowania na resize w SAC
+    // ✅ SAC resize callback (najbardziej “oficjalny”)
     onCustomWidgetResize(width, height) {
+      // UWAGA: nie restartujemy animacji, tylko rozmiar
       this._applySize(width, height);
     }
 
-    connectedCallback() {
-      // wymuś zajmowanie całego pola widgetu w SAC
-      this.style.display = "block";
-      this.style.width = "100%";
-      this.style.height = "100%";
+    _startSizeMonitor() {
+      if (this._rafId) return;
 
-      // fallback: działa, gdy SAC zmienia layout (ale nie zawsze łapie transformacje)
+      let lastTs = 0;
+      const tick = (ts) => {
+        // throttle ~200ms
+        if (ts - lastTs >= 200) {
+          lastTs = ts;
+          const r = this.getBoundingClientRect();
+          const w = Math.round(r.width);
+          const h = Math.round(r.height);
+
+          if (w !== this._lastW || h !== this._lastH) {
+            this._lastW = w;
+            this._lastH = h;
+            this._applySize(w, h);
+          }
+        }
+        this._rafId = requestAnimationFrame(tick);
+      };
+
+      this._rafId = requestAnimationFrame(tick);
+    }
+
+    _stopSizeMonitor() {
+      if (this._rafId) {
+        cancelAnimationFrame(this._rafId);
+        this._rafId = null;
+      }
+    }
+
+    connectedCallback() {
+      // Fallback observer (czasem działa, czasem nie — ale nie przeszkadza)
       if (!this._resizeObserver) {
         this._resizeObserver = new ResizeObserver((entries) => {
           const cr = entries?.[0]?.contentRect;
@@ -137,14 +180,18 @@
       }
       this._resizeObserver.observe(this);
 
-      // startowe ustawienie rozmiaru
-      this._applySize(this.clientWidth, this.clientHeight);
+      // Najpewniejszy fallback na “dziwne” resize’y w SAC
+      this._startSizeMonitor();
 
+      // Startowo ustaw rozmiar i narysuj
+      this._applySize(this.clientWidth, this.clientHeight);
       this.initMain();
     }
 
     disconnectedCallback() {
       if (this._resizeObserver) this._resizeObserver.disconnect();
+      this._stopSizeMonitor();
+
       if (this._intervalId) {
         clearInterval(this._intervalId);
         this._intervalId = null;
@@ -161,25 +208,23 @@
       const emptyBarColor =
         this._props && this._props.emptyBarColor != null ? this._props.emptyBarColor : "#ededed";
 
-      // Raw value shown as text (can be >100 or negative)
       let rawPercentage =
         this._props && this._props.percentage != null ? Number(this._props.percentage) : 75;
       if (!Number.isFinite(rawPercentage)) rawPercentage = 75;
 
-      // Fill for the ring is clamped to 0..100
       const fillTarget = Math.max(0, Math.min(100, rawPercentage));
 
-      // Stop previous animation (if any)
       if (this._intervalId) {
         clearInterval(this._intervalId);
         this._intervalId = null;
       }
 
-      // Start state
+      // Jeśli rozmiar nie był jeszcze ustawiony, ustaw z rect
+      this._applySize(this.clientWidth, this.clientHeight);
+
       progressBar.style.background = `conic-gradient(${barColor} 0%, ${emptyBarColor} 0%)`;
       progressText.innerText = "0%";
 
-      // Fixed-duration animation (~1s)
       const frames = 50;
       let frame = 0;
 
