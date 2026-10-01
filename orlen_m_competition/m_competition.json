@@ -1,0 +1,448 @@
+{
+  "id": "com.sbl.instruments.mcompetition",
+  "version": "4.0.0",
+  "name": "M Competition Cockpit KPI v4",
+  "description": "Kokpit KPI inspirowany cyfrowym zestawem wskaźników BMW M: tekstura bez utrwalonych napisów + konfigurowalne, dynamiczne warstwy SVG.",
+  "newInstancePrefix": "M_Cockpit",
+  "vendor": "SBL Instruments",
+  "eula": "",
+  "license": "",
+  "supportsViewportLoading": true,
+  "webcomponents": [
+    {
+      "kind": "main",
+      "tag": "com-sbl-instruments-m-competition-v4",
+      "url": "https://TWOJ-SERWER-HTTPS/m_competition.js",
+      "integrity": "sha256-dNCJnAL+khyEVB2sTuknwiwrWRJvZLY4ILuTInZQ1vg=",
+      "ignoreIntegrity": false
+    },
+    {
+      "kind": "styling",
+      "tag": "com-sbl-instruments-m-competition-v4-styling",
+      "url": "https://TWOJ-SERWER-HTTPS/m_competition_styling.js",
+      "integrity": "sha256-6xsrEg63ymjHTy1l4VtChD/QT+4s8Ykn/KgKpiNtFmc=",
+      "ignoreIntegrity": false
+    }
+  ],
+  "properties": {
+    "leftValue": {
+      "type": "number",
+      "default": 168
+    },
+    "leftMin": {
+      "type": "number",
+      "default": 0
+    },
+    "leftMax": {
+      "type": "number",
+      "default": 330
+    },
+    "leftPrecision": {
+      "type": "number",
+      "default": 1
+    },
+    "rightValue": {
+      "type": "number",
+      "default": 6.2
+    },
+    "rightMin": {
+      "type": "number",
+      "default": 0
+    },
+    "rightMax": {
+      "type": "number",
+      "default": 8
+    },
+    "rightPrecision": {
+      "type": "number",
+      "default": 1
+    },
+    "centerValue": {
+      "type": "number",
+      "default": 87.4
+    },
+    "centerMin": {
+      "type": "number",
+      "default": 0
+    },
+    "centerMax": {
+      "type": "number",
+      "default": 100
+    },
+    "centerPrecision": {
+      "type": "number",
+      "default": 1
+    },
+    "fuelValue": {
+      "type": "number",
+      "default": 54
+    },
+    "fuelMin": {
+      "type": "number",
+      "default": 0
+    },
+    "fuelMax": {
+      "type": "number",
+      "default": 100
+    },
+    "fuelPrecision": {
+      "type": "number",
+      "default": 0
+    },
+    "tempValue": {
+      "type": "number",
+      "default": 83
+    },
+    "tempMin": {
+      "type": "number",
+      "default": 50
+    },
+    "tempMax": {
+      "type": "number",
+      "default": 130
+    },
+    "tempPrecision": {
+      "type": "number",
+      "default": 0
+    },
+    "logoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "logoWidth": {
+      "type": "number",
+      "default": 100
+    },
+    "logoHeight": {
+      "type": "number",
+      "default": 48
+    },
+    "logoVisible": {
+      "type": "boolean",
+      "default": true
+    },
+    "colorConfig": {
+      "type": "string",
+      "default": "{}"
+    },
+    "fontConfig": {
+      "type": "string",
+      "default": "{}"
+    },
+    "loadingMode": {
+      "type": "string",
+      "default": "auto"
+    },
+    "previewValues": {
+      "type": "boolean",
+      "default": false
+    },
+    "animationMs": {
+      "type": "number",
+      "default": 1600
+    },
+    "dataMeasureOrder": {
+      "type": "string",
+      "default": "leftValue,rightValue,centerValue,fuelValue,tempValue"
+    },
+    "animationOnRefresh": {
+      "type": "boolean",
+      "default": true
+    },
+    "showNeedles": {
+      "type": "boolean",
+      "default": false
+    },
+    "showBottomBar": {
+      "type": "boolean",
+      "default": true
+    },
+    "enableBinding": {
+      "type": "boolean",
+      "default": true
+    },
+    "leftLabel": {
+      "type": "string",
+      "default": "WYKONANIE"
+    },
+    "leftUnit": {
+      "type": "string",
+      "default": "mln"
+    },
+    "rightLabel": {
+      "type": "string",
+      "default": "DYNAMIKA"
+    },
+    "rightUnit": {
+      "type": "string",
+      "default": "x1000"
+    },
+    "centerLabel": {
+      "type": "string",
+      "default": "REALIZACJA PLANU"
+    },
+    "centerUnit": {
+      "type": "string",
+      "default": "%"
+    },
+    "fuelLabel": {
+      "type": "string",
+      "default": "PALIWO"
+    },
+    "fuelUnit": {
+      "type": "string",
+      "default": ""
+    },
+    "tempLabel": {
+      "type": "string",
+      "default": "TEMP. WODY"
+    },
+    "tempUnit": {
+      "type": "string",
+      "default": ""
+    },
+    "footerPeriodLabel": {
+      "type": "string",
+      "default": "Dane za:"
+    },
+    "footerPeriodValue": {
+      "type": "string",
+      "default": "Maj 2024"
+    },
+    "footerPlanLabel": {
+      "type": "string",
+      "default": "Plan"
+    },
+    "footerPlanValue": {
+      "type": "string",
+      "default": "192,2 mln"
+    },
+    "footerDiffLabel": {
+      "type": "string",
+      "default": "Odchylenie"
+    },
+    "footerDiffValue": {
+      "type": "string",
+      "default": "-24,2 mln"
+    },
+    "footerDeltaLabel": {
+      "type": "string",
+      "default": "▼"
+    },
+    "footerDeltaValue": {
+      "type": "string",
+      "default": "-12,6%"
+    },
+    "footerUpdateLabel": {
+      "type": "string",
+      "default": "Aktualizacja"
+    },
+    "footerUpdateValue": {
+      "type": "string",
+      "default": "19.05.2024 19:37"
+    },
+    "headerText": {
+      "type": "string",
+      "default": ""
+    },
+    "modeText": {
+      "type": "string",
+      "default": ""
+    },
+    "topStatusText": {
+      "type": "string",
+      "default": ""
+    },
+    "arrowText": {
+      "type": "string",
+      "default": "▲"
+    },
+    "showMiniValues": {
+      "type": "boolean",
+      "default": false
+    },
+    "leftTicks": {
+      "type": "number",
+      "default": 11
+    },
+    "rightTicks": {
+      "type": "number",
+      "default": 8
+    },
+    "textureOpacity": {
+      "type": "number",
+      "default": 1
+    }
+  },
+  "methods": {
+    "beginLoading": {
+      "description": "beginLoading",
+      "parameters": []
+    },
+    "finishLoading": {
+      "description": "finishLoading",
+      "parameters": []
+    },
+    "replayAnimation": {
+      "description": "replayAnimation",
+      "parameters": []
+    },
+    "setValues": {
+      "description": "setValues",
+      "parameters": [
+        {
+          "name": "left",
+          "type": "number"
+        },
+        {
+          "name": "right",
+          "type": "number"
+        },
+        {
+          "name": "center",
+          "type": "number"
+        },
+        {
+          "name": "fuel",
+          "type": "number"
+        },
+        {
+          "name": "temperature",
+          "type": "number"
+        }
+      ]
+    },
+    "setGaugeValue": {
+      "description": "setGaugeValue",
+      "parameters": [
+        {
+          "name": "gaugeId",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "type": "number"
+        }
+      ]
+    },
+    "setGaugeRange": {
+      "description": "setGaugeRange",
+      "parameters": [
+        {
+          "name": "gaugeId",
+          "type": "string"
+        },
+        {
+          "name": "minimum",
+          "type": "number"
+        },
+        {
+          "name": "maximum",
+          "type": "number"
+        }
+      ]
+    },
+    "setText": {
+      "description": "setText",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string"
+        },
+        {
+          "name": "text",
+          "type": "string"
+        }
+      ]
+    },
+    "setLogo": {
+      "description": "setLogo",
+      "parameters": [
+        {
+          "name": "imageUrl",
+          "type": "string"
+        }
+      ]
+    },
+    "setThemeColor": {
+      "description": "setThemeColor",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string"
+        },
+        {
+          "name": "hexColor",
+          "type": "string"
+        }
+      ]
+    },
+    "setTextStyle": {
+      "description": "setTextStyle",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string"
+        },
+        {
+          "name": "fontFamily",
+          "type": "string"
+        },
+        {
+          "name": "fontSize",
+          "type": "number"
+        },
+        {
+          "name": "hexColor",
+          "type": "string"
+        }
+      ]
+    },
+    "getGaugeValue": {
+      "description": "getGaugeValue",
+      "parameters": [
+        {
+          "name": "gaugeId",
+          "type": "string"
+        }
+      ],
+      "returnType": "number"
+    },
+    "getGaugeRange": {
+      "description": "getGaugeRange",
+      "parameters": [
+        {
+          "name": "gaugeId",
+          "type": "string"
+        }
+      ],
+      "returnType": "string"
+    },
+    "getText": {
+      "description": "getText",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string"
+        }
+      ],
+      "returnType": "string"
+    }
+  },
+  "dataBindings": {
+    "kpiData": {
+      "feeds": [
+        {
+          "id": "measures",
+          "description": "Maks. 5 miar (lewy, prawy, środek, mały lewy, mały prawy)",
+          "type": "mainStructureMember"
+        }
+      ]
+    }
+  },
+  "events": {
+    "onReady": {
+      "description": "Wszystkie dane są gotowe, ekran włączony"
+    }
+  }
+}

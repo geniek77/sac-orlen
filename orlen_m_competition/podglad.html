@@ -1,0 +1,21 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>M Competition Cockpit v4 — rzeczywisty kod</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101722;color:#e9eff8;font-family:Arial,Helvetica,sans-serif}header{padding:16px 20px 10px}h1{font-size:20px;margin:0 0 6px}header p{margin:0;color:#b4bfd0;font-size:13px}nav{display:flex;gap:8px;flex-wrap:wrap;padding:11px 20px}button{border:1px solid #355b7a;border-radius:6px;background:#173554;color:#eef6ff;padding:9px 12px;cursor:pointer}button:hover{background:#265a84}
+.layout{padding:0 20px 25px;display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:16px}.stage{width:100%;aspect-ratio:1672/941;min-height:230px;resize:both;overflow:auto;background:#020307;border:1px solid #314458;border-radius:5px}.stage>com-sbl-instruments-m-competition-v4{width:100%;height:100%;display:block}.panel{max-height:76vh;overflow:auto;border-radius:5px;background:#111724}small{color:#b1b9c9}footer{padding:0 20px 24px;font-size:12px;color:#b6c5d4} @media(max-width:1100px){.layout{display:block}.panel{margin-top:12px;max-height:500px}}
+</style></head><body>
+<header><h1>SAC M Competition Cockpit v4 — podgląd dokładnie tego samego kodu co widget</h1><p>Obraz PNG w ZIP jest zrzutem tego komponentu z przeglądarki. Można zmieniać rozmiar ramki i konfigurację. Po starcie ekran rozświetla się dopiero po załadowaniu danych.</p></header>
+<nav><button id="loading">Ładowanie — wygaszenie</button><button id="ready">Dane pobrane — rozświetl</button><button id="example">Przykładowe wartości</button><button id="random">Losuj wartości</button></nav>
+<main class="layout"><div class="stage" id="stage"><com-sbl-instruments-m-competition-v4 id="cockpit"></com-sbl-instruments-m-competition-v4></div><aside class="panel"><com-sbl-instruments-m-competition-v4-styling id="styling"></com-sbl-instruments-m-competition-v4-styling></aside></main>
+<footer><strong>Ważne:</strong> bitmapowa tekstura tła służy zachowaniu stylu zatwierdzonego projektu; skale, cyfry, wszystkie napisy i logo to niezależne dynamiczne warstwy SVG. Teksturę można wygasić parametrem „Intensywność faktury”.</footer>
+<script src="m_competition.js"></script><script src="m_competition_styling.js"></script>
+<script>
+var widget=document.getElementById('cockpit'),styling=document.getElementById('styling');
+widget.onCustomWidgetAfterUpdate({loadingMode:'manual',previewValues:false,textureOpacity:1,showNeedles:false});
+styling.onCustomWidgetAfterUpdate({loadingMode:'manual',previewValues:false,textureOpacity:1,showNeedles:false});
+styling.addEventListener('propertiesChanged',function(e){widget.onCustomWidgetAfterUpdate(e.detail.properties);});
+document.getElementById('loading').addEventListener('click',function(){widget.beginLoading();});
+document.getElementById('ready').addEventListener('click',function(){widget.finishLoading();});
+document.getElementById('example').addEventListener('click',function(){widget.beginLoading();widget.setValues(168,6.2,87.4,54,83);widget.finishLoading();});
+document.getElementById('random').addEventListener('click',function(){widget.beginLoading();widget.setValues(Math.random()*330,Math.random()*8,Math.random()*100,Math.random()*100,50+Math.random()*80);widget.finishLoading();});
+window.addEventListener('load',function(){window.setTimeout(function(){widget.finishLoading();},200);});
+</script></body></html>
